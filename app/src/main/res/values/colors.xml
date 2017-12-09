@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorBackground">#383737</color>
+    <!-- XMenu Background -->
+    <color name="background1">#1c574c</color>
+    <color name="background2">#00d21c</color>
+    <color name="background3">#eabf3b</color>
+    <color name="background4">#e13f0e</color>
+    <color name="background5">#1068ea</color>
+    <color name="background6">#7f08e7</color>
+
+    <color name="bottomBar">#36465d</color>
+</resources>
