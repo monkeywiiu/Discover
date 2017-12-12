@@ -23,7 +23,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
 
     public SV bindingView;
     public RelativeLayout container;
-    private CompositeSubscription compositeSubscription;
+    private CompositeSubscription compositeSubscription = new CompositeSubscription();
     public boolean isVisibile = false;
     @Nullable
     @Override

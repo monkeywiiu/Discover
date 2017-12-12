@@ -1,1 +1,1 @@
-include ':app', ':http', ':jiaozivideoplayer'
+include ':app', ':librarys:http', ':librarys:jiaozivideoplayer', ':librarys:xrecyclerview'

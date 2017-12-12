@@ -40,8 +40,9 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
 
-    compile project(':http')
-    compile project(':jiaozivideoplayer')
+    compile project(':librarys:http')
+    compile project(':librarys:jiaozivideoplayer')
+    compile project(':librarys:xrecyclerview')
     compile 'com.github.monkeywiiu:Xmenu:v5'
     testCompile 'junit:junit:4.12'
 }
