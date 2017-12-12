@@ -63,6 +63,8 @@ public class HttpUtils {
     public Retrofit.Builder getBuilder(String url) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(url)
+                .client(getClient())
+
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create());
         return builder;
@@ -119,13 +121,14 @@ public class HttpUtils {
         }
     }
 
-        private HttpLoggingInterceptor getInterceptor() {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            if (debug) {
-                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY); // 测试
-            } else {
-                interceptor.setLevel(HttpLoggingInterceptor.Level.NONE); // 打包
-            }
-            return interceptor;
-        }
+    private HttpLoggingInterceptor getInterceptor() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        /*if (debug) {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY); // 测试
+        } else {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.NONE); // 打包
+        }*/
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return interceptor;
+    }
 }

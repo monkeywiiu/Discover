@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.example.discover.adapter.MyFragmentPagerAdapter;
 import com.example.discover.databinding.ActivityMainBinding;
 import com.example.discover.ui.DiscoverFragment;
+import com.example.discover.ui.Video.VideoFragment;
 import com.example.zmenu.PUtils;
 
 import java.util.ArrayList;
@@ -40,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
     public void initXMenu(){
         initXMenuResource();
         //设置图片和颜色
-        PUtils.getInstance().setImagesAndColors(imageList, colorList);
+        if (imageList != null && colorList != null){
+            PUtils.getInstance().setImagesAndColors(imageList, colorList);
+        }
+
         //设置xMenu可见
         PUtils.getInstance().setVisible(true);
 
@@ -76,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initFragment() {
         fragmentList = new ArrayList<>();
-      ;
-        fragmentList.add(new DiscoverFragment());
+        fragmentList.add(new VideoFragment());
         fragmentList.add(new DiscoverFragment());
         fragmentList.add(new DiscoverFragment());
         fragmentList.add(new DiscoverFragment());

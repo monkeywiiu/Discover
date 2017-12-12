@@ -12,6 +12,9 @@ import android.widget.RelativeLayout;
 
 import com.example.discover.R;
 
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Created by Administrator on 2017/12/5 0005.
  */
@@ -20,6 +23,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
 
     public SV bindingView;
     public RelativeLayout container;
+    private CompositeSubscription compositeSubscription;
     public boolean isVisibile = false;
     @Nullable
     @Override
@@ -49,4 +53,16 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     public void onInvisible(){}
     public abstract void loadData();
     public abstract int setContentView();
+
+    public void addSubscription(Subscription subscription) {
+        this.compositeSubscription.add(subscription);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (compositeSubscription != null &&compositeSubscription.hasSubscriptions()) {
+            compositeSubscription.unsubscribe();
+        }
+    }
 }
