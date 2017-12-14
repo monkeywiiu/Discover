@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.example.discover.R;
+import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
+import com.example.discover.bean.EyeBean;
 import com.example.discover.databinding.FragmentDiscoverBinding;
+import com.example.discover.http.cahe.ACache;
+import com.example.discover.utils.DebugUtil;
 
 /**
  * Created by Administrator on 2017/12/5 0005.
@@ -15,6 +19,7 @@ public class DiscoverFragment extends BaseFragment<FragmentDiscoverBinding> {
 
     public boolean isPrepare = false;
 
+    public EyeBean eyeBean;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -27,7 +32,14 @@ public class DiscoverFragment extends BaseFragment<FragmentDiscoverBinding> {
         if (!isPrepare || !isVisibile) {
             return;
         }
-        bindingView.text.setText("baiofhuidf");
+        ACache cache = ACache.get(getContext());
+        eyeBean = (EyeBean) cache.getAsObject(Constant.EYE_VIDEO);
+        if (eyeBean == null) {
+            DebugUtil.debug("test111", "null");
+        }
+        bindingView.text.setText("bu");
+
+
     }
 
     @Override

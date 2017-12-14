@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.discover.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -23,6 +24,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
 
     public SV bindingView;
     public RelativeLayout container;
+    public AVLoadingIndicatorView avLoading;
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
     public boolean isVisibile = false;
     @Nullable
@@ -46,15 +48,24 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
         }
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        avLoading = (AVLoadingIndicatorView) getView(R.id.av_loading);
+        showLoading();
+    }
+
+    public View getView(int id) {
+        return getView().findViewById(id);
+    }
     public void onVisible() {
         loadData();
     }
-
     public void onInvisible(){}
     public abstract void loadData();
     public abstract int setContentView();
 
-    public void addSubscription(Subscription subscription) {
+    public void addMySubscription(Subscription subscription) {
         this.compositeSubscription.add(subscription);
     }
 
@@ -64,5 +75,13 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
         if (compositeSubscription != null &&compositeSubscription.hasSubscriptions()) {
             compositeSubscription.unsubscribe();
         }
+    }
+
+    public void showLoading() {
+        avLoading.show();
+    }
+
+    public void stopLoading() {
+        avLoading.hide();
     }
 }

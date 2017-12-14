@@ -12,5 +12,6 @@
     <color name="background5">#1068ea</color>
     <color name="background6">#7f08e7</color>
 
-    <color name="bottomBar">#36465d</color>
+    <color name="background">#36465d</color>
+    <color name="backgroundDark">#2f3e53</color>
 </resources>

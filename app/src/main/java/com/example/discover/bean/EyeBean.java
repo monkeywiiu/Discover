@@ -1,12 +1,13 @@
 package com.example.discover.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/9 0009.
  */
 
-public class EyeBean {
+public class EyeBean implements Serializable {
 
     private List<ItemList> itemList;
 
@@ -14,20 +15,25 @@ public class EyeBean {
         return itemList;
     }
 
-    public class ItemList {
+    public class ItemList implements Serializable {
 
         private Data data;
+        private String type;
 
         public Data getData() {
             return data;
         }
 
-        public class Data {
+        public String getType() {
+            return type;
+        }
+
+        public class Data implements Serializable{
 
             private String title;
             private String description;
             private String categroy;
-            //private String playUrl;
+
             private List<PlayInfo> playInfo;
 
             public String getTitle() {
@@ -42,21 +48,18 @@ public class EyeBean {
                 return categroy;
             }
 
-            /*public String getPlayUrl() {
-                return playUrl;
-            }*/
 
             public List<PlayInfo> getPlayInfo() {
                 return playInfo;
             }
 
-            public class PlayInfo {
+            public class PlayInfo implements Serializable {
 
                 private int weight;
                 private int height;
                 private String name;
                 private String type;
-                private List<UrlList> urlLIst;
+                private List<UrlList> urlList;
 
                 public int getWeight() {
                     return weight;
@@ -74,11 +77,11 @@ public class EyeBean {
                     return type;
                 }
 
-                public List<UrlList> getUrlLIst() {
-                    return urlLIst;
+                public List<UrlList> getUrlList() {
+                    return urlList;
                 }
 
-                public class UrlList {
+                public class UrlList implements Serializable{
 
                     private String name;
                     private String url;

@@ -391,7 +391,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    public void setUp(String url, int screen, Object... objects) {
+    public void setUp(String url, int screen, String objects) {
         LinkedHashMap map = new LinkedHashMap();
         map.put(URL_KEY_DEFAULT, url);
         Object[] dataSourceObjects = new Object[1];
