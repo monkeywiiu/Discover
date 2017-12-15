@@ -24,7 +24,7 @@ import rx.Subscription;
 public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
 
     public VideoRecyclerAdapter videoAdapter;
-    public int start = 15;
+    public int start = 5;
     public int num = 10;
     public boolean isPrepare = false;
     public EyeBean mEyeBean;
@@ -62,7 +62,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
             public void onSuccess(Object object) {
 
                 EyeBean eyeBean = (EyeBean) object;
-                DebugUtil.debug("test1", eyeBean.getItemList().size() + "");
+                DebugUtil.debug("test1", eyeBean.getItemList().get(0).getData().getPlayInfo().size() + "");
                 setAdapter(eyeBean);
                 mCache.remove(Constant.EYE_VIDEO);
                 mCache.put(Constant.EYE_VIDEO, eyeBean, 30000);
