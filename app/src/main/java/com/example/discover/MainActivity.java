@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //初始化XMenu
+        //初始化XMenu(自己做的一个自定义控件 https://github.com/monkeywiiu/Xmenu)
         initXMenu();
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initBinding();
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initFragment() {
         fragmentList = new ArrayList<>();
-        fragmentList.add(new VideoFragment());
+        fragmentList.add(new VideoFragment()); //开眼视频页面
         fragmentList.add(new DiscoverFragment());
         fragmentList.add(new DiscoverFragment());
         fragmentList.add(new DiscoverFragment());
@@ -89,9 +89,48 @@ public class MainActivity extends AppCompatActivity {
     public void loadViewPager(){
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    mBottomItem1.setSelected(true);
+                    mBottomItem2.setSelected(false);
+                    mBottomItem3.setSelected(false);
+                    mBottomItem4.setSelected(false);
+                } else if (position == 1) {
+                    mBottomItem2.setSelected(true);
+                    mBottomItem1.setSelected(false);
+                    mBottomItem3.setSelected(false);
+                    mBottomItem4.setSelected(false);
+                } else if (position == 2) {
+                    mBottomItem3.setSelected(true);
+                    mBottomItem1.setSelected(false);
+                    mBottomItem2.setSelected(false);
+                    mBottomItem4.setSelected(false);
+                } else if (position == 3) {
+                    mBottomItem4.setSelected(true);
+                    mBottomItem1.setSelected(false);
+                    mBottomItem2.setSelected(false);
+                    mBottomItem3.setSelected(false);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     public void initBottomBar() {
+        //设置bottom点击选中事件
+        mBottomItem1.setSelected(true);
         mBottomItem1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,5 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 mViewPager.setCurrentItem(3);
             }
         });
+
+
     }
 }

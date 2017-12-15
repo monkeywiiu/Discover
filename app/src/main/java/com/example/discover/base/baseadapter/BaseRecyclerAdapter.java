@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.discover.utils.DebugUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
-    public List<T> mData;
+    public List<T> mData = new ArrayList<>();
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
@@ -25,8 +26,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     }
 
     public void addAll(List<T> data) {
-        this.mData = data;
+        this.mData.addAll(data);
         DebugUtil.debug("listSize", data.size() + "");
     }
 
+    public void clear() {
+        this.mData.clear();
+    }
 }

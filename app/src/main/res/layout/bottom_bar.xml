@@ -3,20 +3,19 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:elevation="10dp">
+        android:layout_width="match_parent">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
 
+            <!-- 分割线 仿阴影-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="#000000"
-                android:alpha="0.2"/>
+                android:background="@color/backgroundDark"
+                />
             <LinearLayout
                 android:id="@+id/bottom_bar"
                 android:orientation="horizontal"

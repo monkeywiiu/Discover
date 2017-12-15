@@ -9,20 +9,23 @@
         android:layout_height="match_parent"
         tools:context="com.example.discover.MainActivity">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/main_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
 
 
             <include
                 android:id="@+id/bottom_bar"
-                layout="@layout/bottom_bar" />
-        </RelativeLayout>
+                layout="@layout/bottom_bar"
+                />
+        </LinearLayout>
 
 
 
