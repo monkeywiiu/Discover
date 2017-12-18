@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.discover"
         minSdkVersion 16
@@ -43,7 +43,7 @@ dependencies {
     compile project(':librarys:http')
     compile project(':librarys:jiaozivideoplayer')
     compile project(':librarys:xrecyclerview')
+    compile project(':librarys:zmenu')
     compile 'com.wang.avi:library:2.1.3'
-    compile 'com.github.monkeywiiu:Xmenu:v5.1'
     testCompile 'junit:junit:4.12'
 }

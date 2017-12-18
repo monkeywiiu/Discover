@@ -73,6 +73,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     @Override
     public long getCurrentPosition() {
         return mediaPlayer.getCurrentPosition();
+
     }
 
     @Override

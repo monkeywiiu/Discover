@@ -1,1 +1,1 @@
-include ':app', ':librarys:http', ':librarys:jiaozivideoplayer', ':librarys:xrecyclerview'
+include ':app', ':librarys:http', ':librarys:jiaozivideoplayer', ':librarys:xrecyclerview', ':librarys:zmenu'

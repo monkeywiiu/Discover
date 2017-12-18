@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <com.example.zmenu.SnakeButtonLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/container"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.discover.MainActivity">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -20,15 +18,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-
             <include
                 android:id="@+id/bottom_bar"
                 layout="@layout/bottom_bar"
                 />
         </LinearLayout>
 
+        <com.example.zmenu.SnakeButtonLayout
+            android:id="@+id/container"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.example.discover.MainActivity">
+        </com.example.zmenu.SnakeButtonLayout>
+    </FrameLayout>
 
-
-    </com.example.zmenu.SnakeButtonLayout>
 </layout>
 
