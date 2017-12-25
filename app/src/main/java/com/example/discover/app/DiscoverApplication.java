@@ -12,7 +12,7 @@ import com.example.http.HttpUtils;
 public class DiscoverApplication extends Application {
     private static DiscoverApplication discoverApplication;
 
-    private static DiscoverApplication getDiscoverApplication() {
+    public static DiscoverApplication getDiscoverApplication() {
         return discoverApplication;
     }
 

@@ -15,7 +15,9 @@
             <TextView
                 android:id="@+id/video_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@color/backgroundVideoCard"/>
             <cn.jzvd.JZVideoPlayerStandard
                 android:id="@+id/jz_video_player"
                 android:layout_width="match_parent"
@@ -23,8 +25,13 @@
             <TextView
                 android:id="@+id/video_desc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/backgroundVideoCard"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/background"/>
         </LinearLayout>
 
     </FrameLayout>

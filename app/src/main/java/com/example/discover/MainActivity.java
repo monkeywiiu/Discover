@@ -14,8 +14,11 @@ import com.example.discover.ui.DiscoverFragment;
 import com.example.discover.ui.Video.VideoFragment;
 import com.example.zmenu.PUtils;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jzvd.JZVideoPlayer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         initXMenuResource();
         //设置图片和颜色
         if (imageList != null && colorList != null){
-            PUtils.getInstance().setImagesAndColors(imageList, colorList);
+           PUtils.getInstance().setImagesAndColors(imageList, colorList);
         }
 
         //设置xMenu可见
@@ -177,7 +180,11 @@ public class MainActivity extends AppCompatActivity {
                 mViewPager.setCurrentItem(3);
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
 
+        super.onBackPressed();
     }
 }

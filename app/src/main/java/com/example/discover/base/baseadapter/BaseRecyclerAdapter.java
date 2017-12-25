@@ -1,5 +1,6 @@
 package com.example.discover.base.baseadapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.discover.utils.DebugUtil;
@@ -14,6 +15,11 @@ import java.util.List;
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
     public List<T> mData = new ArrayList<>();
+    public Context mContext;
+
+    public BaseRecyclerAdapter(Context context) {
+        mContext = context;
+    }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {

@@ -20,7 +20,7 @@
                 android:id="@+id/bottom_bar"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="?attr/actionBarSize"
                 android:background="@color/background">
 
                 <ImageView
@@ -28,8 +28,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:scaleType="center"
+                    android:padding="15dp"
+                    android:scaleType="centerInside"
                     android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/item_home"/>
 
                 <ImageView
@@ -37,8 +39,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:scaleType="center"
+                    android:padding="15dp"
+                    android:scaleType="centerInside"
                     android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/item_search"/>
 
                 <ImageView
@@ -46,16 +50,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:scaleType="center"
+                    android:padding="15dp"
+                    android:scaleType="centerInside"
                     android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/item_smile"/>
                 <ImageView
                     android:id="@+id/four"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:scaleType="center"
+                    android:padding="15dp"
+                    android:scaleType="centerInside"
                     android:clickable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/item_figure"/>
 
             </LinearLayout>

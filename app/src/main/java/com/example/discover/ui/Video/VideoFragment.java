@@ -21,6 +21,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.List;
 
+import cn.jzvd.JZVideoPlayer;
 import rx.Subscription;
 
 /**
@@ -41,7 +42,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         mCache = ACache.get(getContext());
         floatButtons = PUtils.getInstance().getViewList(); //获取悬浮按钮
         initRecyclerView();
@@ -80,9 +80,9 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                         bindingView.rvVideo.refreshComplete();
                         DebugUtil.debug("test1", eyeBean.getItemList().get(0).getData().getPlayInfo().size() + "");
                         setAdapter(eyeBean);
-                        //缓存500分钟
+                        //缓存5小时
                         mCache.remove(Constant.EYE_VIDEO);
-                        mCache.put(Constant.EYE_VIDEO, eyeBean, 30000);
+                        mCache.put(Constant.EYE_VIDEO, eyeBean, 18000);
                     }
                 } else {
                     if(eyeBean != null && eyeBean.getItemList() != null&& eyeBean.getItemList().size() > 0) {
@@ -93,9 +93,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                         //数据刷新到底了
                         bindingView.rvVideo.setNoMore(true);
                     }
-
                 }
-
             }
 
             @Override
@@ -116,7 +114,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
     }
 
     public void initRecyclerView() {
-        mVideoAdapter = new VideoRecyclerAdapter();
+        mVideoAdapter = new VideoRecyclerAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.rvVideo.setLayoutManager(layoutManager);
@@ -126,6 +124,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         bindingView.rvVideo.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
+                JZVideoPlayer.goOnPlayOnPause();
                 mPage = 1;
                 start = 5;
                 loadVideo();
@@ -134,7 +133,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
             @Override
             public void onLoadMore() {
                 mPage++;
-                start += 5;
+                start += num;
                 loadVideo();
             }
         });
@@ -187,6 +186,12 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
             setAdapter(mEyeBean);
             isFirst = false;
         }
-
     }
+
+    @Override
+    public void onPause() {
+        JZVideoPlayer.releaseAllVideos();
+        super.onPause();
+    }
+
 }
