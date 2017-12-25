@@ -1,7 +1,9 @@
 package com.example.discover.ui.Video;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -77,7 +79,8 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                 EyeBean eyeBean = (EyeBean) object;
                 if (mPage == 1) {
                     if(eyeBean != null && eyeBean.getItemList() != null&& eyeBean.getItemList().size() > 0) {
-                        bindingView.rvVideo.refreshComplete();
+                        //bindingView.rvVideo.refreshComplete();
+                        bindingView.srlVideo.setRefreshing(false);
                         DebugUtil.debug("test1", eyeBean.getItemList().get(0).getData().getPlayInfo().size() + "");
                         setAdapter(eyeBean);
                         //缓存5小时
@@ -86,12 +89,12 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                     }
                 } else {
                     if(eyeBean != null && eyeBean.getItemList() != null&& eyeBean.getItemList().size() > 0) {
-                        bindingView.rvVideo.loadMoreComplete();
+                        //bindingView.rvVideo.loadMoreComplete();
                         mVideoAdapter.addAll(eyeBean.getItemList());
                         mVideoAdapter.notifyDataSetChanged();
                     } else {
                         //数据刷新到底了
-                        bindingView.rvVideo.setNoMore(true);
+                       // bindingView.rvVideo.setNoMore(true);
                     }
                 }
             }
@@ -113,15 +116,14 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         return R.layout.fragment_video;
     }
 
+    @SuppressLint("ResourceAsColor")
     public void initRecyclerView() {
         mVideoAdapter = new VideoRecyclerAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.rvVideo.setLayoutManager(layoutManager);
-        bindingView.rvVideo.setPullRefreshEnabled(true);
-        bindingView.rvVideo.setLoadingMoreEnabled(true);
         //设置recycler上拉加载和下拉刷新监听
-        bindingView.rvVideo.setLoadingListener(new XRecyclerView.LoadingListener() {
+        /*bindingView.rvVideo.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 JZVideoPlayer.goOnPlayOnPause();
@@ -135,6 +137,21 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                 mPage++;
                 start += num;
                 loadVideo();
+            }
+        });*/
+        bindingView.srlVideo.setColorSchemeColors(R.color.background);
+        bindingView.srlVideo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                JZVideoPlayer.goOnPlayOnPause();
+                bindingView.srlVideo.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPage = 1;
+                        start = 5;
+                        loadVideo();
+                    }
+                }, 800);
             }
         });
         //设置recycler滚动监听

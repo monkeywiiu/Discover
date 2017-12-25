@@ -3,7 +3,11 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:elevation="15dp"
+        android:background="@color/background"
+        >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -11,17 +15,14 @@
             >
 
             <!-- 分割线 仿阴影-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/backgroundDark"
-                />
+
             <LinearLayout
                 android:id="@+id/bottom_bar"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/background">
+
+                >
 
                 <ImageView
                     android:id="@+id/one"
