@@ -11,6 +11,8 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.util.AttributeSet;
+import android.util.DebugUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -128,6 +130,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
 
     public void setUp(Object[] dataSourceObjects, int defaultUrlMapIndex, int screen, Object... objects) {
         super.setUp(dataSourceObjects, defaultUrlMapIndex, screen, objects);
+        Log.d("titlevideo012", dataSourceObjects[0] + "");
         if (objects.length != 0) titleTextView.setText(objects[0].toString());
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             fullscreenButton.setImageResource(R.drawable.jz_shrink);

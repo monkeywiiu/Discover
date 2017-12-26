@@ -2,11 +2,17 @@ package com.example.discover;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.discover.adapter.MyFragmentPagerAdapter;
 import com.example.discover.databinding.ActivityMainBinding;
@@ -28,6 +34,16 @@ public class MainActivity extends AppCompatActivity {
     public List<Fragment> fragmentList;
     public List<Integer> imageList;//XMenu的图片
     public List<Integer> colorList;//XMenu的颜色
+    private boolean isFullSreen = false;
+    private static boolean isExit = false;
+    private static Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            isExit = false;
+            return true;
+        }
+    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         initFragment();
         loadViewPager();
         initBottomBar();
+
     }
 
     public void initXMenu(){
@@ -184,7 +201,41 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //全屏播放时退出全屏
+        if (JZVideoPlayer.backPress()) {
+            return;
+        }
 
         super.onBackPressed();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (JZVideoPlayer.backPress()) {
+            return false;
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+
+        if (!isExit) {
+            isExit = true;
+            //Toast.makeText(getApplicationContext(), "再按一次后退键退出程序",
+              //      Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(mViewPager, "再按一次后退键退出程序", Snackbar.LENGTH_SHORT);
+            snackbar.getView().setBackgroundResource(R.color.colorAccent);
+            snackbar.show();
+            // 利用handler延迟发送更改状态信息
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            this.finish();
+        }
+    }
+
 }
