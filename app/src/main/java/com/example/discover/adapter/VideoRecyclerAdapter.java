@@ -74,7 +74,6 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
         }else {
             this.mState = NO_MORE;
         }
-
     }
 
     public boolean isLoading() {
@@ -89,13 +88,18 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
         }
         @Override
         public void fillHolder(EyeBean.ItemListBean list) {
+            DebugUtil.debug("nullisa", "12");
+            DebugUtil.debug("testttt", list.getData().getTitle());
+            //playinfo有时候没有，playurl常有， bug待修复
             if (list != null && list.getData().getPlayInfo().size() > 0) {
 
+                DebugUtil.debug("nullisa", "11");
                 int x = list.getData().getPlayInfo().get(0).getWidth();//获取视频的width
                 int y = list.getData().getPlayInfo().get(0).getHeight();//获取视频的height
                 int height = width * y / x; //根据视频比列获得视频控件的高
                 LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
                 itemViewBinding.jzVideoPlayer.setLayoutParams(layoutParams);
+                itemViewBinding.tvVideoSize.setText("视频大小约" + list.getData().getPlayInfo().get(0).getUrlList().get(2).getSize()/1024/1024+"MB");
                 if (list.getData().getPlayInfo().size() == 1) { //标清||高清
                     itemViewBinding.jzVideoPlayer.setUp(list.getData().getPlayInfo().get(0).getUrlList().get(2).getUrl(),
                             JZVideoPlayer.SCREEN_WINDOW_NORMAL, list.getData().getTitle());

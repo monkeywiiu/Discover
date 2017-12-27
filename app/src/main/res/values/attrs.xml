@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="labelText" format="string" />
+    <attr name="labelTextColor" format="color" />
+    <attr name="labelTextSize" format="dimension" />
+    <attr name="labelBackground" format="color"/>
+
+    <declare-styleable name="CustomTitleView">
+        <attr name="labelText" />
+        <attr name="labelTextColor" />
+        <attr name="labelTextSize" />
+        <attr name="labelBackground"/>
+    </declare-styleable>
+</resources>

@@ -85,7 +85,10 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                     if(eyeBean != null && eyeBean.getItemList() != null&& eyeBean.getItemList().size() > 0) {
 
                         bindingView.srlVideo.setRefreshing(false);
-                        DebugUtil.debug("test1", eyeBean.getItemList().get(0).getData().getPlayInfo().size() + "");
+                        DebugUtil.debug("test1", eyeBean.getItemList().size() + "");
+                        /*for (int i = 0; i < eyeBean.getItemList().size(); i++) {
+                            DebugUtil.debug("test1", eyeBean.getItemList().get(i).getData().getTitle() + "");
+                        }*/
                         setAdapter(eyeBean);
                         //缓存5小时
                         mCache.remove(Constant.EYE_VIDEO);

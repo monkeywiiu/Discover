@@ -16,6 +16,7 @@ public abstract class BaseViewHolder<T,H extends ViewDataBinding> extends Recycl
     public BaseViewHolder(ViewGroup parent, int layoutId) {
         super(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),layoutId, parent, false).getRoot());
         itemViewBinding = DataBindingUtil.getBinding(itemView);
+
     }
 
     public abstract void fillHolder(T object);

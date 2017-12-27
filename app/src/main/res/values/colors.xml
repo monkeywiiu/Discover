@@ -15,4 +15,5 @@
     <color name="background">#36465d</color>
     <color name="backgroundDark">#2f3e53</color>
     <color name="backgroundVideoCard">#ffffff</color>
+    <color name="divisionLine">#FFD2CFCF</color>
 </resources>
