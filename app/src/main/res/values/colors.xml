@@ -16,4 +16,24 @@
     <color name="backgroundDark">#2f3e53</color>
     <color name="backgroundVideoCard">#ffffff</color>
     <color name="divisionLine">#FFD2CFCF</color>
+
+    <color name="colorLabelCre">#a63939</color>
+    <color name="colorLabelMusic">#d47e38</color>
+    <color name="colorLabelTravel">#fac654</color>
+    <color name="colorLabelScience">#bbcf1f</color>
+    <color name="colorLabelFunny">#89f959</color>
+    <color name="colorLabelFashion">#5fe18f</color>
+    <color name="colorLabelSport">#62f5d5</color>
+    <color name="colorLabelAnim">#66bcd9</color>
+    <color name="colorLabelAd">#6599e7</color>
+    <color name="colorLabelAppetizing">#295981</color>
+    <color name="colorLabelLife">#5458cc</color>
+    <color name="colorLabelDrama">#3a4afa</color>
+    <color name="colorLabelNotice">#7e4cd4</color>
+    <color name="colorLabelHigh">#af2ec2</color>
+    <color name="colorLabelRecord">#ca73d4</color>
+    <color name="colorLabelGame">#98cf78</color>
+    <color name="colorLabelPet">#e64570</color>
+    <color name="colorLabelVariety">#e76fc7</color>
+    <color name="colorLabelDefault">#ffffff</color>
 </resources>

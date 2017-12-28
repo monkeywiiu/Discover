@@ -1,13 +1,11 @@
 package com.example.discover.ui.Video;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.discover.R;
 import com.example.discover.adapter.VideoRecyclerAdapter;
@@ -19,7 +17,6 @@ import com.example.discover.http.RequestListener;
 import com.example.discover.http.cahe.ACache;
 import com.example.discover.model.VideoModel;
 import com.example.discover.utils.DebugUtil;
-import com.example.discover.utils.DensityUtil;
 import com.example.zmenu.FloatButton;
 import com.example.zmenu.PUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -36,7 +33,7 @@ import rx.Subscription;
 public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
 
     private VideoRecyclerAdapter mVideoAdapter;
-    LinearLayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
     private int start = 5; //前几个数据可能没有video，所以从5开始
     private int num = 10;
     private int mPage = 1;

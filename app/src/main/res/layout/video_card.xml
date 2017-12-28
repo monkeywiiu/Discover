@@ -16,7 +16,8 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/backgroundVideoCard">
 
                 <TextView
                     android:id="@+id/video_title"
@@ -26,7 +27,20 @@
                     android:layout_marginStart="8dp"
                     android:padding="8dp"
                     android:textSize="15sp"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+
+                <com.example.discover.view.CustomView.LabelView
+                    android:id="@+id/lv_type"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:labelText="test"
+                    app:labelTextSize="16sp"
+                    android:elevation="15dp"/>
 
             </android.support.constraint.ConstraintLayout>
 
@@ -90,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@color/background"/>
+
 
 
 

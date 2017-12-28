@@ -21,7 +21,11 @@ public abstract class BaseViewHolder<T,H extends ViewDataBinding> extends Recycl
 
     public abstract void fillHolder(T object);
 
+    /**
+     * 当数据改变时，binding会在下一帧去改变数据，如果我们需要立即改变，就去调用executePendingBindings方法。
+     */
     public void baseFillHolder(T object) {
         fillHolder(object);
+        itemViewBinding.executePendingBindings();
     }
 }

@@ -14,8 +14,6 @@
             android:layout_height="wrap_content"
             >
 
-            <!-- 分割线 仿阴影-->
-
             <LinearLayout
                 android:id="@+id/bottom_bar"
                 android:orientation="horizontal"
