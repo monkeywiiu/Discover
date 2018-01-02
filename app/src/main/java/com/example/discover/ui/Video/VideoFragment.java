@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.discover.R;
 import com.example.discover.adapter.VideoRecyclerAdapter;
@@ -13,6 +15,7 @@ import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
 import com.example.discover.bean.EyeBean;
 import com.example.discover.databinding.FragmentVideoBinding;
+import com.example.discover.databinding.VideoCardBinding;
 import com.example.discover.http.RequestListener;
 import com.example.discover.http.cahe.ACache;
 import com.example.discover.model.VideoModel;
@@ -42,6 +45,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
     private EyeBean mEyeBean;
     private ACache mCache;
     private List<FloatButton> floatButtons;//XMenu的悬浮按钮
+    private boolean isCollect = false;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -181,6 +185,22 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                 }
             }
         });
+        //添加collect的监听
+        /*mVideoAdapter.setCollectClickListener(new VideoRecyclerAdapter.MyCollectClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isCollect) {
+                    //ImageView imageView = (ImageView) v;
+                    ((ImageView) v).setImageDrawable(getContext().getResources().getDrawable(R.drawable.collected));
+                    isCollect = true;
+                } else {
+                    //ImageView imageView = (ImageView) v;
+                    ((ImageView) v).setImageDrawable(getContext().getResources().getDrawable(R.drawable.collect));
+                    isCollect = false;
+                }
+
+            }
+        });*/
     }
     public void setAdapter(EyeBean eyeBean) {
         stopLoading();

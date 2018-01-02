@@ -73,11 +73,6 @@ public class SnakeButtonLayout extends RelativeLayout {
             if (i == len - 2) {
                 topFollowView = floatButton;
             }
-
-            //去除阴影
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                floatButton.setElevation(0);
-            }
         }
         PUtils.getInstance().setViewList(viewList);
         controller.init(viewList);

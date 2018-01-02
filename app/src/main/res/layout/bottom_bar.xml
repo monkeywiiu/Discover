@@ -30,6 +30,7 @@
                     android:padding="15dp"
                     android:scaleType="centerInside"
                     android:clickable="true"
+                    android:focusable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/item_home"/>
 
@@ -41,6 +42,7 @@
                     android:padding="15dp"
                     android:scaleType="centerInside"
                     android:clickable="true"
+                    android:focusable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/item_search"/>
 
@@ -52,6 +54,7 @@
                     android:padding="15dp"
                     android:scaleType="centerInside"
                     android:clickable="true"
+                    android:focusable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/item_smile"/>
                 <ImageView
@@ -62,16 +65,11 @@
                     android:padding="15dp"
                     android:scaleType="centerInside"
                     android:clickable="true"
+                    android:focusable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/item_figure"/>
-
             </LinearLayout>
         </LinearLayout>
-
-
-
-
-
     </RelativeLayout>
 
 </layout>

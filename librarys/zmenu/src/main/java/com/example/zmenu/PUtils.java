@@ -13,7 +13,7 @@ public class PUtils {
     public List<FloatButton> viewList;
     public int marginRight, marginBottom;
     public boolean isVisible;
-    private static PUtils instance = new PUtils();
+    private static volatile PUtils instance = new PUtils();
 
     public static PUtils getInstance() {
         if (instance != null) {

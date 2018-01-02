@@ -3,6 +3,7 @@ package com.example.discover.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -12,12 +13,18 @@ import com.example.discover.R;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
 import com.example.discover.bean.EyeBean;
+import com.example.discover.bean.LitePalBean.Video;
 import com.example.discover.databinding.FooterItemVideoBinding;
 import com.example.discover.databinding.VideoCardBinding;
+import com.example.discover.model.VideoModel;
 import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.DensityUtil;
+import com.example.discover.utils.ShareUtil;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -34,8 +41,17 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
     private int TYPE_FOOTER = 3;
     private int TYPE_CONTENT = 2;
     private int mState = STATE_NORMAL;
+    private int width = DensityUtil.getScreenWidth(mContext);//屏宽
+    private int videoSize; //video大小MB
+    public MyCollectClickListener collectListener;
 
-    private int width = DensityUtil.getScreenWidth(mContext);
+    public interface MyCollectClickListener {
+        void onClick(View v);
+    }
+
+    public void setCollectClickListener(MyCollectClickListener listener){
+        this.collectListener = listener;
+    }
 
     public VideoRecyclerAdapter(Context context) {
         super(context);
@@ -75,12 +91,15 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
         } else
             return false;
     }
+
+
+
     public class VideoHolder extends BaseViewHolder<EyeBean.ItemListBean, VideoCardBinding> {
         private VideoHolder(ViewGroup parent, int layoutId) {
             super(parent, layoutId);
         }
         @Override
-        public void fillHolder(EyeBean.ItemListBean list) {
+        public void fillHolder(final EyeBean.ItemListBean list, final int position) {
             DebugUtil.debug("nullisa", "12");
             DebugUtil.debug("testttt", list.getData().getTitle());
             //填充基础数据
@@ -102,8 +121,8 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                 int height = width * y / x; //根据视频比列获得视频控件的高
                 LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
                 itemViewBinding.jzVideoPlayer.setLayoutParams(layoutParams);
-
-                itemViewBinding.tvVideoSize.setText("视频大小约" + list.getData().getPlayInfo().get(0).getUrlList().get(2).getSize()/1024/1024+"MB");
+                videoSize = list.getData().getPlayInfo().get(0).getUrlList().get(2).getSize()/1024/1024;
+                itemViewBinding.tvVideoSize.setText("视频大小约" + videoSize+ "MB");
 
                 if (list.getData().getPlayInfo().size() == 1) { //标清||高清
 
@@ -127,8 +146,17 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
 
                     itemViewBinding.jzVideoPlayer.setUp(list.getData().getPlayUrl(), JZVideoPlayer.SCREEN_WINDOW_NORMAL, "");
                 }
-
             }
+            DebugUtil.debug("getTagfill", "tt" + position);
+
+            if ("true".equals(list.getTag())) {
+                itemViewBinding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collected));
+            } else if (list.getTag() == null) {
+                itemViewBinding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
+            }
+            //设置点击事件
+            setOnClick(list, itemViewBinding, position, videoSize);
+
         }
     }
 
@@ -138,14 +166,57 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
         }
 
         @Override
-        public void fillHolder(Object object) {
+        public void fillHolder(Object object, int position) {
 
             itemViewBinding.loading.show();
         }
     }
 
-    private int getLabelColor(String type) {
+    private void setOnClick(final EyeBean.ItemListBean list, final VideoCardBinding binding, final int position, final int vSize) {
 
+        boolean isCollect = false;
+        final String shareText = list.getData().getTitle() + list.getData().getWebUrl().getForWeibo() + mContext.getString(R.string.share_from);
+        //点击分享
+        binding.ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ShareUtil.share(mContext, shareText);
+            }
+        });
+
+        binding.ivCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
+                if (list.getTag() == null) {
+                    DebugUtil.debug("getTag",  list.getData().getTitle() + "|" + list.getData().getDescription());
+                    binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collected));
+                    //存入数据库
+                    VideoModel.addToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
+                           list.getData().getPlayUrl(), vSize);
+                    list.setTag("true");
+                } else  if ("true".equals(list.getTag())) {
+                    DebugUtil.debug("getTag", list.getTag() + "//" + position);
+                    binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
+                    list.setTag(null);
+                    List<Video> list1 = DataSupport.findAll(Video.class);
+                    DebugUtil.debug("getData", list1.size() + "");
+                    for (Video vi : list1) {
+                        DebugUtil.debug("getData", vi.getDescription());
+                        DebugUtil.debug("getData", vi.getPlayUrl());
+                        DebugUtil.debug("getData", vi.getTitle());
+                        DebugUtil.debug("getData", vi.getSize() + "");
+                        DebugUtil.debug("getData", vi.getVideoId() + "");
+                    }
+                }
+            }
+        });
+    }
+
+
+    private int getLabelColor(String type) {
 
         switch (type) {
             case "创意":

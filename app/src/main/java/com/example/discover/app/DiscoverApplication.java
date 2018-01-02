@@ -6,6 +6,8 @@ import android.content.Context;
 import com.example.discover.utils.DebugUtil;
 import com.example.http.HttpUtils;
 
+import org.litepal.LitePal;
+
 /**
  * Created by Administrator on 2017/12/9 0009.
  */
@@ -25,6 +27,7 @@ public class DiscoverApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LitePal.initialize(this);
         context = getApplicationContext();
         discoverApplication = this;
         HttpUtils.getInstance().init(this, DebugUtil.DEBUG);

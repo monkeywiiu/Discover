@@ -13,16 +13,8 @@ import java.util.List;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    public List<Fragment> mFragmentList;
-    public List<Integer> mTabList;
-    public Context mContext;
-
-   /* private int[] imageResId = {
-            R.drawable.figure_normal,
-            R.drawable.search_normal,
-            R.drawable.smile_normal,
-            R.drawable.figure_normal
-    };*/
+    private List<Fragment> mFragmentList;
+    private List<String> mTitleList;
 
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -32,11 +24,10 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         mFragmentList = list;
     }
-    public MyFragmentPagerAdapter(FragmentManager fm, Context context, List<Fragment> list, List<Integer> tabList) {
+    public MyFragmentPagerAdapter(FragmentManager fm, List<Fragment> list, List<String> titleList) {
         super(fm);
         mFragmentList = list;
-        mTabList = tabList;
-        mContext = context;
+        mTitleList = titleList;
     }
 
     @Override
@@ -49,5 +40,12 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
         return mFragmentList.size();
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (mTitleList != null) {
+            return mTitleList.get(position);
+        } else
+            return "";
+    }
 
 }

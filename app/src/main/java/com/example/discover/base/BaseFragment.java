@@ -62,7 +62,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
         loadData();
     }
     public void onInvisible(){}
-    public abstract void loadData();
+    protected void loadData(){};
     public abstract int setContentView();
 
     public void addMySubscription(Subscription subscription) {
@@ -77,10 +77,12 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
         }
     }
 
+    //显示loading
     public void showLoading() {
         avLoading.show();
     }
 
+    //隐藏loading
     public void stopLoading() {
         avLoading.hide();
     }

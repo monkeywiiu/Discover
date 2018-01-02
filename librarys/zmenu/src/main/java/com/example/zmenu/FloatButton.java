@@ -118,4 +118,11 @@ public class FloatButton extends FloatingActionButton {
         springX.setEndValue(x);
         springY.setEndValue(y);
     }
+
+    //设置阴影为0
+
+    @Override
+    public void setElevation(float elevation) {
+        super.setElevation(0);
+    }
 }

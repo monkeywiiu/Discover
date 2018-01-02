@@ -17,9 +17,12 @@ import android.widget.Toast;
 import com.example.discover.adapter.MyFragmentPagerAdapter;
 import com.example.discover.databinding.ActivityMainBinding;
 import com.example.discover.ui.DiscoverFragment;
+import com.example.discover.ui.Personal.PersonalFragment;
 import com.example.discover.ui.Video.VideoFragment;
 import com.example.zmenu.PUtils;
 
+
+import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +31,12 @@ import cn.jzvd.JZVideoPlayer;
 
 public class MainActivity extends AppCompatActivity {
 
-    public ActivityMainBinding mBinding;
-    public ViewPager mViewPager;
-    public ImageView mBottomItem1, mBottomItem2, mBottomItem3, mBottomItem4;
-    public List<Fragment> fragmentList;
-    public List<Integer> imageList;//XMenu的图片
-    public List<Integer> colorList;//XMenu的颜色
+    private ActivityMainBinding mBinding;
+    private ViewPager mViewPager;
+    private ImageView mBottomItem1, mBottomItem2, mBottomItem3, mBottomItem4;
+    private List<Fragment> fragmentList;
+    private List<Integer> imageList;//XMenu的图片
+    private List<Integer> colorList;//XMenu的颜色
     private boolean isFullSreen = false;
     private static boolean isExit = false;
     private static Handler mHandler = new Handler(new Handler.Callback() {
@@ -52,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
         initXMenu();
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initBinding();
-        initFragment();
+        initFragmentList();
         loadViewPager();
         initBottomBar();
 
+        //创建litepal数据库
+        Connector.getDatabase();
     }
 
     public void initXMenu(){
@@ -98,12 +103,12 @@ public class MainActivity extends AppCompatActivity {
         mBottomItem4 = mBinding.bottomBar.four;
     }
 
-    public void initFragment() {
+    public void initFragmentList() {
         fragmentList = new ArrayList<>();
         fragmentList.add(new VideoFragment()); //开眼视频页面
         fragmentList.add(new DiscoverFragment());
         fragmentList.add(new DiscoverFragment());
-        fragmentList.add(new DiscoverFragment());
+        fragmentList.add(new PersonalFragment());
     }
 
     public void loadViewPager(){
@@ -222,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    //双击退出
     private void exit() {
 
         if (!isExit) {

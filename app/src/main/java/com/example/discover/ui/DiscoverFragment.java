@@ -17,9 +17,9 @@ import com.example.discover.utils.DebugUtil;
 
 public class DiscoverFragment extends BaseFragment<FragmentDiscoverBinding> {
 
-    public boolean isPrepare = false;
+    private boolean isPrepare = false;
 
-    public EyeBean eyeBean;
+    private EyeBean eyeBean;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

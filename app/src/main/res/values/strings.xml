@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Discover</string>
+    <string name="action_share">分享给朋友</string>
+    <string name="share_from">（来自Discover）</string>
 </resources>

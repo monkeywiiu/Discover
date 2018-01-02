@@ -1,6 +1,7 @@
 package com.example.discover.model;
 
 import com.example.discover.bean.EyeBean;
+import com.example.discover.bean.LitePalBean.Video;
 import com.example.discover.http.HttpClient;
 import com.example.discover.http.RequestListener;
 import com.example.discover.utils.DebugUtil;
@@ -39,5 +40,20 @@ public class VideoModel {
                 });
 
         listener.addSubscription(subscription);
+    }
+
+    public static void addToFavor(int id, String title, String desc, String playUrl, int size) {
+        Video video = new Video();
+        video.setId(1);
+        video.setVideoId(id);
+        video.setTitle(title);
+        video.setDescription(desc);
+        video.setPlayUrl(playUrl);
+        video.setSize(size);
+        video.save();
+    }
+
+    public static void deleteFromFavor() {
+
     }
 }
