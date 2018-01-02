@@ -201,7 +201,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                     DebugUtil.debug("getTag", list.getTag() + "//" + position);
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
                     list.setTag(null);
-                    List<Video> list1 = DataSupport.findAll(Video.class);
+                    /*List<Video> list1 = DataSupport.findAll(Video.class);
                     DebugUtil.debug("getData", list1.size() + "");
                     for (Video vi : list1) {
                         DebugUtil.debug("getData", vi.getDescription());
@@ -209,7 +209,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                         DebugUtil.debug("getData", vi.getTitle());
                         DebugUtil.debug("getData", vi.getSize() + "");
                         DebugUtil.debug("getData", vi.getVideoId() + "");
-                    }
+                    }*/
                 }
             }
         });
