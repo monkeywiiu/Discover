@@ -42,13 +42,17 @@ public class VideoModel {
         listener.addSubscription(subscription);
     }
 
-    public static void addToFavor(int id, String title, String desc, String playUrl, int size) {
+    public static void addToFavor(int id, String title, String desc, String playUrl,
+                                  String imageUrl, int labelColor, String labelText, int size) {
         Video video = new Video();
         video.setId(1);
         video.setVideoId(id);
         video.setTitle(title);
         video.setDescription(desc);
         video.setPlayUrl(playUrl);
+        video.setImageUrl(imageUrl);
+        video.setLabelColor(labelColor);
+        video.setLabelText(labelText);
         video.setSize(size);
         video.save();
     }

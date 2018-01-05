@@ -34,15 +34,15 @@ import cn.jzvd.JZVideoPlayerStandard;
  */
 
 public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBean> {
-    private int i; //随机过渡图序号
     private int LOAD_MORE = 1;
-    private int NO_MORE = 0;
-    private int STATE_NORMAL = -1;
-    private int TYPE_FOOTER = 3;
-    private int TYPE_CONTENT = 2;
-    private int mState = STATE_NORMAL;
+    private final static int NO_MORE = 0;
+    private final static int STATE_NORMAL = -1;
+    private final static int TYPE_FOOTER = 3;
+    private final static int TYPE_CONTENT = 2;
+    private  int mState = STATE_NORMAL;
     private int width = DensityUtil.getScreenWidth(mContext);//屏宽
     private int videoSize; //video大小MB
+    private FooterItemVideoBinding mFooterBinding;
     public MyCollectClickListener collectListener;
 
     public interface MyCollectClickListener {
@@ -68,6 +68,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
 
     @Override
     public int getItemViewType(int position) {
+        DebugUtil.debug("positionrecy", position +"");
         if (position + 1 == getItemCount()) {
             DebugUtil.debug("footer", "true");
             return TYPE_FOOTER;
@@ -77,10 +78,13 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
 
     }
 
+
+
     public void updateStateLoad(boolean loading) {
         if (loading) {
             this.mState = LOAD_MORE;
         }else {
+            mFooterBinding.loading.hide();
             this.mState = NO_MORE;
         }
     }
@@ -100,8 +104,6 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
         }
         @Override
         public void fillHolder(final EyeBean.ItemListBean list, final int position) {
-            DebugUtil.debug("nullisa", "12");
-            DebugUtil.debug("testttt", list.getData().getTitle());
             //填充基础数据
             itemViewBinding.videoTitle.setText(list.getData().getTitle());
             itemViewBinding.videoDesc.setText(list.getData().getDescription());
@@ -111,7 +113,6 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                     .error(R.drawable.cross_image)
                     .into(itemViewBinding.jzVideoPlayer.thumbImageView);
             itemViewBinding.lvType.setText(list.getData().getCategory());
-            DebugUtil.debug("labelColor", getLabelColor(list.getData().getCategory()) + "");
             itemViewBinding.lvType.setBackground(getLabelColor(list.getData().getCategory()));
             //填充播放链接，playinfo有时候没有，playurl常有
             if (list.getData().getPlayInfo().size() > 0) {
@@ -147,7 +148,6 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                     itemViewBinding.jzVideoPlayer.setUp(list.getData().getPlayUrl(), JZVideoPlayer.SCREEN_WINDOW_NORMAL, "");
                 }
             }
-            DebugUtil.debug("getTagfill", "tt" + position);
 
             if ("true".equals(list.getTag())) {
                 itemViewBinding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collected));
@@ -167,7 +167,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
 
         @Override
         public void fillHolder(Object object, int position) {
-
+            mFooterBinding = itemViewBinding;
             itemViewBinding.loading.show();
         }
     }
@@ -195,21 +195,13 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collected));
                     //存入数据库
                     VideoModel.addToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
-                           list.getData().getPlayUrl(), vSize);
+                           list.getData().getPlayUrl(), list.getData().getCover().getDetail(),
+                            getLabelColor(list.getData().getCategory()), list.getData().getCategory(), vSize);
                     list.setTag("true");
                 } else  if ("true".equals(list.getTag())) {
                     DebugUtil.debug("getTag", list.getTag() + "//" + position);
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
                     list.setTag(null);
-                    /*List<Video> list1 = DataSupport.findAll(Video.class);
-                    DebugUtil.debug("getData", list1.size() + "");
-                    for (Video vi : list1) {
-                        DebugUtil.debug("getData", vi.getDescription());
-                        DebugUtil.debug("getData", vi.getPlayUrl());
-                        DebugUtil.debug("getData", vi.getTitle());
-                        DebugUtil.debug("getData", vi.getSize() + "");
-                        DebugUtil.debug("getData", vi.getVideoId() + "");
-                    }*/
                 }
             }
         });

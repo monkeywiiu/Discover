@@ -19,7 +19,6 @@
                 android:layout_height="48dp"
                 android:background="@color/backgroundVideoCard">
 
-
                 <com.example.discover.view.CustomView.LabelView
                     android:id="@+id/lv_type"
                     android:layout_width="60dp"
@@ -54,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
             <TextView
-                android:id="@+id/video_desc"
+                android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"

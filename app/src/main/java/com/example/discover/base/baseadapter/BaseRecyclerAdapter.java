@@ -23,12 +23,19 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
+        DebugUtil.debug("position11", position + "");
+        if (position == mData.size()) {
+            holder.baseFillHolder(null, position);
+            return;
+        }
         holder.baseFillHolder(mData.get(position), position);
+
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        //考虑有footer的情况
+        return mData.size() + 1;
     }
 
     public void addAll(List<T> data) {
@@ -39,4 +46,5 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     public void clear() {
         this.mData.clear();
     }
+
 }

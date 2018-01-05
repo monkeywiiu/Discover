@@ -12,7 +12,11 @@ public class Video extends DataSupport {
     private String title;
     private String description;
     private String playUrl;
+    private String imageUrl;
+    private int labelColor;
+    private String labelText;
     private int size;
+
 
     public int getId() {
         return id;
@@ -52,6 +56,30 @@ public class Video extends DataSupport {
 
     public void setPlayUrl(String playUrl) {
         this.playUrl = playUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public int getLabelColor() {
+        return labelColor;
+    }
+
+    public void setLabelColor(int labelColor) {
+        this.labelColor = labelColor;
+    }
+
+    public String getLabelText() {
+        return labelText;
+    }
+
+    public void setLabelText(String labelText) {
+        this.labelText = labelText;
     }
 
     public int getSize() {

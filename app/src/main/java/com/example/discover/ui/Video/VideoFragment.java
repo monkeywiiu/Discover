@@ -102,13 +102,14 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                         mVideoAdapter.notifyDataSetChanged();
                     } else {
                         //数据刷新到底了
-                       // bindingView.rvVideo.setNoMore(true);
+                        mVideoAdapter.updateStateLoad(false);
                     }
                 }
             }
 
             @Override
             public void onFailed() {
+
                 //DebugUtil.toast(getActivity(), "failed");
             }
 
@@ -185,22 +186,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                 }
             }
         });
-        //添加collect的监听
-        /*mVideoAdapter.setCollectClickListener(new VideoRecyclerAdapter.MyCollectClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isCollect) {
-                    //ImageView imageView = (ImageView) v;
-                    ((ImageView) v).setImageDrawable(getContext().getResources().getDrawable(R.drawable.collected));
-                    isCollect = true;
-                } else {
-                    //ImageView imageView = (ImageView) v;
-                    ((ImageView) v).setImageDrawable(getContext().getResources().getDrawable(R.drawable.collect));
-                    isCollect = false;
-                }
 
-            }
-        });*/
     }
     public void setAdapter(EyeBean eyeBean) {
         stopLoading();
