@@ -232,8 +232,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (!isExit) {
             isExit = true;
-            //Toast.makeText(getApplicationContext(), "再按一次后退键退出程序",
-              //      Toast.LENGTH_SHORT).show();
             Snackbar snackbar = Snackbar.make(mViewPager, "再按一次后退键退出程序", Snackbar.LENGTH_SHORT);
             snackbar.getView().setBackgroundResource(R.color.colorAccent);
             snackbar.show();

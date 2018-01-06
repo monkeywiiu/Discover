@@ -31,6 +31,17 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
     private final static int STATE_NORMAL = -1;
     private int mState = STATE_NORMAL;
     private FooterItemVideoBinding mFooterBinding;
+
+    public MyDeleteClickListener deleteListener;
+
+    public interface MyDeleteClickListener {
+        void onDelete(int position, int id);
+    }
+
+    public void setOnClickListener(MyDeleteClickListener listener){
+        this.deleteListener = listener;
+    }
+
     public LikeVideoRecyclerAdapter(Context context) {
         super(context);
     }
@@ -77,7 +88,7 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
                 }
             }
             //设置点击事件
-            setOnClick(itemViewBinding, likeVideo);
+            setOnClick(itemViewBinding, likeVideo, position, likeVideo.getId());
         }
     }
 
@@ -88,13 +99,13 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
 
         @Override
         public void fillHolder(Object object, int position) {
-
             mFooterBinding = itemViewBinding;
-            itemViewBinding.loading.show();
+            DebugUtil.debug("loading11", "yun");
+            //itemViewBinding.loading.show();
         }
     }
 
-    public void setOnClick(LikeVideoCardBinding binding, Video likeVideo) {
+    public void setOnClick(LikeVideoCardBinding binding, Video likeVideo, final int positon, final int videoId) {
         //点击分享
         final String shareText = likeVideo.getTitle() + likeVideo.getPlayUrl() + mContext.getString(R.string.share_from);
         binding.ivShare.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +115,12 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
             }
         });
         //点击删除item
+        binding.ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteListener.onDelete(positon, videoId);
+            }
+        });
         //点击下载
     }
     public void updateStateLoad(boolean loading) {
@@ -111,7 +128,6 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
         if (loading) {
             this.mState = LOAD_MORE;
         }else {
-            mFooterBinding.loading.hide(); //隐藏loading
             this.mState = NO_MORE;
         }
     }
@@ -121,5 +137,9 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
             return true;
         } else
             return false;
+    }
+
+    public void hideLoading() {
+        mFooterBinding.loading.hide();
     }
 }

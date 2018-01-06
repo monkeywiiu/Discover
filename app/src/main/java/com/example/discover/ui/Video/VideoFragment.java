@@ -19,6 +19,7 @@ import com.example.discover.databinding.VideoCardBinding;
 import com.example.discover.http.RequestListener;
 import com.example.discover.http.cahe.ACache;
 import com.example.discover.model.VideoModel;
+import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
 import com.example.discover.utils.DebugUtil;
 import com.example.zmenu.FloatButton;
 import com.example.zmenu.PUtils;
@@ -38,7 +39,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
     private VideoRecyclerAdapter mVideoAdapter;
     private LinearLayoutManager mLayoutManager;
     private int start = 5; //前几个数据可能没有video，所以从5开始
-    private int num = 10;
+    private int num = 15;
     private int mPage = 1;
     private boolean isPrepare = false;
     private boolean isFirst = true;
@@ -86,10 +87,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                     if(eyeBean != null && eyeBean.getItemList() != null&& eyeBean.getItemList().size() > 0) {
 
                         bindingView.srlVideo.setRefreshing(false);
-                        DebugUtil.debug("test1", eyeBean.getItemList().size() + "");
-                        /*for (int i = 0; i < eyeBean.getItemList().size(); i++) {
-                            DebugUtil.debug("test1", eyeBean.getItemList().get(i).getData().getTitle() + "");
-                        }*/
                         setAdapter(eyeBean);
                         //缓存5小时
                         mCache.remove(Constant.EYE_VIDEO);
@@ -102,7 +99,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                         mVideoAdapter.notifyDataSetChanged();
                     } else {
                         //数据刷新到底了
-                        mVideoAdapter.updateStateLoad(false);
+                        mVideoAdapter.hideLoading();
                     }
                 }
             }
@@ -128,7 +125,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
 
     public void initRecyclerView() {
         mVideoAdapter = new VideoRecyclerAdapter(getContext());
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.rvVideo.setLayoutManager(mLayoutManager);
         bindingView.srlVideo.setColorSchemeResources(R.color.background5, R.color.background2, R.color.background4);
@@ -166,7 +163,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                             DebugUtil.debug("startpage", mPage + "" + start);
                             loadVideo();
                         }
-                    }, 500);
+                    }, 1000);
 
                 }
             }

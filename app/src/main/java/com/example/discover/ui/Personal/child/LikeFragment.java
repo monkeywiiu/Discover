@@ -13,6 +13,7 @@ import com.example.discover.adapter.LikeVideoRecyclerAdapter;
 import com.example.discover.base.BaseFragment;
 import com.example.discover.bean.LitePalBean.Video;
 import com.example.discover.databinding.FragmentPersonalLikeBinding;
+import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
 import com.example.discover.utils.DebugUtil;
 
 import org.litepal.crud.DataSupport;
@@ -31,19 +32,19 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
     private boolean isFirst = true;
     private LikeVideoRecyclerAdapter mLikeVideoAdapter;
     private LinearLayoutManager mLayoutManager;
-    private int mPage = 1;
     private int mNum = 15;
-    private int currentStart;
-    private int currentEnd;
-    private int total;
+    private int currentId;
+    private int largestId;
+    private int totalNum;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isPrepare = true;
-        likeVideoList = DataSupport.order("id desc").find(Video.class);
+        likeVideoList = DataSupport.order("id desc").limit(mNum).find(Video.class);
         if (DataSupport.findLast(Video.class) != null) {
-            total = DataSupport.findLast(Video.class).getId();
+            largestId = DataSupport.findLast(Video.class).getId();
         }
+        totalNum = DataSupport.findAll(Video.class).size();
         initRecyclerView();
         loadData();
     }
@@ -53,22 +54,16 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
         if (!isPrepare || !isVisibile || !isFirst) {
             return;
         }
-        //隐藏loading
-        //stopLoading();
-
-        //test();
         setAdapter();
-
         //避免重复加载
         isFirst = false;
 
     }
 
-
     public void initRecyclerView() {
 
         mLikeVideoAdapter = new LikeVideoRecyclerAdapter(getContext());
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.rvLikeVideo.setLayoutManager(mLayoutManager);
         bindingView.srlRefresh.setColorSchemeResources(R.color.background5, R.color.background2, R.color.background4);
@@ -79,8 +74,14 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
                 bindingView.rvLikeVideo.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        likeVideoList = DataSupport.order("id desc").limit(15).find(Video.class);
-                        DebugUtil.debug("refreshTest", likeVideoList.size() + "");
+                        likeVideoList = DataSupport.order("id desc").limit(mNum).find(Video.class);
+                        totalNum = DataSupport.findAll(Video.class).size();
+                        if (likeVideoList != null && likeVideoList.size() > 0) {
+                            currentId = likeVideoList.get(likeVideoList.size() - 1).getId();
+                            DebugUtil.debug("totalTest", "currentId:" + currentId);
+                            largestId = DataSupport.findLast(Video.class).getId();
+                            DebugUtil.debug("totalTest", "largestId" + largestId);
+                        }
                         setAdapter();
                         mLikeVideoAdapter.notifyDataSetChanged();
                         bindingView.srlRefresh.setRefreshing(false);
@@ -94,23 +95,40 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-                int totalItemCount = mLayoutManager.getItemCount();
-                DebugUtil.debug("position1", lastVisibleItem + "  " + totalItemCount);
+                final int totalItemCount = mLayoutManager.getItemCount();
                 if (lastVisibleItem == totalItemCount - 1 && !mLikeVideoAdapter.isLoading()) {
+
                     mLikeVideoAdapter.updateStateLoad(true);
-                    mPage++;
-                    currentStart = (mPage - 1) * mNum;
+                    likeVideoList = DataSupport.order("id desc").limit(mNum).where("id < ?", String.valueOf(currentId)).find(Video.class);
+                    if (likeVideoList != null && likeVideoList.size() > 0) {
+                        currentId = likeVideoList.get(likeVideoList.size() - 1).getId();
+                        DebugUtil.debug("totalTest", "currentIdLoad" + currentId);
+                    }
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            if (totalItemCount - 1 == totalNum) {
+                                mLikeVideoAdapter.hideLoading();
+                            }
                             mLikeVideoAdapter.updateStateLoad(false);
-                            likeVideoList = DataSupport.order("id desc").limit(mNum).offset(currentStart).find(Video.class);
                             mLikeVideoAdapter.addAll(likeVideoList);
                             mLikeVideoAdapter.notifyDataSetChanged();
                         }
-                    }, 500);
-
+                    }, 1000);
                 }
+            }
+        });
+
+        //删除item
+        mLikeVideoAdapter.setOnClickListener(new LikeVideoRecyclerAdapter.MyDeleteClickListener() {
+            @Override
+            public void onDelete(int position, int id) {
+
+                DataSupport.deleteAll(Video.class, "id = ?", String.valueOf(id));
+                totalNum = DataSupport.findAll(Video.class).size();
+                DebugUtil.debug("totalTest", "largestId" + largestId + "position:" + position);
+                mLikeVideoAdapter.delete(position);
             }
         });
     }
@@ -125,4 +143,6 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
     public int setContentView() {
         return R.layout.fragment_personal_like;
     }
+
+
 }

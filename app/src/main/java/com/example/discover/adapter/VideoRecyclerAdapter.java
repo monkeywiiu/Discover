@@ -43,15 +43,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
     private int width = DensityUtil.getScreenWidth(mContext);//屏宽
     private int videoSize; //video大小MB
     private FooterItemVideoBinding mFooterBinding;
-    public MyCollectClickListener collectListener;
 
-    public interface MyCollectClickListener {
-        void onClick(View v);
-    }
-
-    public void setCollectClickListener(MyCollectClickListener listener){
-        this.collectListener = listener;
-    }
 
     public VideoRecyclerAdapter(Context context) {
         super(context);
@@ -84,7 +76,6 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
         if (loading) {
             this.mState = LOAD_MORE;
         }else {
-            mFooterBinding.loading.hide();
             this.mState = NO_MORE;
         }
     }
@@ -96,6 +87,9 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
             return false;
     }
 
+    public void hideLoading() {
+        mFooterBinding.loading.hide();
+    }
 
 
     public class VideoHolder extends BaseViewHolder<EyeBean.ItemListBean, VideoCardBinding> {
@@ -167,6 +161,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
 
         @Override
         public void fillHolder(Object object, int position) {
+            DebugUtil.debug("loadingm", "11");
             mFooterBinding = itemViewBinding;
             itemViewBinding.loading.show();
         }

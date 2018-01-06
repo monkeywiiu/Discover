@@ -4,6 +4,7 @@ import org.litepal.crud.DataSupport;
 
 /**
  * Created by monkeyWiiu on 2017/12/31.
+ * id : 不变,与表中数据绑定
  */
 
 public class Video extends DataSupport {

@@ -47,4 +47,14 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
         this.mData.clear();
     }
 
+    public void delete(int position) {
+        if (this.mData != null && this.mData.size() > position) {
+            this.mData.remove(position);
+        }
+        notifyItemRemoved(position);
+
+        if (position != mData.size()) {
+            notifyItemRangeRemoved(position, mData.size() - position);
+        }
+    }
 }
