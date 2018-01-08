@@ -32,6 +32,8 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View ll = inflater.inflate(R.layout.fragment_base, null);
         bindingView = DataBindingUtil.inflate(getActivity().getLayoutInflater(), setContentView(), null, false);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        bindingView.getRoot().setLayoutParams(params);
         container = ll.findViewById(R.id.container);
         container.addView(bindingView.getRoot());
         return ll;

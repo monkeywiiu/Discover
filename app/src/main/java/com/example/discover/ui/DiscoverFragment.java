@@ -1,9 +1,12 @@
 package com.example.discover.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.example.discover.R;
+import com.example.discover.TestActivity;
 import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
 import com.example.discover.bean.EyeBean;
@@ -25,6 +28,14 @@ public class DiscoverFragment extends BaseFragment<FragmentDiscoverBinding> {
         super.onActivityCreated(savedInstanceState);
         isPrepare = true;
         loadData();
+
+        bindingView.btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TestActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        >
         <RelativeLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
+            android:background="#00ff00"
             >
             <RelativeLayout
                 android:id="@+id/ll_loading"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:gravity="center">
 
                 <com.wang.avi.AVLoadingIndicatorView
@@ -26,9 +25,7 @@
 
             </RelativeLayout>
 
-
-
         </RelativeLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 </layout>

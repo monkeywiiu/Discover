@@ -32,7 +32,7 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
     private boolean isFirst = true;
     private LikeVideoRecyclerAdapter mLikeVideoAdapter;
     private LinearLayoutManager mLayoutManager;
-    private int mNum = 15;
+    private int mNum = 5;
     private int currentId;
     private int largestId;
     private int totalNum;
