@@ -26,11 +26,9 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        stopLoading();
-
         initFragmentList();
         loadViewPager();
-
+        showContentView();
     }
 
     @Override

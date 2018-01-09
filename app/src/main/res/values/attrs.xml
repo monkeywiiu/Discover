@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <attr name="labelText" format="string" />
-        <attr name="labelTextColor" format="color" />
-        <attr name="labelTextSize" format="dimension" />
-        <attr name="labelBackground" format="color"/>
 
         <declare-styleable name="LabelView">
-            <attr name="labelText" />
-            <attr name="labelTextColor" />
-            <attr name="labelTextSize" />
-            <attr name="labelBackground"/>
+            <attr name="labelText" format="string" />
+            <attr name="labelTextColor" format="color" />
+            <attr name="labelTextSize" format="dimension"/>
+            <attr name="labelBackground" format="color"/>
         </declare-styleable>
+
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+        <attr name="civ_circle_background_color" format="color" />
+    </declare-styleable>
 </resources>

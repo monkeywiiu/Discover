@@ -9,21 +9,22 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#00ff00"
+            android:background="@color/backgroundDark"
             >
-            <RelativeLayout
-                android:id="@+id/ll_loading"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+        </RelativeLayout>
 
-                <com.wang.avi.AVLoadingIndicatorView
-                    android:id="@+id/av_loading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:indicatorName="BallPulseIndicator"/>
+        <RelativeLayout
+            android:id="@+id/rl_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/background">
 
-            </RelativeLayout>
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/av_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorName="BallPulseIndicator"/>
 
         </RelativeLayout>
 

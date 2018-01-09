@@ -25,6 +25,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     public SV bindingView;
     public RelativeLayout container;
     public AVLoadingIndicatorView avLoading;
+    private RelativeLayout rlLoading;
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
     public boolean isVisibile = false;
     @Nullable
@@ -54,6 +55,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         avLoading = (AVLoadingIndicatorView) getView(R.id.av_loading);
+        rlLoading = (RelativeLayout) getView(R.id.rl_loading);
         showLoading();
     }
 
@@ -79,6 +81,23 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
         }
     }
 
+    /**
+     * 加载中的状态
+     */
+    protected void showLoading() {
+        if (rlLoading.getVisibility() == View.GONE) {
+            rlLoading.setVisibility(View.VISIBLE);
+        }
+    }
+    /**
+     * 加载完成的状态
+     */
+    protected void showContentView() {
+        if (rlLoading.getVisibility() == View.VISIBLE) {
+            rlLoading.setVisibility(View.GONE);
+        }
+    }
+/*
     //显示loading
     public void showLoading() {
         avLoading.show();
@@ -88,4 +107,6 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     public void stopLoading() {
         avLoading.hide();
     }
+    */
+
 }

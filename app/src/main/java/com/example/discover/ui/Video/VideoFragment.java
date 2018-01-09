@@ -69,6 +69,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         mEyeBean = (EyeBean) mCache.getAsObject(Constant.EYE_VIDEO);
         if (mEyeBean != null ) {
             //getAchecaData();
+            showContentView();
             setAdapter(mEyeBean);
            // DebugUtil.debug("test12", mEyeBean.getItemList().get(0).getType());
         }else {
@@ -82,6 +83,8 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         VideoModel.showVideo(start, num, new RequestListener() {
             @Override
             public void onSuccess(Object object) {
+                showContentView();
+
                 EyeBean eyeBean = (EyeBean) object;
                 if (mPage == 1) {
                     if(eyeBean != null && eyeBean.getItemList() != null&& eyeBean.getItemList().size() > 0) {
@@ -186,7 +189,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
 
     }
     public void setAdapter(EyeBean eyeBean) {
-        stopLoading();
         mVideoAdapter.clear();
         mVideoAdapter.addAll(eyeBean.getItemList());
         bindingView.rvVideo.setAdapter(mVideoAdapter);

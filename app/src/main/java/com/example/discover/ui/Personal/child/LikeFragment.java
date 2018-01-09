@@ -47,6 +47,7 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
         totalNum = DataSupport.findAll(Video.class).size();
         initRecyclerView();
         loadData();
+        showContentView();
     }
 
     @Override
@@ -134,7 +135,6 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
     }
 
     public void setAdapter() {
-        stopLoading();
         mLikeVideoAdapter.clear();
         mLikeVideoAdapter.addAll(likeVideoList);
         bindingView.rvLikeVideo.setAdapter(mLikeVideoAdapter);
