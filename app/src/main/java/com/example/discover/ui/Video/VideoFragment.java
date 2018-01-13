@@ -131,6 +131,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.rvVideo.setLayoutManager(mLayoutManager);
+
         bindingView.srlVideo.setColorSchemeResources(R.color.background5, R.color.background2, R.color.background4);
         //上拉刷新
         bindingView.srlVideo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

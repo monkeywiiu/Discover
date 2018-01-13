@@ -18,6 +18,7 @@ import com.example.discover.adapter.MyFragmentPagerAdapter;
 import com.example.discover.databinding.ActivityMainBinding;
 import com.example.discover.ui.DiscoverFragment;
 import com.example.discover.ui.Personal.PersonalFragment;
+import com.example.discover.ui.Search.SearchFragment;
 import com.example.discover.ui.Video.VideoFragment;
 import com.example.zmenu.PUtils;
 
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     public void initFragmentList() {
         fragmentList = new ArrayList<>();
         fragmentList.add(new VideoFragment()); //开眼视频页面
-        fragmentList.add(new DiscoverFragment());
+        fragmentList.add(new SearchFragment());
         fragmentList.add(new DiscoverFragment());
         fragmentList.add(new PersonalFragment());
     }

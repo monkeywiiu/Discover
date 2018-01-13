@@ -2,6 +2,7 @@ package com.example.discover.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.discover.R;
+import com.example.discover.app.Constant;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
 import com.example.discover.bean.EyeBean;
@@ -107,7 +109,8 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                     .error(R.drawable.cross_image)
                     .into(itemViewBinding.jzVideoPlayer.thumbImageView);
             itemViewBinding.lvType.setText(list.getData().getCategory());
-            itemViewBinding.lvType.setBackground(getLabelColor(list.getData().getCategory()));
+            //itemViewBinding.lvType.setBackground(getLabelColor(list.getData().getCategory()));
+            itemViewBinding.lvType.setBackground((int)Constant.LabelMap.get(list.getData().getCategory()));
             //填充播放链接，playinfo有时候没有，playurl常有
             if (list.getData().getPlayInfo().size() > 0) {
                 //设置窗口比列
@@ -191,7 +194,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                     //存入数据库
                     VideoModel.addToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
                            list.getData().getPlayUrl(), list.getData().getCover().getDetail(),
-                            getLabelColor(list.getData().getCategory()), list.getData().getCategory(), vSize);
+                            (int)Constant.LabelMap.get(list.getData().getCategory()), list.getData().getCategory(), vSize);
                     list.setTag("true");
                 } else  if ("true".equals(list.getTag())) {
                     DebugUtil.debug("getTag", list.getTag() + "//" + position);
@@ -203,7 +206,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
     }
 
 
-    private int getLabelColor(String type) {
+    /*private int getLabelColor(String type) {
 
         switch (type) {
             case "创意":
@@ -245,5 +248,5 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
             default:
                 return mContext.getResources().getColor(R.color.colorLabelDefault);
         }
-    }
+    }*/
 }

@@ -19,7 +19,7 @@
 			For example:
     	<version value="1" />
     -->
-    <version value="2" />
+    <version value="3" />
 
     <!--
     	Define your models in the list with mapping tag, LitePal will
@@ -33,6 +33,7 @@
     -->
     <list>
         <mapping class="com.example.discover.bean.LitePalBean.Video"/>
+        <mapping class="com.example.discover.bean.LitePalBean.LabelType"/>
     </list>
 
     <!--

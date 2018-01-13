@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.example.discover.R;
 import com.example.discover.utils.DebugUtil;
+import com.example.discover.utils.DensityUtil;
 
 /**
  * Created by monkeyWiiu on 2017/12/28.
@@ -97,6 +98,10 @@ public class LabelView extends View {
         mPaint.setTextSize(mLabelTextSize);
         // mPaint.setColor(mTitleTextColor);
         mBound = new Rect();
+        //防止mLabelText空
+        if (mLabelText == null) {
+            mLabelText = "";
+        }
         mPaint.getTextBounds(mLabelText, 0, mLabelText.length(), mBound);
         mRectF = new RectF();
 
@@ -112,7 +117,9 @@ public class LabelView extends View {
         int height;
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
+            DebugUtil.debug("tesfsdf", width + "");
         } else {
+            //动态设置时不起作用
             mPaint.setTextSize(mLabelTextSize);
             mPaint.getTextBounds(mLabelText, 0, mLabelText.length(), mBound);
             float textWidth = mBound.width();
@@ -123,6 +130,7 @@ public class LabelView extends View {
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
         } else {
+            //动态设置时不起作用
             mPaint.setTextSize(mLabelTextSize);
             mPaint.getTextBounds(mLabelText, 0, mLabelText.length(), mBound);
             float textHeight = mBound.height();
@@ -136,7 +144,7 @@ public class LabelView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        DebugUtil.debug("backcolor", mBackground + "");
+        mPaint.getTextBounds(mLabelText, 0, mLabelText.length(), mBound);
         mPaint.setColor(mBackground);
         canvas.drawRect(getMeasuredHeight() / 2, 0, getMeasuredWidth() - getMeasuredHeight() / 2, getMeasuredHeight(), mPaint);
         //左半圆

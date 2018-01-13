@@ -25,7 +25,6 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="8dp"
                     android:elevation="15dp"
-                    app:labelText="test"
                     app:labelTextSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
