@@ -6,15 +6,17 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.discover.R;
 import com.example.discover.adapter.SelectTypeRecyclerAdapter;
 import com.example.discover.base.BaseFragment;
 import com.example.discover.bean.LitePalBean.LabelType;
 import com.example.discover.databinding.FragmentSearchBinding;
+import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
+import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.DensityUtil;
 import com.example.discover.utils.LitePalUtil;
 import com.example.discover.view.CustomView.MyPopupWindow;
@@ -29,12 +31,10 @@ import java.util.List;
 
 public class SearchFragment extends BaseFragment<FragmentSearchBinding> implements View.OnClickListener {
 
-    private TextView searchText;
     private RecyclerView sTRecyclerView;
     private List<String> selectLabel;
     private List<LabelType> savedLabelList;
     private SelectTypeRecyclerAdapter strAdapter;
-    private Handler mHandler;
     @Override
     public int setContentView() {
         return R.layout.fragment_search;
@@ -46,22 +46,68 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         showContentView();
         selectLabel = LitePalUtil.getSelectLabel();
         init();
+        initSelectTypeRecyclerView();
     }
 
     private void init() {
 
-        sTRecyclerView = bindingView.rvSelectType;
         Drawable drawable = getResources().getDrawable(R.drawable.search_normal);
         drawable.setBounds(0, 0 , DensityUtil.dip2px(30), DensityUtil.dip2px(30));
         bindingView.tvSearch.setCompoundDrawables(drawable, null, null, null);
         bindingView.ivAdd.setOnClickListener(this);
 
+
+
+    }
+
+    public void initSelectTypeRecyclerView() {
+
+        sTRecyclerView = bindingView.rvSelectType;
         //初始化selectTypeRecyclerView
         strAdapter = new SelectTypeRecyclerAdapter(selectLabel, getContext());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new RecyclerViewNoBugLinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         sTRecyclerView.setLayoutManager(layoutManager);
         sTRecyclerView.setAdapter(strAdapter);
+        //长按删除监听
+        strAdapter.setItemCLickListener(new SelectTypeRecyclerAdapter.ItemClickListener() {
+            @Override
+            public void onLongItemLClick(int position) {
+                DebugUtil.debug("itemposition", "" + position);
+                DataSupport.deleteAll(LabelType.class, "type = ?", selectLabel.get(position));
+                selectLabel.remove(position);
+                strAdapter.notifyItemRemoved(position);
+                strAdapter.notifyItemRangeChanged(position, selectLabel.size() - position);
+
+
+            }
+        });
+
+        //设置拖拽监听
+        /*ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                final int dragFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+                final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+                return makeMovementFlags(dragFlags, swipeFlags);
+
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                //strAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return false;
+            }
+
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                //strAdapter.onItemDismiss(viewHolder.getAdapterPosition());
+            }
+        });
+        mItemTouchHelper.attachToRecyclerView(sTRecyclerView);*/
+
 
     }
 

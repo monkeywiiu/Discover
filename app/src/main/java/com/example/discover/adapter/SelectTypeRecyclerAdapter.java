@@ -21,6 +21,15 @@ public class SelectTypeRecyclerAdapter extends RecyclerView.Adapter<SelectTypeRe
     private List<String> mLabelList;
     private Context mContext;
 
+    private ItemClickListener mListener;
+    public interface ItemClickListener {
+        void onLongItemLClick(int position);
+    }
+
+    public void setItemCLickListener(ItemClickListener listener) {
+        this.mListener = listener;
+    }
+
     public SelectTypeRecyclerAdapter(List<String> list, Context context) {
         this.mLabelList = list;
         mContext = context;
@@ -33,15 +42,40 @@ public class SelectTypeRecyclerAdapter extends RecyclerView.Adapter<SelectTypeRe
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.labelView.setBackground((int) Constant.LabelMap.get(mLabelList.get(position)));
         holder.labelView.setText(mLabelList.get(position));
+        holder.labelView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mListener.onLongItemLClick(position);
+                return false;
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mLabelList.size();
     }
+
+    /**
+     * 拖拽移位
+     *
+     */
+    /*@Override
+    public void onItemMove(int fromPosition, int toPosition) {
+
+        String prev = mLabelList.remove(fromPosition);
+        mLabelList.add(toPosition > fromPosition ? toPosition - 1 : toPosition, prev);
+        notifyItemMoved(fromPosition, toPosition);
+
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+
+    }*/
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

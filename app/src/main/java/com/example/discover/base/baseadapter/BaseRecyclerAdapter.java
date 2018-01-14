@@ -52,9 +52,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
             this.mData.remove(position);
         }
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mData.size() - position);
 
-        if (position != mData.size()) {
-            notifyItemRangeRemoved(position, mData.size() - position);
-        }
     }
 }
