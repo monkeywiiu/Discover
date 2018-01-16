@@ -31,7 +31,8 @@ public class HttpUtils {
     private Context context;
     private Object eyeHttp;
     //天眼API
-    public String EYE_API = "http://baobab.kaiyanapp.com/api/v4/discovery/";
+    private String EYE_API = "http://baobab.kaiyanapp.com/api/";
+
 
     public static HttpUtils getInstance() {
         if (instance == null) {
@@ -64,7 +65,6 @@ public class HttpUtils {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(url)
                 .client(getClient())
-
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create());
         return builder;

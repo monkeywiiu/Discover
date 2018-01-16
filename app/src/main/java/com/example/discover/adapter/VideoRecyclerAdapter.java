@@ -1,9 +1,6 @@
 package com.example.discover.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -14,19 +11,15 @@ import com.example.discover.R;
 import com.example.discover.app.Constant;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
-import com.example.discover.bean.EyeBean;
-import com.example.discover.bean.LitePalBean.Video;
+import com.example.discover.bean.HotEyeBean;
 import com.example.discover.databinding.FooterItemVideoBinding;
 import com.example.discover.databinding.VideoCardBinding;
-import com.example.discover.model.VideoModel;
+import com.example.discover.model.HotVideoModel;
 import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.DensityUtil;
 import com.example.discover.utils.ShareUtil;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -35,7 +28,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Administrator on 2017/12/14 0014.
  */
 
-public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBean> {
+public class VideoRecyclerAdapter extends BaseRecyclerAdapter<HotEyeBean.ItemListBean> {
     private int LOAD_MORE = 1;
     private final static int NO_MORE = 0;
     private final static int STATE_NORMAL = -1;
@@ -94,12 +87,12 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
     }
 
 
-    public class VideoHolder extends BaseViewHolder<EyeBean.ItemListBean, VideoCardBinding> {
+    public class VideoHolder extends BaseViewHolder<HotEyeBean.ItemListBean, VideoCardBinding> {
         private VideoHolder(ViewGroup parent, int layoutId) {
             super(parent, layoutId);
         }
         @Override
-        public void fillHolder(final EyeBean.ItemListBean list, final int position) {
+        public void fillHolder(final HotEyeBean.ItemListBean list, final int position) {
             //填充基础数据
             itemViewBinding.videoTitle.setText(list.getData().getTitle());
             itemViewBinding.videoDesc.setText(list.getData().getDescription());
@@ -108,9 +101,10 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                     .placeholder(R.drawable.cross_image)
                     .error(R.drawable.cross_image)
                     .into(itemViewBinding.jzVideoPlayer.thumbImageView);
-            itemViewBinding.lvType.setText(list.getData().getCategory());
+            itemViewBinding.tvLabel.setText(list.getData().getCategory());
             //itemViewBinding.lvType.setBackground(getLabelColor(list.getData().getCategory()));
-            itemViewBinding.lvType.setBackground((int)Constant.LabelMap.get(list.getData().getCategory()));
+            //itemViewBinding.cvLabel.setBackground((int)Constant.LabelMap.get(list.getData().getCategory()));
+            itemViewBinding.cvLabel.setCardBackgroundColor((int)Constant.LabelMap.get(list.getData().getCategory()));
             //填充播放链接，playinfo有时候没有，playurl常有
             if (list.getData().getPlayInfo().size() > 0) {
                 //设置窗口比列
@@ -170,7 +164,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
         }
     }
 
-    private void setOnClick(final EyeBean.ItemListBean list, final VideoCardBinding binding, final int position, final int vSize) {
+    private void setOnClick(final HotEyeBean.ItemListBean list, final VideoCardBinding binding, final int position, final int vSize) {
 
         boolean isCollect = false;
         final String shareText = list.getData().getTitle() + list.getData().getWebUrl().getForWeibo() + mContext.getString(R.string.share_from);
@@ -192,7 +186,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<EyeBean.ItemListBe
                     DebugUtil.debug("getTag",  list.getData().getTitle() + "|" + list.getData().getDescription());
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collected));
                     //存入数据库
-                    VideoModel.addToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
+                    HotVideoModel.addToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
                            list.getData().getPlayUrl(), list.getData().getCover().getDetail(),
                             (int)Constant.LabelMap.get(list.getData().getCategory()), list.getData().getCategory(), vSize);
                     list.setTag("true");

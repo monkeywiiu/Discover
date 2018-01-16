@@ -6,12 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
 
 import com.example.discover.R;
 import com.example.discover.adapter.LikeVideoRecyclerAdapter;
 import com.example.discover.base.BaseFragment;
-import com.example.discover.bean.LitePalBean.Video;
+import com.example.discover.bean.LitePalBean.LikeVideo;
 import com.example.discover.databinding.FragmentPersonalLikeBinding;
 import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
 import com.example.discover.utils.DebugUtil;
@@ -28,7 +27,7 @@ import cn.jzvd.JZVideoPlayer;
 
 public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
     private boolean isPrepare = false;
-    private List<Video> likeVideoList;
+    private List<LikeVideo> likeVideoList;
     private boolean isFirst = true;
     private LikeVideoRecyclerAdapter mLikeVideoAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -40,11 +39,11 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isPrepare = true;
-        likeVideoList = DataSupport.order("id desc").limit(mNum).find(Video.class);
-        if (DataSupport.findLast(Video.class) != null) {
-            largestId = DataSupport.findLast(Video.class).getId();
+        likeVideoList = DataSupport.order("id desc").limit(mNum).find(LikeVideo.class);
+        if (DataSupport.findLast(LikeVideo.class) != null) {
+            largestId = DataSupport.findLast(LikeVideo.class).getId();
         }
-        totalNum = DataSupport.findAll(Video.class).size();
+        totalNum = DataSupport.findAll(LikeVideo.class).size();
         initRecyclerView();
         loadData();
         showContentView();
@@ -75,12 +74,12 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
                 bindingView.rvLikeVideo.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        likeVideoList = DataSupport.order("id desc").limit(mNum).find(Video.class);
-                        totalNum = DataSupport.findAll(Video.class).size();
+                        likeVideoList = DataSupport.order("id desc").limit(mNum).find(LikeVideo.class);
+                        totalNum = DataSupport.findAll(LikeVideo.class).size();
                         if (likeVideoList != null && likeVideoList.size() > 0) {
                             currentId = likeVideoList.get(likeVideoList.size() - 1).getId();
                             DebugUtil.debug("totalTest", "currentId:" + currentId);
-                            largestId = DataSupport.findLast(Video.class).getId();
+                            largestId = DataSupport.findLast(LikeVideo.class).getId();
                             DebugUtil.debug("totalTest", "largestId" + largestId);
                         }
                         setAdapter();
@@ -100,7 +99,7 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
                 if (lastVisibleItem == totalItemCount - 1 && !mLikeVideoAdapter.isLoading()) {
 
                     mLikeVideoAdapter.updateStateLoad(true);
-                    likeVideoList = DataSupport.order("id desc").limit(mNum).where("id < ?", String.valueOf(currentId)).find(Video.class);
+                    likeVideoList = DataSupport.order("id desc").limit(mNum).where("id < ?", String.valueOf(currentId)).find(LikeVideo.class);
                     if (likeVideoList != null && likeVideoList.size() > 0) {
                         currentId = likeVideoList.get(likeVideoList.size() - 1).getId();
                         DebugUtil.debug("totalTest", "currentIdLoad" + currentId);
@@ -126,8 +125,8 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
             @Override
             public void onDelete(int position, int id) {
 
-                DataSupport.deleteAll(Video.class, "id = ?", String.valueOf(id));
-                totalNum = DataSupport.findAll(Video.class).size();
+                DataSupport.deleteAll(LikeVideo.class, "id = ?", String.valueOf(id));
+                totalNum = DataSupport.findAll(LikeVideo.class).size();
                 DebugUtil.debug("totalTest", "largestId" + largestId + "position:" + position);
                 mLikeVideoAdapter.delete(position);
             }

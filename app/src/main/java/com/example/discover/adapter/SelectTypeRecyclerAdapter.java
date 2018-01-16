@@ -1,10 +1,12 @@
 package com.example.discover.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.discover.R;
 import com.example.discover.app.Constant;
@@ -43,8 +45,8 @@ public class SelectTypeRecyclerAdapter extends RecyclerView.Adapter<SelectTypeRe
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.labelView.setBackground((int) Constant.LabelMap.get(mLabelList.get(position)));
-        holder.labelView.setText(mLabelList.get(position));
+        holder.labelView.setCardBackgroundColor((int) Constant.LabelMap.get(mLabelList.get(position)));
+        holder.textLabel.setText(mLabelList.get(position));
         holder.labelView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -79,10 +81,12 @@ public class SelectTypeRecyclerAdapter extends RecyclerView.Adapter<SelectTypeRe
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private LabelView labelView;
+        private TextView textLabel;
+        private CardView labelView;
         public MyViewHolder(View itemView) {
             super(itemView);
-            labelView = itemView.findViewById(R.id.lv_select);
+            textLabel = itemView.findViewById(R.id.tv_label);
+            labelView = itemView.findViewById(R.id.cv_select_label);
         }
     }
 }

@@ -32,7 +32,7 @@
     	</list>
     -->
     <list>
-        <mapping class="com.example.discover.bean.LitePalBean.Video"/>
+        <mapping class="com.example.discover.bean.LitePalBean.LikeVideo"/>
         <mapping class="com.example.discover.bean.LitePalBean.LabelType"/>
     </list>
 

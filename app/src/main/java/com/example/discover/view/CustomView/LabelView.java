@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.discover.R;
 import com.example.discover.utils.DebugUtil;
@@ -146,6 +147,7 @@ public class LabelView extends View {
 
         mPaint.getTextBounds(mLabelText, 0, mLabelText.length(), mBound);
         mPaint.setColor(mBackground);
+        mPaint.setAntiAlias(true);
         canvas.drawRect(getMeasuredHeight() / 2, 0, getMeasuredWidth() - getMeasuredHeight() / 2, getMeasuredHeight(), mPaint);
         //左半圆
         mRectF.left = 0;
@@ -159,6 +161,8 @@ public class LabelView extends View {
         mRectF.right = getMeasuredWidth();
         mRectF.bottom = getMeasuredHeight();
         canvas.drawArc(mRectF, -90, 180, false, mPaint);
+
+
         mPaint.setColor(mLabelTextColor);
         canvas.drawText(mLabelText, getWidth() / 2 - mBound.width() / 2, getHeight() / 2 + mBound.height() / 2, mPaint);
     }

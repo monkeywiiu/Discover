@@ -19,6 +19,7 @@
                 android:layout_height="48dp"
                 android:background="@color/backgroundVideoCard">
 
+                <!--
                 <com.example.discover.view.CustomView.LabelView
                     android:id="@+id/lv_type"
                     android:layout_width="60dp"
@@ -26,9 +27,38 @@
                     android:layout_marginStart="8dp"
                     android:elevation="15dp"
                     app:labelTextSize="16sp"
+                    app:labelTextColor="@color/lightWhite"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:cardBackgroundColor="#ff0000"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="5dp"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="运动"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold" />
+                </android.support.v7.widget.CardView>
 
                 <ImageView
                     android:id="@+id/iv_close"

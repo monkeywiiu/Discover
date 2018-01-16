@@ -9,7 +9,7 @@ import com.example.discover.R;
 import com.example.discover.TestActivity;
 import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
-import com.example.discover.bean.EyeBean;
+import com.example.discover.bean.HotEyeBean;
 import com.example.discover.databinding.FragmentDiscoverBinding;
 import com.example.discover.http.cahe.ACache;
 import com.example.discover.utils.DebugUtil;
@@ -22,7 +22,7 @@ public class DiscoverFragment extends BaseFragment<FragmentDiscoverBinding> {
 
     private boolean isPrepare = false;
 
-    private EyeBean eyeBean;
+    private HotEyeBean hotEyeBean;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -44,8 +44,8 @@ public class DiscoverFragment extends BaseFragment<FragmentDiscoverBinding> {
             return;
         }
         ACache cache = ACache.get(getContext());
-        eyeBean = (EyeBean) cache.getAsObject(Constant.EYE_VIDEO);
-        if (eyeBean == null) {
+        hotEyeBean = (HotEyeBean) cache.getAsObject(Constant.EYE_VIDEO);
+        if (hotEyeBean == null) {
             DebugUtil.debug("test111", "null");
         }
         bindingView.text.setText("bu");

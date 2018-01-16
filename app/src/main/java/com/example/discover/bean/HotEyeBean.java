@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Administrator on 2017/12/9 0009.
  */
 
-public class EyeBean implements Serializable {
+public class HotEyeBean implements Serializable {
 
 
     /**

@@ -1,6 +1,7 @@
 package com.example.discover.http;
 
-import com.example.discover.bean.EyeBean;
+import com.example.discover.bean.CateGoryEyeBean;
+import com.example.discover.bean.HotEyeBean;
 import com.example.http.HttpUtils;
 
 import retrofit2.http.GET;
@@ -24,7 +25,14 @@ public interface HttpClient {
      * @param num   一次请求的数目（从start开始计算）
      * @return
      */
-    @GET("hot")
-    Observable<EyeBean> getEyeDetail(@Query("start") int start, @Query("num") int num);
+    @GET("v4/discovery/hot")
+    Observable<HotEyeBean> getEyeHot(@Query("start") int start, @Query("num") int num);
 
+    /**
+     *
+     * @param id = 2创意4开胃6旅行8预告10动画12剧情14广告18运动20音乐22记录24时尚26萌宠28搞笑30游戏32科普34集锦36生活38综艺
+     * @return
+     */
+    @GET("v3/categories/detail")
+    Observable<CateGoryEyeBean> getEyeCateGory(@Query("id") int id);
 }

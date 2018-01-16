@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.example.discover.R;
 import com.example.discover.adapter.SelectTypeRecyclerAdapter;
 import com.example.discover.base.BaseFragment;
+import com.example.discover.bean.CateGoryEyeBean;
 import com.example.discover.bean.LitePalBean.LabelType;
 import com.example.discover.databinding.FragmentSearchBinding;
+import com.example.discover.http.RequestListener;
+import com.example.discover.model.SearchModel;
 import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
 import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.DensityUtil;
@@ -23,7 +26,10 @@ import com.example.discover.view.CustomView.MyPopupWindow;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import rx.Subscription;
 
 /**
  * Created by monkeyWiiu on 2018/1/12.
@@ -31,6 +37,10 @@ import java.util.List;
 
 public class SearchFragment extends BaseFragment<FragmentSearchBinding> implements View.OnClickListener {
 
+    private boolean isPrepare = false;
+    private boolean isFirst = true;
+    private List<Integer> categoryIdList = new ArrayList<>();
+    private List<List<CateGoryEyeBean.SectionListBean>> categoryConentList = new ArrayList<>();
     private RecyclerView sTRecyclerView;
     private List<String> selectLabel;
     private List<LabelType> savedLabelList;
@@ -47,6 +57,19 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         selectLabel = LitePalUtil.getSelectLabel();
         init();
         initSelectTypeRecyclerView();
+        categoryIdList = getCategoryIdList();
+        isPrepare = true;
+    }
+
+    @Override
+    protected void loadData() {
+        if (!isPrepare || !isFirst || !isVisibile) {
+            return;
+        }
+
+        loadDetail();
+        //避免重复加载
+        isFirst = false;
     }
 
     private void init() {
@@ -54,11 +77,37 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         Drawable drawable = getResources().getDrawable(R.drawable.search_normal);
         drawable.setBounds(0, 0 , DensityUtil.dip2px(30), DensityUtil.dip2px(30));
         bindingView.tvSearch.setCompoundDrawables(drawable, null, null, null);
-        bindingView.ivAdd.setOnClickListener(this);
+        bindingView.cvAdd.setOnClickListener(this);
+    }
 
 
+    private void loadDetail() {
+        categoryIdList = getCategoryIdList();
+        if (categoryIdList.size() > 0) {
+
+            DebugUtil.debug("test211", "search");
+            SearchModel.showDetail(categoryIdList, new RequestListener() {
+                @Override
+                public void onSuccess(Object object) {
+                    CateGoryEyeBean cateGoryEyeBean = (CateGoryEyeBean) object;
+                    DebugUtil.debug("categoryeye", cateGoryEyeBean.getCategoryInfo().getName());
+
+                }
+
+                @Override
+                public void onFailed() {
+
+                }
+
+                @Override
+                public void addSubscription(Subscription subscription) {
+                    addToMySubscription(subscription);
+                }
+            });
+        }
 
     }
+
 
     public void initSelectTypeRecyclerView() {
 
@@ -78,8 +127,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                 selectLabel.remove(position);
                 strAdapter.notifyItemRemoved(position);
                 strAdapter.notifyItemRangeChanged(position, selectLabel.size() - position);
-
-
             }
         });
 
@@ -115,9 +162,9 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.iv_add:
+            case R.id.cv_add:
                 MyPopupWindow popupWindow = new MyPopupWindow(getContext());
-                popupWindow.showPopupWindow(bindingView.ivAdd);
+                popupWindow.showPopupWindow(bindingView.cvAdd);
                 popupWindow.setPopItemClickListener(new MyPopupWindow.PopItemClickListener() {
                     @Override
                     public void ItemClick(String labelType) {
@@ -141,6 +188,71 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                 });
                 //Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private List<Integer> getCategoryIdList() {
+        List<LabelType> labelTypes = DataSupport.findAll(LabelType.class);
+        List<Integer> list = new ArrayList<>();
+        for (LabelType type : labelTypes) {
+            switch (type.getType()) {
+                case "创意":
+                    list.add(2);
+                    break;
+                case "开胃":
+                    list.add(4);
+                    break;
+                case "旅行":
+                    list.add(6);
+                    break;
+                case "预告":
+                    list.add(8);
+                    break;
+                case "动画":
+                    list.add(10);
+                    break;
+                case "剧情":
+                    list.add(12);
+                    break;
+                case "广告":
+                    list.add(14);
+                    break;
+                case "运动":
+                    list.add(18);
+                    break;
+                case "音乐":
+                    list.add(20);
+                    break;
+                case "记录":
+                    list.add(22);
+                    break;
+                case "时尚":
+                    list.add(24);
+                    break;
+                case "萌宠":
+                    list.add(26);
+                    break;
+                case "搞笑":
+                    list.add(28);
+                    break;
+                case "游戏":
+                    list.add(30);
+                    break;
+                case "科普":
+                    list.add(32);
+                    break;
+                case "集锦":
+                    list.add(34);
+                    break;
+                case "生活":
+                    list.add(36);
+                    break;
+                case "综艺":
+                    list.add(38);
+                    break;
+            }
+        }
+        return list;
     }
 
 }

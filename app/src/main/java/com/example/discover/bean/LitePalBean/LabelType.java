@@ -9,6 +9,7 @@ import org.litepal.crud.DataSupport;
 public class LabelType extends DataSupport {
     private String type;
 
+
     public String getType() {
         return type;
     }
@@ -16,4 +17,6 @@ public class LabelType extends DataSupport {
     public void setType(String type) {
         this.type = type;
     }
+
+
 }

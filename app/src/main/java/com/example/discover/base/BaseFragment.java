@@ -69,7 +69,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     protected void loadData(){};
     public abstract int setContentView();
 
-    public void addMySubscription(Subscription subscription) {
+    public void addToMySubscription(Subscription subscription) {
         this.compositeSubscription.add(subscription);
     }
 

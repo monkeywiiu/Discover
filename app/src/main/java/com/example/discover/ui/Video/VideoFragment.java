@@ -6,19 +6,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.example.discover.R;
 import com.example.discover.adapter.VideoRecyclerAdapter;
 import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
-import com.example.discover.bean.EyeBean;
+import com.example.discover.bean.HotEyeBean;
 import com.example.discover.databinding.FragmentVideoBinding;
-import com.example.discover.databinding.VideoCardBinding;
 import com.example.discover.http.RequestListener;
 import com.example.discover.http.cahe.ACache;
-import com.example.discover.model.VideoModel;
+import com.example.discover.model.HotVideoModel;
 import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
 import com.example.discover.utils.DebugUtil;
 import com.example.zmenu.FloatButton;
@@ -43,7 +40,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
     private int mPage = 1;
     private boolean isPrepare = false;
     private boolean isFirst = true;
-    private EyeBean mEyeBean;
+    private HotEyeBean mHotEyeBean;
     private ACache mCache;
     private List<FloatButton> floatButtons;//XMenu的悬浮按钮
     private boolean isCollect = false;
@@ -66,12 +63,12 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
             return;
         }
         //先从缓存读取数据，如果没有在请求
-        mEyeBean = (EyeBean) mCache.getAsObject(Constant.EYE_VIDEO);
-        if (mEyeBean != null ) {
+        mHotEyeBean = (HotEyeBean) mCache.getAsObject(Constant.EYE_VIDEO);
+        if (mHotEyeBean != null ) {
             //getAchecaData();
             showContentView();
-            setAdapter(mEyeBean);
-           // DebugUtil.debug("test12", mEyeBean.getItemList().get(0).getType());
+            setAdapter(mHotEyeBean);
+           // DebugUtil.debug("test12", mHotEyeBean.getItemList().get(0).getType());
         }else {
             loadVideo();
         }
@@ -80,25 +77,25 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
     }
 
     public void loadVideo() {
-        VideoModel.showVideo(start, num, new RequestListener() {
+        HotVideoModel.showVideo(start, num, new RequestListener() {
             @Override
             public void onSuccess(Object object) {
                 showContentView();
 
-                EyeBean eyeBean = (EyeBean) object;
+                HotEyeBean hotEyeBean = (HotEyeBean) object;
                 if (mPage == 1) {
-                    if(eyeBean != null && eyeBean.getItemList() != null&& eyeBean.getItemList().size() > 0) {
+                    if(hotEyeBean != null && hotEyeBean.getItemList() != null&& hotEyeBean.getItemList().size() > 0) {
 
                         bindingView.srlVideo.setRefreshing(false);
-                        setAdapter(eyeBean);
+                        setAdapter(hotEyeBean);
                         //缓存5小时
                         mCache.remove(Constant.EYE_VIDEO);
-                        mCache.put(Constant.EYE_VIDEO, eyeBean, 18000);
+                        mCache.put(Constant.EYE_VIDEO, hotEyeBean, 18000);
                     }
                 } else {
-                    if(eyeBean != null && eyeBean.getItemList() != null&& eyeBean.getItemList().size() > 0) {
+                    if(hotEyeBean != null && hotEyeBean.getItemList() != null&& hotEyeBean.getItemList().size() > 0) {
                         mVideoAdapter.updateStateLoad(false);
-                        mVideoAdapter.addAll(eyeBean.getItemList());
+                        mVideoAdapter.addAll(hotEyeBean.getItemList());
                         mVideoAdapter.notifyDataSetChanged();
                     } else {
                         //数据刷新到底了
@@ -115,7 +112,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
 
             @Override
             public void addSubscription(Subscription subscription) {
-                addMySubscription(subscription);
+                addToMySubscription(subscription);
             }
         });
 
@@ -189,18 +186,18 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         });
 
     }
-    public void setAdapter(EyeBean eyeBean) {
+    public void setAdapter(HotEyeBean hotEyeBean) {
         mVideoAdapter.clear();
-        mVideoAdapter.addAll(eyeBean.getItemList());
+        mVideoAdapter.addAll(hotEyeBean.getItemList());
         bindingView.rvVideo.setAdapter(mVideoAdapter);
     }
 
     //取缓存
     public void getAchecaData() {
-        mEyeBean = (EyeBean) mCache.getAsObject(Constant.EYE_VIDEO);
+        mHotEyeBean = (HotEyeBean) mCache.getAsObject(Constant.EYE_VIDEO);
         //如果是第一次打开再加载
         if (isFirst) {
-            setAdapter(mEyeBean);
+            setAdapter(mHotEyeBean);
             isFirst = false;
         }
     }

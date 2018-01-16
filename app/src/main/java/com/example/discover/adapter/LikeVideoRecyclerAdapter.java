@@ -6,10 +6,9 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.discover.R;
-import com.example.discover.base.BaseFragment;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
-import com.example.discover.bean.LitePalBean.Video;
+import com.example.discover.bean.LitePalBean.LikeVideo;
 import com.example.discover.databinding.FooterItemVideoBinding;
 import com.example.discover.databinding.LikeVideoCardBinding;
 import com.example.discover.utils.DebugUtil;
@@ -21,7 +20,7 @@ import cn.jzvd.JZVideoPlayer;
  * Created by monkeyWiiu on 2018/1/5.
  */
 
-public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
+public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<LikeVideo> {
 
 
     private final static int TYPE_CONTENT = 2;
@@ -66,18 +65,18 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
 
 
 
-    public class LikeVideoHolder extends BaseViewHolder<Video, LikeVideoCardBinding> {
+    public class LikeVideoHolder extends BaseViewHolder<LikeVideo, LikeVideoCardBinding> {
         public LikeVideoHolder(ViewGroup parent, int layoutId) {
             super(parent, layoutId);
         }
 
         @Override
-        public void fillHolder(Video likeVideo, int position) {
+        public void fillHolder(LikeVideo likeVideo, int position) {
             if (likeVideo != null) {
                 itemViewBinding.tvDesc.setText(likeVideo.getDescription());
                 itemViewBinding.jzVideoPlayer.setUp(likeVideo.getPlayUrl(), JZVideoPlayer.SCREEN_WINDOW_NORMAL, likeVideo.getTitle());
-                itemViewBinding.lvType.setText(likeVideo.getLabelText());
-                itemViewBinding.lvType.setBackground(likeVideo.getLabelColor());
+                itemViewBinding.tvLabel.setText(likeVideo.getLabelText());
+                itemViewBinding.cvLabel.setCardBackgroundColor(likeVideo.getLabelColor());
                 Glide.with(mContext).load(likeVideo.getImageUrl())
                         .crossFade(800)
                         .placeholder(R.drawable.cross_image)
@@ -105,7 +104,7 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<Video> {
         }
     }
 
-    public void setOnClick(LikeVideoCardBinding binding, Video likeVideo, final int positon, final int videoId) {
+    public void setOnClick(LikeVideoCardBinding binding, LikeVideo likeVideo, final int positon, final int videoId) {
         //点击分享
         final String shareText = likeVideo.getTitle() + likeVideo.getPlayUrl() + mContext.getString(R.string.share_from);
         binding.ivShare.setOnClickListener(new View.OnClickListener() {

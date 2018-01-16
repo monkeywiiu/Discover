@@ -1,10 +1,12 @@
 package com.example.discover.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.discover.R;
 import com.example.discover.app.Constant;
@@ -12,6 +14,7 @@ import com.example.discover.bean.LitePalBean.LabelType;
 import com.example.discover.view.CustomView.LabelView;
 
 import org.litepal.crud.DataSupport;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -51,8 +54,8 @@ public class LabelChooseAdapter extends RecyclerView.Adapter<LabelChooseAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.labelView.setBackground((int)mMap.get(mKeyList.get(position)));
-        holder.labelView.setText(mKeyList.get(position));
+        holder.labelView.setCardBackgroundColor((int)mMap.get(mKeyList.get(position)));
+        holder.textLabel.setText(mKeyList.get(position));
 
         holder.labelView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +84,12 @@ public class LabelChooseAdapter extends RecyclerView.Adapter<LabelChooseAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private LabelView labelView;
+        private TextView textLabel;
+        private CardView labelView;
         private MyViewHolder(View itemView) {
             super(itemView);
-            labelView = itemView.findViewById(R.id.lv);
+            textLabel = itemView.findViewById(R.id.tv_label);
+            labelView = itemView.findViewById(R.id.cv_choose_label);
         }
     }
 

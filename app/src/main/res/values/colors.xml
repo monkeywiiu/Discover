@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Theme -->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBackground">#383737</color>
-    <!-- XMenu Background -->
-    <color name="background1">#1c574c</color>
-    <color name="background2">#00d21c</color>
-    <color name="background3">#eabf3b</color>
-    <color name="background4">#e13f0e</color>
-    <color name="background5">#1068ea</color>
-    <color name="background6">#7f08e7</color>
 
+
+    <!-- UI Color -->
     <color name="background">#36465d</color>
     <color name="backgroundDark">#2f3e53</color>
     <color name="backgroundVideoCard">#ffffff</color>
     <color name="divisionLine">#FFD2CFCF</color>
     <color name="backgroundGray">#f2f2f2</color>
     <color name="lightWhite">#FFEEEEEE</color>
+    <color name="followLabelText">#86909E</color>
 
+    <!-- LabelColor -->
     <color name="colorLabelCre">#a63939</color>
     <color name="colorLabelMusic">#d47e38</color>
     <color name="colorLabelTravel">#fac654</color>
@@ -38,4 +36,12 @@
     <color name="colorLabelPet">#e64570</color>
     <color name="colorLabelVariety">#e76fc7</color>
     <color name="colorLabelDefault">#ffffff</color>
+
+    <!-- XMenu Background -->
+    <color name="background1">#1c574c</color>
+    <color name="background2">#00d21c</color>
+    <color name="background3">#eabf3b</color>
+    <color name="background4">#e13f0e</color>
+    <color name="background5">#1068ea</color>
+    <color name="background6">#7f08e7</color>
 </resources>

@@ -7,7 +7,7 @@ import org.litepal.crud.DataSupport;
  * id : 不变,与表中数据绑定
  */
 
-public class Video extends DataSupport {
+public class LikeVideo extends DataSupport {
     private int id;
     private int videoId;
     private String title;
