@@ -25,7 +25,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import java.util.List;
 
 import cn.jzvd.JZVideoPlayer;
-import rx.Subscription;
+
 
 /**
  * Created by Administrator on 2017/12/9 0009.
@@ -74,14 +74,16 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         }
         //避免重复加载
         isFirst = false;
+
     }
 
     public void loadVideo() {
-        HotVideoModel.showVideo(start, num, new RequestListener() {
+        HotVideoModel.showVideo(this, start, num, new RequestListener() {
             @Override
             public void onSuccess(Object object) {
                 showContentView();
 
+                DebugUtil.debug("test1234", "video");
                 HotEyeBean hotEyeBean = (HotEyeBean) object;
                 if (mPage == 1) {
                     if(hotEyeBean != null && hotEyeBean.getItemList() != null&& hotEyeBean.getItemList().size() > 0) {
@@ -110,10 +112,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                 //DebugUtil.toast(getActivity(), "failed");
             }
 
-            @Override
-            public void addSubscription(Subscription subscription) {
-                addToMySubscription(subscription);
-            }
         });
 
     }

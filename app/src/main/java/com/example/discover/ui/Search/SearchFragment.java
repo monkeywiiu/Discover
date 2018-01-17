@@ -2,18 +2,16 @@ package com.example.discover.ui.Search;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.discover.R;
 import com.example.discover.adapter.SelectTypeRecyclerAdapter;
 import com.example.discover.base.BaseFragment;
-import com.example.discover.bean.CateGoryEyeBean;
+import com.example.discover.bean.CategoryDetailBean.FindCategory;
+import com.example.discover.bean.CategoryDetailBean.ItemList;
 import com.example.discover.bean.LitePalBean.LabelType;
 import com.example.discover.databinding.FragmentSearchBinding;
 import com.example.discover.http.RequestListener;
@@ -29,8 +27,6 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscription;
-
 /**
  * Created by monkeyWiiu on 2018/1/12.
  */
@@ -40,7 +36,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     private boolean isPrepare = false;
     private boolean isFirst = true;
     private List<Integer> categoryIdList = new ArrayList<>();
-    private List<List<CateGoryEyeBean.SectionListBean>> categoryConentList = new ArrayList<>();
+    private List<ItemList> categoryConentList = new ArrayList<>();
     private RecyclerView sTRecyclerView;
     private List<String> selectLabel;
     private List<LabelType> savedLabelList;
@@ -86,11 +82,11 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         if (categoryIdList.size() > 0) {
 
             DebugUtil.debug("test211", "search");
-            SearchModel.showDetail(categoryIdList, new RequestListener() {
+            SearchModel.showDetail(this, categoryIdList, new RequestListener() {
                 @Override
                 public void onSuccess(Object object) {
-                    CateGoryEyeBean cateGoryEyeBean = (CateGoryEyeBean) object;
-                    DebugUtil.debug("categoryeye", cateGoryEyeBean.getCategoryInfo().getName());
+                    FindCategory cateGoryEyeBean = (FindCategory) object;
+                    DebugUtil.debug("categoryeye", cateGoryEyeBean.sectionList.get(1).itemList.get(0).getData().description);
 
                 }
 
@@ -99,10 +95,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
                 }
 
-                @Override
-                public void addSubscription(Subscription subscription) {
-                    addToMySubscription(subscription);
-                }
+
             });
         }
 

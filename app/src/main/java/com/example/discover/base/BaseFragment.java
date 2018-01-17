@@ -11,22 +11,22 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.discover.R;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+
 
 /**
  * Created by Administrator on 2017/12/5 0005.
  */
 
-public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment {
+public abstract class BaseFragment<SV extends ViewDataBinding> extends RxFragment {
 
     public SV bindingView;
     public RelativeLayout container;
     public AVLoadingIndicatorView avLoading;
     private RelativeLayout rlLoading;
-    private CompositeSubscription compositeSubscription = new CompositeSubscription();
     public boolean isVisibile = false;
     @Nullable
     @Override
@@ -69,16 +69,11 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends Fragment 
     protected void loadData(){};
     public abstract int setContentView();
 
-    public void addToMySubscription(Subscription subscription) {
-        this.compositeSubscription.add(subscription);
-    }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (compositeSubscription != null &&compositeSubscription.hasSubscriptions()) {
-            compositeSubscription.unsubscribe();
-        }
     }
 
     /**

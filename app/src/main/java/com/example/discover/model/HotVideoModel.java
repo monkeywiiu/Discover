@@ -4,12 +4,15 @@ import com.example.discover.bean.HotEyeBean;
 import com.example.discover.bean.LitePalBean.LikeVideo;
 import com.example.discover.http.HttpClient;
 import com.example.discover.http.RequestListener;
+import com.example.discover.ui.Video.VideoFragment;
 import com.example.discover.utils.DebugUtil;
 
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by Administrator on 2017/12/12 0012.
@@ -17,9 +20,9 @@ import rx.schedulers.Schedulers;
 
 public class HotVideoModel {
 
-    public static void showVideo(int start, int num, final RequestListener listener) {
-        Subscription subscription = HttpClient.Builder.getEyeService().getEyeHot(start, num)
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    public static void showVideo(VideoFragment context, int start, int num, final RequestListener listener) {
+        /*Subscription subscription = HttpClient.Builder.getEyeService().getEyeHot(start, num)
+                .subscribeOn(io.reactivex.schedulers.Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<HotEyeBean>() {
                     @Override
                     public void onCompleted() {
@@ -35,11 +38,38 @@ public class HotVideoModel {
                     @Override
                     public void onNext(HotEyeBean eyeBean) {
                         listener.onSuccess(eyeBean);
-                        //DebugUtil.debug("test1", "successed");
+                        //
                     }
-                });
+                });*/
 
-        listener.addSubscription(subscription);
+        DebugUtil.debug("test12345", "successed111");
+            HttpClient.Builder.getEyeService().getEyeHot(start, num)
+                    .compose(context.<HotEyeBean>bindToLifecycle())
+                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<HotEyeBean>() {
+                        @Override
+                        public void onSubscribe(Subscription s) {
+
+                            s.request(Long.MAX_VALUE);
+                        }
+
+                        @Override
+                        public void onNext(HotEyeBean hotEyeBean) {
+
+                            listener.onSuccess(hotEyeBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable t) {
+
+                            listener.onFailed();
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
     }
 
     public static void addToFavor(int id, String title, String desc, String playUrl,

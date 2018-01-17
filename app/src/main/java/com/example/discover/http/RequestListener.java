@@ -1,6 +1,6 @@
 package com.example.discover.http;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/12/12 0012.
@@ -11,5 +11,4 @@ public interface RequestListener {
 
     void onFailed();
 
-    void addSubscription(Subscription subscription);
 }

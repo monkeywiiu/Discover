@@ -1,12 +1,13 @@
 package com.example.discover.http;
 
-import com.example.discover.bean.CateGoryEyeBean;
+import com.example.discover.bean.CategoryDetailBean.FindCategory;
 import com.example.discover.bean.HotEyeBean;
 import com.example.http.HttpUtils;
 
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
+
 
 /**
  * Created by Administrator on 2017/12/9 0009.
@@ -26,7 +27,7 @@ public interface HttpClient {
      * @return
      */
     @GET("v4/discovery/hot")
-    Observable<HotEyeBean> getEyeHot(@Query("start") int start, @Query("num") int num);
+    Flowable<HotEyeBean> getEyeHot(@Query("start") int start, @Query("num") int num);
 
     /**
      *
@@ -34,5 +35,5 @@ public interface HttpClient {
      * @return
      */
     @GET("v3/categories/detail")
-    Observable<CateGoryEyeBean> getEyeCateGory(@Query("id") int id);
+    Flowable<FindCategory> getEyeCateGory(@Query("id") int id);
 }

@@ -1,24 +1,25 @@
 package com.example.discover.model;
 
-import android.support.annotation.NonNull;
-
-import com.example.discover.bean.CateGoryEyeBean;
+import com.example.discover.bean.CategoryDetailBean.FindCategory;
+import com.example.discover.bean.CategoryDetailBean.SectionList;
 import com.example.discover.http.HttpClient;
 import com.example.discover.http.RequestListener;
+import com.example.discover.ui.Search.SearchFragment;
 import com.example.discover.utils.DebugUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Observable;
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
-import rx.Observer;
-import rx.Scheduler;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by monkeyWiiu on 2018/1/16.
@@ -27,16 +28,57 @@ import rx.schedulers.Schedulers;
 public class SearchModel {
 
 
-    public static void showDetail(List<Integer> idList, final RequestListener listener) {
-        List<rx.Observable<CateGoryEyeBean>> sources = new ArrayList<>();
+    public static void showDetail(SearchFragment context, List<Integer> idList, final RequestListener listener) {
+        List<Flowable<FindCategory>> sources = new ArrayList<>();
 
         for (int id : idList) {
             sources.add(HttpClient.Builder.getEyeService().getEyeCateGory(id));
         }
 
-        Subscription subscription = rx.Observable.mergeDelayError(sources)
+
+        Flowable.mergeDelayError(sources)
+                .compose(context.<FindCategory>bindToLifecycle())
+                .filter(new Predicate<FindCategory>() {
+                    @Override
+                    public boolean test(FindCategory findCategory) throws Exception {
+                        return findCategory != null;
+                    }
+                })
+                .filter(new Predicate<FindCategory>() {
+                    @Override
+                    public boolean test(FindCategory findCategory) throws Exception {
+                        return findCategory.sectionList != null;
+                    }
+                })
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CateGoryEyeBean>() {
+                .subscribe(new Subscriber<FindCategory>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                        s.request(Long.MAX_VALUE);
+                    }
+
+                    @Override
+                    public void onNext(FindCategory findCategory) {
+                        DebugUtil.debug("searchmodel", "chenggon");
+                        listener.onSuccess(findCategory);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                        DebugUtil.debug("searchmodel", "failed");
+                        listener.onFailed();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        /*rx.Observable.mergeDelayError(sources)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<FindCategory>() {
                     @Override
                     public void onCompleted() {
 
@@ -49,13 +91,14 @@ public class SearchModel {
                     }
 
                     @Override
-                    public void onNext(CateGoryEyeBean cateGoryEyeBean) {
+                    public void onNext(FindCategory cateGoryEyeBean) {
 
                         listener.onSuccess(cateGoryEyeBean);
                         DebugUtil.debug("test221", "successed");
                     }
-                });
+                });*/
         //合并多个接口的请求
 
     }
 }
+
