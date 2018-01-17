@@ -11,4 +11,5 @@ public interface RequestListener {
 
     void onFailed();
 
+    void onCompleted();
 }

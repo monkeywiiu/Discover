@@ -112,6 +112,11 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                 //DebugUtil.toast(getActivity(), "failed");
             }
 
+            @Override
+            public void onCompleted() {
+
+            }
+
         });
 
     }

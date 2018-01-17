@@ -9,12 +9,15 @@ import android.view.View;
 
 import com.example.discover.R;
 import com.example.discover.adapter.SelectTypeRecyclerAdapter;
+import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
+import com.example.discover.bean.CategoryDetailBean.ACacheFindList;
 import com.example.discover.bean.CategoryDetailBean.FindCategory;
 import com.example.discover.bean.CategoryDetailBean.ItemList;
 import com.example.discover.bean.LitePalBean.LabelType;
 import com.example.discover.databinding.FragmentSearchBinding;
 import com.example.discover.http.RequestListener;
+import com.example.discover.http.cahe.ACache;
 import com.example.discover.model.SearchModel;
 import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
 import com.example.discover.utils.DebugUtil;
@@ -22,6 +25,7 @@ import com.example.discover.utils.DensityUtil;
 import com.example.discover.utils.LitePalUtil;
 import com.example.discover.view.CustomView.MyPopupWindow;
 
+import org.json.JSONArray;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
@@ -36,7 +40,8 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     private boolean isPrepare = false;
     private boolean isFirst = true;
     private List<Integer> categoryIdList = new ArrayList<>();
-    private List<ItemList> categoryConentList = new ArrayList<>();
+    private ACacheFindList findList;
+    private ACache mCache;
     private RecyclerView sTRecyclerView;
     private List<String> selectLabel;
     private List<LabelType> savedLabelList;
@@ -50,6 +55,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         showContentView();
+        mCache = ACache.get(getContext());
         selectLabel = LitePalUtil.getSelectLabel();
         init();
         initSelectTypeRecyclerView();
@@ -63,7 +69,14 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
             return;
         }
 
-        loadDetail();
+        findList = (ACacheFindList) mCache.getAsObject(Constant.EYE_FIND);
+        if (findList != null) {
+            DebugUtil.debug("findlistsize", "" + findList.size());
+        } else {
+            findList = new ACacheFindList();
+            loadDetail();
+        }
+
         //避免重复加载
         isFirst = false;
     }
@@ -85,9 +98,10 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
             SearchModel.showDetail(this, categoryIdList, new RequestListener() {
                 @Override
                 public void onSuccess(Object object) {
-                    FindCategory cateGoryEyeBean = (FindCategory) object;
-                    DebugUtil.debug("categoryeye", cateGoryEyeBean.sectionList.get(1).itemList.get(0).getData().description);
+                    FindCategory find = (FindCategory) object;
+                    DebugUtil.debug("categoryeye", find.sectionList.get(1).itemList.get(0).getData().description);
 
+                    findList.add(find);
                 }
 
                 @Override
@@ -95,9 +109,20 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
                 }
 
+                @Override
+                public void onCompleted() {
 
+                    if (findList.size() > 0) {
+                        mCache.remove(Constant.EYE_FIND);
+                        mCache.put(Constant.EYE_FIND, findList, 18000);
+                    }
+                }
             });
         }
+
+        DebugUtil.debug("categoryeye", "cache");
+
+
 
     }
 

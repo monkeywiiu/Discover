@@ -74,6 +74,8 @@ public class SearchModel {
                     @Override
                     public void onComplete() {
 
+                        listener.onCompleted();
+
                     }
                 });
         /*rx.Observable.mergeDelayError(sources)
