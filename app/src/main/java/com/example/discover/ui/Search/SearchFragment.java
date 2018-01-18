@@ -8,12 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.discover.R;
+import com.example.discover.adapter.SearchRecyclerAdapter;
 import com.example.discover.adapter.SelectTypeRecyclerAdapter;
 import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
 import com.example.discover.bean.CategoryDetailBean.ACacheFindList;
 import com.example.discover.bean.CategoryDetailBean.FindCategory;
 import com.example.discover.bean.CategoryDetailBean.ItemList;
+import com.example.discover.bean.CategoryDetailBean.SectionList;
 import com.example.discover.bean.LitePalBean.LabelType;
 import com.example.discover.databinding.FragmentSearchBinding;
 import com.example.discover.http.RequestListener;
@@ -40,7 +42,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     private boolean isPrepare = false;
     private boolean isFirst = true;
     private List<Integer> categoryIdList = new ArrayList<>();
-    private ACacheFindList findList;
+    private ACacheFindList findList = new ACacheFindList() ;
     private ACache mCache;
     private RecyclerView sTRecyclerView;
     private List<String> selectLabel;
@@ -61,22 +63,41 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         initSelectTypeRecyclerView();
         categoryIdList = getCategoryIdList();
         isPrepare = true;
+
+        //测试
+        recyclerTest();
     }
 
+    /**
+     *测试
+     */
+    public void recyclerTest() {
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        bindingView.rvMain.setLayoutManager(linearLayoutManager);
+    }
+
+    public void setAdapterTest(List<Object> objects) {
+        SearchRecyclerAdapter adapter = new SearchRecyclerAdapter(getContext());
+        adapter.addAll(objects);
+        bindingView.rvMain.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
     @Override
     protected void loadData() {
         if (!isPrepare || !isFirst || !isVisibile) {
             return;
         }
 
-        findList = (ACacheFindList) mCache.getAsObject(Constant.EYE_FIND);
+        loadDetail();
+        /*findList = (ACacheFindList) mCache.getAsObject(Constant.EYE_FIND);
         if (findList != null) {
-            DebugUtil.debug("findlistsize", "" + findList.size());
+            DebugUtil.debug("findlistsize", "" + findList.getAuthorSection().size());
         } else {
             findList = new ACacheFindList();
             loadDetail();
-        }
-
+        }*/
         //避免重复加载
         isFirst = false;
     }
@@ -89,21 +110,29 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         bindingView.cvAdd.setOnClickListener(this);
     }
 
-
     private void loadDetail() {
         categoryIdList = getCategoryIdList();
+
         if (categoryIdList.size() > 0) {
 
             DebugUtil.debug("test211", "search");
             SearchModel.showDetail(this, categoryIdList, new RequestListener() {
                 @Override
                 public void onSuccess(Object object) {
-                    FindCategory find = (FindCategory) object;
-                    DebugUtil.debug("categoryeye", find.sectionList.get(1).itemList.get(0).getData().description);
-
-                    findList.add(find);
+                    SectionList find = (SectionList) object;
+                    switch (find.getType()) {
+                        case "horizontalScrollCardSection":
+                            findList.getScrollCardSection().add(find);
+                            break;
+                        case "videoListSection":
+                            findList.getVideoSection().add(find);
+                            break;
+                        case "authorSection":
+                            findList.getAuthorSection().add(find);
+                            break;
+                    }
+                    DebugUtil.debug("categoryeye", find.getType());
                 }
-
                 @Override
                 public void onFailed() {
 
@@ -112,20 +141,23 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                 @Override
                 public void onCompleted() {
 
-                    if (findList.size() > 0) {
+                    if (findList.getScrollCardSection().size() > 0 || findList.getVideoSection().size() > 0 || findList.getAuthorSection().size() > 0) {
+
+                        List<Object> objects = new ArrayList<>();
+                        objects.add(findList.getAuthorSection());
+                        for (int i = 0; i < findList.getVideoSection().size(); i ++) {
+                            objects.add(findList.getVideoSection().get(i));
+                        }
+                        DebugUtil.debug("objjj", findList.getAuthorSection().size() + "");
+                        setAdapterTest(objects);
                         mCache.remove(Constant.EYE_FIND);
                         mCache.put(Constant.EYE_FIND, findList, 18000);
                     }
                 }
             });
         }
-
         DebugUtil.debug("categoryeye", "cache");
-
-
-
     }
-
 
     public void initSelectTypeRecyclerView() {
 
@@ -150,7 +182,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
         //设置拖拽监听
         /*ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 final int dragFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
@@ -158,22 +189,17 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                 return makeMovementFlags(dragFlags, swipeFlags);
 
             }
-
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 //strAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return false;
             }
-
-
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 //strAdapter.onItemDismiss(viewHolder.getAdapterPosition());
             }
         });
         mItemTouchHelper.attachToRecyclerView(sTRecyclerView);*/
-
-
     }
 
     @Override
@@ -199,15 +225,11 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                         //刷新数据
                         selectLabel.add(DataSupport.findLast(LabelType.class).getType());
                         strAdapter.notifyDataSetChanged();
-
-
-
                     }
                 });
                 //Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private List<Integer> getCategoryIdList() {
         List<LabelType> labelTypes = DataSupport.findAll(LabelType.class);
@@ -272,5 +294,4 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         }
         return list;
     }
-
 }

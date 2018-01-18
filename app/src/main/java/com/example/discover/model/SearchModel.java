@@ -50,8 +50,14 @@ public class SearchModel {
                         return findCategory.sectionList != null;
                     }
                 })
+                .flatMap(new Function<FindCategory, Publisher<SectionList>>() {
+                    @Override
+                    public Publisher<SectionList> apply(FindCategory findCategory) throws Exception {
+                        return Flowable.fromIterable(findCategory.sectionList);
+                    }
+                })
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<FindCategory>() {
+                .subscribe(new Subscriber<SectionList>() {
                     @Override
                     public void onSubscribe(Subscription s) {
 
@@ -59,9 +65,9 @@ public class SearchModel {
                     }
 
                     @Override
-                    public void onNext(FindCategory findCategory) {
+                    public void onNext(SectionList sectionList) {
                         DebugUtil.debug("searchmodel", "chenggon");
-                        listener.onSuccess(findCategory);
+                        listener.onSuccess(sectionList);
                     }
 
                     @Override
