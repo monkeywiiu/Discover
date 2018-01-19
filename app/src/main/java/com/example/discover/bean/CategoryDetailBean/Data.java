@@ -24,6 +24,7 @@ public class Data implements Serializable {
     public List<ItemList> itemList;
     public Author author;
     public String icon;
+    public List<Tag> tags;
 
     public int getId() {
         return id;

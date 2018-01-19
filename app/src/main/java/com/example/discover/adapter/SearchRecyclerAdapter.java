@@ -49,13 +49,13 @@ public class SearchRecyclerAdapter extends BaseRecyclerAdapter<Object> {
     }
 
 
-    public class AuthorBindingHolder extends BaseViewHolder<List<SectionList>, RecommendAuthorBinding>{
+    public class AuthorBindingHolder extends BaseViewHolder<List<ItemList>, RecommendAuthorBinding>{
         public AuthorBindingHolder(ViewGroup parent, int layoutId) {
             super(parent, layoutId);
         }
 
         @Override
-        public void fillHolder(List<SectionList> object, int position) {
+        public void fillHolder(List<ItemList> object, int position) {
 
             DebugUtil.debug("objjt", object.size() + "");
             itemViewBinding.setData(object);

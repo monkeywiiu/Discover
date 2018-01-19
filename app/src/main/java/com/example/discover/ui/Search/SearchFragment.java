@@ -143,8 +143,14 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
                     if (findList.getScrollCardSection().size() > 0 || findList.getVideoSection().size() > 0 || findList.getAuthorSection().size() > 0) {
 
+                        List<ItemList> authorList = new ArrayList<>();
+                        for (int i = 0; i < findList.getAuthorSection().size(); i++) {
+                            for (int n = 0; n <findList.getAuthorSection().get(i).getItemList().size(); n ++) {
+                                authorList.add(findList.getAuthorSection().get(i).getItemList().get(n));
+                            }
+                        }
                         List<Object> objects = new ArrayList<>();
-                        objects.add(findList.getAuthorSection());
+                        objects.add(authorList);
                         for (int i = 0; i < findList.getVideoSection().size(); i ++) {
                             objects.add(findList.getVideoSection().get(i));
                         }
