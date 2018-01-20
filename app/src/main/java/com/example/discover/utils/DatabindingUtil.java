@@ -3,6 +3,7 @@ package com.example.discover.utils;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by monkeyWiiu on 2018/1/18.
  */
 
-public class DatabingUtil {
+public class DatabindingUtil {
 
     @BindingAdapter("authorData")
     public static void setAuthorData(RecyclerView view, List<ItemList> lists) {
@@ -48,5 +49,14 @@ public class DatabingUtil {
                 .placeholder(R.drawable.cross_image)
                 .error(R.drawable.cross_image)
                 .into(view);
+    }
+
+    @BindingAdapter("visibility")
+    public static void setVisibility(View view, boolean visible) {
+        if (visible) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
     }
 }

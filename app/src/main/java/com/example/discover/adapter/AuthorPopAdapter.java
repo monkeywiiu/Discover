@@ -7,11 +7,8 @@ import com.example.discover.R;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
 import com.example.discover.bean.CategoryDetailBean.ItemList;
-import com.example.discover.bean.CategoryDetailBean.SectionList;
 import com.example.discover.databinding.AuthorCardBinding;
-import com.example.discover.utils.DebugUtil;
 
-import java.util.List;
 
 /**
  * Created by monkeyWiiu on 2018/1/18.
