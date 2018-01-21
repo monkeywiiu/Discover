@@ -154,7 +154,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                         for (int i = 0; i < findList.getVideoSection().size(); i ++) {
                             objects.add(findList.getVideoSection().get(i));
                         }
-                        DebugUtil.debug("objjj", findList.getAuthorSection().size() + "");
                         setAdapterTest(objects);
                         mCache.remove(Constant.EYE_FIND);
                         mCache.put(Constant.EYE_FIND, findList, 18000);

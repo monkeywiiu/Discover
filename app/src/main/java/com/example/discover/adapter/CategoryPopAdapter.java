@@ -36,7 +36,8 @@ public class CategoryPopAdapter extends BaseRecyclerAdapter<ItemList> {
 
         @Override
         public void fillHolder(ItemList object, int position) {
-            itemViewBinding.tvText.setText(object.getData().getTitle());
+            //itemViewBinding.tvText.setText(object.getData().getTitle());
+            itemViewBinding.setItemList(object);
         }
     }
 

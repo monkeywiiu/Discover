@@ -34,7 +34,6 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
         public void fillHolder(ItemList object, int position) {
 
             itemViewBinding.setItemList(object);
-
             //itemViewBinding.tvText.setText(object.getItemList().get(0).getData().getItemList().get(0).getData().getTitle());
         }
     }

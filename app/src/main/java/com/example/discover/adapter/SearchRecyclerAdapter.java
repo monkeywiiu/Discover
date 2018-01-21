@@ -70,6 +70,9 @@ public class SearchRecyclerAdapter extends BaseRecyclerAdapter<Object> {
         @Override
         public void fillHolder(SectionList object, int position) {
 
+            if (object.getItemList().size() > 0) {
+                itemViewBinding.tvCategory.setText(object.getItemList().get(0).getData().getCategory());
+            }
             itemViewBinding.setData(object.getItemList());
         }
 
