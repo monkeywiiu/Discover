@@ -65,7 +65,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         //先从缓存读取数据，如果没有在请求
         mHotEyeBean = (HotEyeBean) mCache.getAsObject(Constant.EYE_VIDEO);
         if (mHotEyeBean != null ) {
-            //getAchecaData();
             showContentView();
             setAdapter(mHotEyeBean);
            // DebugUtil.debug("test12", mHotEyeBean.getItemList().get(0).getType());
@@ -74,7 +73,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         }
         //避免重复加载
         isFirst = false;
-
     }
 
     public void loadVideo() {
@@ -109,7 +107,10 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
             @Override
             public void onFailed() {
 
-                //DebugUtil.toast(getActivity(), "failed");
+                bindingView.srlVideo.setRefreshing(false);
+                if (mVideoAdapter.getItemCount() == 1) {
+                    Error();
+                }
             }
 
             @Override
@@ -124,7 +125,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
     public int setContentView() {
         return R.layout.fragment_video;
     }
-
 
     public void initRecyclerView() {
         mVideoAdapter = new VideoRecyclerAdapter(getContext());
@@ -193,16 +193,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         mVideoAdapter.clear();
         mVideoAdapter.addAll(hotEyeBean.getItemList());
         bindingView.rvVideo.setAdapter(mVideoAdapter);
-    }
-
-    //取缓存
-    public void getAchecaData() {
-        mHotEyeBean = (HotEyeBean) mCache.getAsObject(Constant.EYE_VIDEO);
-        //如果是第一次打开再加载
-        if (isFirst) {
-            setAdapter(mHotEyeBean);
-            isFirst = false;
-        }
     }
 
     @Override

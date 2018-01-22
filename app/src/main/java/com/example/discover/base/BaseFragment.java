@@ -27,6 +27,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends RxFragmen
     public RelativeLayout container;
     public AVLoadingIndicatorView avLoading;
     private RelativeLayout rlLoading;
+    private RelativeLayout rlError;
     public boolean isVisibile = false;
     @Nullable
     @Override
@@ -56,6 +57,7 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends RxFragmen
         super.onActivityCreated(savedInstanceState);
         avLoading = (AVLoadingIndicatorView) getView(R.id.av_loading);
         rlLoading = (RelativeLayout) getView(R.id.rl_loading);
+        rlError = (RelativeLayout) getView(R.id.rl_error);
         showLoading();
     }
 
@@ -88,8 +90,19 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends RxFragmen
      * 加载完成的状态
      */
     protected void showContentView() {
+        if (rlError.getVisibility() == View.VISIBLE) {
+            rlLoading.setVisibility(View.GONE);
+        }
         if (rlLoading.getVisibility() == View.VISIBLE) {
             rlLoading.setVisibility(View.GONE);
+        }
+    }
+    /**
+     * 加载失败
+     */
+    protected void Error() {
+        if (rlError.getVisibility() == View.GONE) {
+            rlError.setVisibility(View.VISIBLE);
         }
     }
 /*

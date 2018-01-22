@@ -3,6 +3,8 @@ package com.example.discover.ui.Search;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -33,6 +35,8 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jzvd.JZVideoPlayer;
+
 /**
  * Created by monkeyWiiu on 2018/1/12.
  */
@@ -42,7 +46,9 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     private boolean isPrepare = false;
     private boolean isFirst = true;
     private List<Integer> categoryIdList = new ArrayList<>();
-    private ACacheFindList findList = new ACacheFindList() ;
+    private ACacheFindList findList;
+    private List<Object> combineList = new ArrayList<>();
+    private List<ItemList> authorList = new ArrayList<>();
     private ACache mCache;
     private RecyclerView sTRecyclerView;
     private List<String> selectLabel;
@@ -57,6 +63,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         showContentView();
+
         mCache = ACache.get(getContext());
         selectLabel = LitePalUtil.getSelectLabel();
         init();
@@ -64,43 +71,70 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         categoryIdList = getCategoryIdList();
         isPrepare = true;
 
-        //测试
-        recyclerTest();
+        initMainRecyclerTest();
     }
 
-    /**
-     *测试
-     */
-    public void recyclerTest() {
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        bindingView.rvMain.setLayoutManager(linearLayoutManager);
-    }
-
-    public void setAdapterTest(List<Object> objects) {
-        SearchRecyclerAdapter adapter = new SearchRecyclerAdapter(getContext());
-        adapter.addAll(objects);
-        bindingView.rvMain.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
     @Override
     protected void loadData() {
         if (!isPrepare || !isFirst || !isVisibile) {
             return;
         }
 
-        loadDetail();
-        /*findList = (ACacheFindList) mCache.getAsObject(Constant.EYE_FIND);
+        findList = (ACacheFindList) mCache.getAsObject(Constant.EYE_FIND);
         if (findList != null) {
+            loadSuccess();
             DebugUtil.debug("findlistsize", "" + findList.getAuthorSection().size());
+            setAdapterTest(getPrecessedData());
         } else {
+            DebugUtil.debug("findlistsize", "" + "null" );
             findList = new ACacheFindList();
             loadDetail();
-        }*/
+        }
         //避免重复加载
         isFirst = false;
     }
+
+    public void initMainRecyclerTest() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        bindingView.rvMain.setLayoutManager(linearLayoutManager);
+        bindingView.srlSearchRefresh.setColorSchemeResources(R.color.background5, R.color.background2, R.color.background4);
+        //SwipeRefreshLayout与CoordinatorLayout嵌套刷新，动态设置SwipeRefreshLayout是否可用
+        bindingView.abl.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (verticalOffset >= 0) {
+                    bindingView.srlSearchRefresh.setEnabled(true);
+                } else {
+                    bindingView.srlSearchRefresh.setEnabled(false);
+                }
+            }
+        });
+        //上拉刷新
+        bindingView.srlSearchRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                JZVideoPlayer.goOnPlayOnPause();
+                bindingView.srlSearchRefresh.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadDetail();
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    public void setAdapterTest(List<Object> objects) {
+        SearchRecyclerAdapter adapter = new SearchRecyclerAdapter(getContext());
+        adapter.clear();
+        adapter.addAll(objects);
+        bindingView.rvMain.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+
 
     private void init() {
 
@@ -112,7 +146,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
     private void loadDetail() {
         categoryIdList = getCategoryIdList();
-
+        findList = new ACacheFindList();
         if (categoryIdList.size() > 0) {
 
             DebugUtil.debug("test211", "search");
@@ -120,6 +154,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                 @Override
                 public void onSuccess(Object object) {
                     SectionList find = (SectionList) object;
+
                     switch (find.getType()) {
                         case "horizontalScrollCardSection":
                             findList.getScrollCardSection().add(find);
@@ -132,10 +167,13 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                             break;
                     }
                     DebugUtil.debug("categoryeye", find.getType());
+
                 }
                 @Override
                 public void onFailed() {
 
+                    bindingView.srlSearchRefresh.setRefreshing(false);
+                    loadError();
                 }
 
                 @Override
@@ -143,27 +181,30 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
                     if (findList.getScrollCardSection().size() > 0 || findList.getVideoSection().size() > 0 || findList.getAuthorSection().size() > 0) {
 
-                        List<ItemList> authorList = new ArrayList<>();
-                        for (int i = 0; i < findList.getAuthorSection().size(); i++) {
-                            for (int n = 0; n <findList.getAuthorSection().get(i).getItemList().size(); n ++) {
-                                authorList.add(findList.getAuthorSection().get(i).getItemList().get(n));
-                            }
-                        }
-                        List<Object> objects = new ArrayList<>();
-                        objects.add(authorList);
-                        for (int i = 0; i < findList.getVideoSection().size(); i ++) {
-                            objects.add(findList.getVideoSection().get(i));
-                        }
-                        setAdapterTest(objects);
+                        loadSuccess();
+                        setAdapterTest(getPrecessedData());
                         mCache.remove(Constant.EYE_FIND);
                         mCache.put(Constant.EYE_FIND, findList, 18000);
                     }
                 }
             });
+        } else {
+            loadSuccess();
         }
-        DebugUtil.debug("categoryeye", "cache");
     }
 
+    public List<Object> getPrecessedData() {
+
+        authorList.clear();
+        combineList.clear();
+        for (int i = 0; i < findList.getAuthorSection().size(); i++) {
+            authorList.addAll(findList.getAuthorSection().get(i).getItemList());
+        }
+        combineList.add(authorList);
+        combineList.addAll(findList.getVideoSection());
+
+        return combineList;
+    }
     public void initSelectTypeRecyclerView() {
 
         sTRecyclerView = bindingView.rvSelectType;
@@ -236,6 +277,21 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         }
     }
 
+    public void loadSuccess() {
+        bindingView.srlSearchRefresh.setRefreshing(false);
+        if (bindingView.rlError.getVisibility() == View.VISIBLE) {
+            bindingView.rlError.setVisibility(View.GONE);
+        }
+        if (bindingView.rlSearchLoading.getVisibility() == View.VISIBLE) {
+            bindingView.rlSearchLoading.setVisibility(View.GONE);
+        }
+    }
+
+    public void loadError() {
+        if (bindingView.rlError.getVisibility() == View.GONE) {
+            bindingView.rlError.setVisibility(View.VISIBLE);
+        }
+    }
     private List<Integer> getCategoryIdList() {
         List<LabelType> labelTypes = DataSupport.findAll(LabelType.class);
         List<Integer> list = new ArrayList<>();

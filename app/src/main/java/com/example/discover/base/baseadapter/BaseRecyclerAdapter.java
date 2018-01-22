@@ -43,6 +43,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
         DebugUtil.debug("listSize", data.size() + "");
     }
 
+
+    public void add(T data) {
+        this.mData.add(data);
+    }
     public void clear() {
         this.mData.clear();
     }

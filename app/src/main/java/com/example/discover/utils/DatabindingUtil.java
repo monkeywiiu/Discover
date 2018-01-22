@@ -1,17 +1,22 @@
 package com.example.discover.utils;
 
 import android.databinding.BindingAdapter;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.discover.R;
 import com.example.discover.adapter.AuthorPopAdapter;
 import com.example.discover.adapter.CategoryPopAdapter;
 import com.example.discover.bean.CategoryDetailBean.ItemList;
 import com.example.discover.bean.CategoryDetailBean.SectionList;
+import com.example.discover.view.CustomView.CircleImageView;
 
 import java.util.List;
 
@@ -51,6 +56,28 @@ public class DatabindingUtil {
                 .into(view);
     }
 
+    @BindingAdapter("circleImageUrl")
+    public static void setCircleImage(CircleImageView view, String url) {
+        Glide.with(view.getContext()).load(url)
+                .crossFade(800)
+                .dontAnimate()
+                .placeholder(R.drawable.cross_image)
+                .error(R.drawable.close_press)
+                .into(view);
+        /*Glide.with(view.getContext()).load(url)
+                .asBitmap()
+                .placeholder(R.drawable.cross_image)
+                .error(R.drawable.close_press)
+                .into(new BitmapImageViewTarget(view) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        super.setResource(resource);
+                        RoundedBitmapDrawable circleImage = RoundedBitmapDrawableFactory.create(view.getResources(), resource);
+                        circleImage.setCircular(true);
+                        view.setImageDrawable(circleImage);
+                    }
+                });*/
+    }
     @BindingAdapter("visibility")
     public static void setVisibility(View view, boolean visible) {
         if (visible) {

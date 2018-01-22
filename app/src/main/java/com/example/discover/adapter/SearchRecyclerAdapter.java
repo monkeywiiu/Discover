@@ -63,7 +63,7 @@ public class SearchRecyclerAdapter extends BaseRecyclerAdapter<Object> {
     }
 
     public class CategoryBindingHolder extends BaseViewHolder<SectionList, RecommendCategoryBinding> {
-        public CategoryBindingHolder(ViewGroup parent, int layoutId) {
+        private CategoryBindingHolder(ViewGroup parent, int layoutId) {
             super(parent, layoutId);
         }
 
