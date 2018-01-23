@@ -5,4 +5,5 @@
     <string name="searchHint">  搜索开眼视频</string>
     <string name="followLabel">你关注的标签</string>
     <string name="videoRecommend">推荐的视频作者</string>
+    <string name="homePageEnter">进入主页</string>
 </resources>

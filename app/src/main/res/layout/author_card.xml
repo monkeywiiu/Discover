@@ -13,6 +13,7 @@
         android:layout_margin="10dp">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cv_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="#56ecd0"
@@ -89,6 +90,7 @@
                         </LinearLayout>
 
                         <android.support.v7.widget.CardView
+                            android:id="@+id/cv_enter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="5dp"
@@ -100,10 +102,11 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginBottom="8dp"
                                 android:layout_gravity="center"
-                                android:text="进入主页"/>
+                                android:text="@string/homePageEnter"/>
                         </android.support.v7.widget.CardView>
 
                         <android.support.v7.widget.CardView
+                            android:id="@+id/cv_image"
                             android:layout_width="220dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="6dp"
@@ -153,8 +156,8 @@
 
                     </LinearLayout>
 
-
                 <com.example.discover.view.CustomView.CircleImageView
+                    android:id="@+id/civ_avatar"
                     android:layout_width="74dp"
                     android:layout_height="74dp"
                     android:layout_gravity="center_horizontal"
@@ -164,7 +167,6 @@
                     android:scaleType="centerCrop"
                     circleImageUrl="@{itemList.data.header.icon}"
                     />
-
 
             </FrameLayout>
 

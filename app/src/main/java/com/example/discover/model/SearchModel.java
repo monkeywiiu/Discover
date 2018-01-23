@@ -35,7 +35,6 @@ public class SearchModel {
             sources.add(HttpClient.Builder.getEyeService().getEyeCateGory(id));
         }
 
-
         Flowable.mergeDelayError(sources)
                 .compose(context.<FindCategory>bindToLifecycle())
                 .filter(new Predicate<FindCategory>() {

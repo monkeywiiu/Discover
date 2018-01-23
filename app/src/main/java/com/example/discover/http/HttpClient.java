@@ -36,4 +36,7 @@ public interface HttpClient {
      */
     @GET("v3/categories/detail")
     Flowable<FindCategory> getEyeCateGory(@Query("id") int id);
+
+    //@GET("v3/pgc/videos")
+    //Flowable<>
 }

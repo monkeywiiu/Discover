@@ -1,21 +1,32 @@
 package com.example.discover.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.discover.AuthorHomeActivity;
 import com.example.discover.R;
+import com.example.discover.app.Constant;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
 import com.example.discover.bean.CategoryDetailBean.ItemList;
 import com.example.discover.databinding.AuthorCardBinding;
+import com.jakewharton.rxbinding2.view.RxView;
 
+import java.util.concurrent.TimeUnit;
+import java.util.zip.Inflater;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by monkeyWiiu on 2018/1/18.
  */
 
 public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
-    //public AuthorPopAdapter(){};
+
     public AuthorPopAdapter(Context context) {
         super(context);
     }
@@ -31,15 +42,41 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
         }
 
         @Override
-        public void fillHolder(ItemList object, int position) {
+        public void fillHolder(final ItemList object, int position) {
 
+            RxView.clicks(itemViewBinding.cvEnter)
+                    .throttleFirst(1, TimeUnit.SECONDS)
+                    .subscribe(new Consumer<Object>() {
+                        @Override
+                        public void accept(Object o) throws Exception {
+                            toAuthorHomeActivity(object);
+                        }
+                    });
+            setBackGroundColor(itemViewBinding, object);
             itemViewBinding.setItemList(object);
-            //itemViewBinding.tvText.setText(object.getItemList().get(0).getData().getItemList().get(0).getData().getTitle());
         }
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    public void setBackGroundColor(AuthorCardBinding binding, ItemList object) {
+        if (object.getData().getItemList().size() > 0) {
+
+            int color = (Integer) Constant.LabelMap.get(object.getData().getItemList().get(0).getData().getCategory());
+            binding.cvAuthor.setCardBackgroundColor(color);
+            binding.cvImage.setCardBackgroundColor(color);
+            binding.civAvatar.setBorderColor(color);
+        }
+    }
+
+    public void toAuthorHomeActivity(ItemList list) {
+        Toast.makeText(mContext, "dianji", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(mContext, AuthorHomeActivity.class);
+        intent.putExtra("AuthorId", list.getData().getHeader().getId());
+        intent.putExtra("AuthorName", list.getData().getHeader().getTitle());
+        mContext.startActivity(intent);
     }
 }
