@@ -14,10 +14,9 @@ import com.example.discover.adapter.SearchRecyclerAdapter;
 import com.example.discover.adapter.SelectTypeRecyclerAdapter;
 import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
-import com.example.discover.bean.CategoryDetailBean.ACacheFindList;
-import com.example.discover.bean.CategoryDetailBean.FindCategory;
-import com.example.discover.bean.CategoryDetailBean.ItemList;
-import com.example.discover.bean.CategoryDetailBean.SectionList;
+import com.example.discover.bean.DetailBean.ACacheFindList;
+import com.example.discover.bean.DetailBean.ItemList;
+import com.example.discover.bean.DetailBean.SectionList;
 import com.example.discover.bean.LitePalBean.LabelType;
 import com.example.discover.databinding.FragmentSearchBinding;
 import com.example.discover.http.RequestListener;
@@ -29,7 +28,6 @@ import com.example.discover.utils.DensityUtil;
 import com.example.discover.utils.LitePalUtil;
 import com.example.discover.view.CustomView.MyPopupWindow;
 
-import org.json.JSONArray;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;

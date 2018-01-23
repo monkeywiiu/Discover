@@ -1,7 +1,7 @@
 package com.example.discover.model;
 
-import com.example.discover.bean.CategoryDetailBean.FindCategory;
-import com.example.discover.bean.CategoryDetailBean.SectionList;
+import com.example.discover.bean.DetailBean.FindCategory;
+import com.example.discover.bean.DetailBean.SectionList;
 import com.example.discover.http.HttpClient;
 import com.example.discover.http.RequestListener;
 import com.example.discover.ui.Search.SearchFragment;

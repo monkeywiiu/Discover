@@ -3,7 +3,7 @@
 
     <data>
         <import type="java.util.List"/>
-        <import type="com.example.discover.bean.CategoryDetailBean.ItemList"/>
+        <import type="com.example.discover.bean.DetailBean.ItemList"/>
         <variable
             name="data"
             type="List&lt;ItemList&gt;"/>

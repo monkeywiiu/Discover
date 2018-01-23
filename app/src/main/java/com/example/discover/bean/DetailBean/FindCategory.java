@@ -1,8 +1,7 @@
-package com.example.discover.bean.CategoryDetailBean;
+package com.example.discover.bean.DetailBean;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by monkeyWiiu on 2018/1/17.

@@ -1,4 +1,4 @@
-package com.example.discover.bean.CategoryDetailBean;
+package com.example.discover.bean.DetailBean;
 
 import java.io.Serializable;
 
@@ -6,21 +6,12 @@ import java.io.Serializable;
  * Created by monkeyWiiu on 2018/1/17.
  */
 
-public class CategoryInfo implements Serializable {
-
-    public String dataType;
+public class Author implements Serializable {
     public int id;
+    public String icon;
     public String name;
     public String description;
-    public String headerImage;
-
-    public String getDataType() {
-        return dataType;
-    }
-
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
-    }
+    public int videoNum;
 
     public int getId() {
         return id;
@@ -28,6 +19,14 @@ public class CategoryInfo implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getName() {
@@ -46,11 +45,14 @@ public class CategoryInfo implements Serializable {
         this.description = description;
     }
 
-    public String getHeaderImage() {
-        return headerImage;
+    public int getVideoNum() {
+        return videoNum;
     }
 
-    public void setHeaderImage(String headerImage) {
-        this.headerImage = headerImage;
+    public void setVideoNum(int videoNum) {
+        this.videoNum = videoNum;
     }
+
+
 }
+

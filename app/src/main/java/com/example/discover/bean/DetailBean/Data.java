@@ -1,4 +1,4 @@
-package com.example.discover.bean.CategoryDetailBean;
+package com.example.discover.bean.DetailBean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +24,9 @@ public class Data implements Serializable {
     public List<ItemList> itemList;
     public Author author;
     public String icon;
-    public List<Tag> tags;
+    public List<Tags> tags;
+    public List<PlayInfo> playInfo;
+    public WebUrl webUrl;
 
     public int getId() {
         return id;
@@ -84,6 +86,18 @@ public class Data implements Serializable {
 
     public String getText() {
         return text;
+    }
+
+    public List<PlayInfo> getPlayinfo() {
+        return playInfo;
+    }
+
+    public WebUrl getWebUrl() {
+        return webUrl;
+    }
+
+    public List<Tags> getTags() {
+        return tags;
     }
 
     public void setId(int id) {
@@ -150,4 +164,15 @@ public class Data implements Serializable {
         this.text = text;
     }
 
+    public void setPlayinfo(List<PlayInfo> list) {
+        this.playInfo = list;
+    }
+
+    public void setWebUrl(WebUrl webUrl) {
+        this.webUrl = webUrl;
+    }
+
+    public void setTags(List<Tags> tags) {
+        this.tags = tags;
+    }
 }

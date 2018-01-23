@@ -1,6 +1,7 @@
 package com.example.discover.http;
 
-import com.example.discover.bean.CategoryDetailBean.FindCategory;
+import com.example.discover.bean.DetailBean.FindCategory;
+import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.bean.HotEyeBean;
 import com.example.http.HttpUtils;
 
@@ -37,6 +38,6 @@ public interface HttpClient {
     @GET("v3/categories/detail")
     Flowable<FindCategory> getEyeCateGory(@Query("id") int id);
 
-    //@GET("v3/pgc/videos")
-    //Flowable<>
+    @GET("v3/pgc/videos")
+    Flowable<ItemList> getAuthorRelated(@Query("start") int start, @Query("tagId") int id, @Query("strategy") String strategy);
 }

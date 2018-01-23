@@ -12,8 +12,8 @@
 
     <!--
     	Define the version of your database. Each time you want
-    	to upgrade your database, the version tag would helps.
-    	Modify the models you defined in the mapping tag, and just
+    	to upgrade your database, the verstags tag would helps.
+    	Modify the models you defined in the mapptags tag, and just
     	make the version value plus one, the upgrade of database
     	will be processed automatically without concern.
 			For example:
@@ -22,7 +22,7 @@
     <version value="3" />
 
     <!--
-    	Define your models in the list with mapping tag, LitePal will
+    	Define your models in the list with mapptags tag, LitePal will
     	create tables for each mapping class. The supported fields
     	defined in models will be mapped into columns.
     	For example:

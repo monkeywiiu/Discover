@@ -86,6 +86,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                 if (mPage == 1) {
                     if(hotEyeBean != null && hotEyeBean.getItemList() != null&& hotEyeBean.getItemList().size() > 0) {
 
+                        DebugUtil.debug("test123456", "video" + hotEyeBean.getItemList().size());
                         bindingView.srlVideo.setRefreshing(false);
                         setAdapter(hotEyeBean);
                         //缓存5小时

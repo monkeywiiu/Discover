@@ -21,26 +21,6 @@ import io.reactivex.schedulers.Schedulers;
 public class HotVideoModel {
 
     public static void showVideo(VideoFragment context, int start, int num, final RequestListener listener) {
-        /*Subscription subscription = HttpClient.Builder.getEyeService().getEyeHot(start, num)
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HotEyeBean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        listener.onFailed();
-                        DebugUtil.debug("test1", "failed");
-                    }
-
-                    @Override
-                    public void onNext(HotEyeBean eyeBean) {
-                        listener.onSuccess(eyeBean);
-                        //
-                    }
-                });*/
 
         DebugUtil.debug("test12345", "successed111");
             HttpClient.Builder.getEyeService().getEyeHot(start, num)

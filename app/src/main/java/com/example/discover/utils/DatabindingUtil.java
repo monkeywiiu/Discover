@@ -1,21 +1,16 @@
 package com.example.discover.utils;
 
 import android.databinding.BindingAdapter;
-import android.graphics.Bitmap;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.discover.R;
 import com.example.discover.adapter.AuthorPopAdapter;
 import com.example.discover.adapter.CategoryPopAdapter;
-import com.example.discover.bean.CategoryDetailBean.ItemList;
-import com.example.discover.bean.CategoryDetailBean.SectionList;
+import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.view.CustomView.CircleImageView;
 
 import java.util.List;

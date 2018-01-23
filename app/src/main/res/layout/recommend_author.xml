@@ -2,7 +2,7 @@
 <layout xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.example.discover.bean.CategoryDetailBean.ItemList"/>
+        <import type="com.example.discover.bean.DetailBean.ItemList"/>
         <import type="java.util.List"/>
 
         <variable

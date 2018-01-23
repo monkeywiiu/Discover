@@ -4,7 +4,7 @@
     <data>
         <variable
             name="itemList"
-            type="com.example.discover.bean.CategoryDetailBean.ItemList"/>
+            type="com.example.discover.bean.DetailBean.ItemList"/>
     </data>
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

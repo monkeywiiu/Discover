@@ -1,4 +1,4 @@
-package com.example.discover.bean.CategoryDetailBean;
+package com.example.discover.bean.DetailBean;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by monkeyWiiu on 2018/1/19.
  */
 
-public class Tag implements Serializable {
+public class Tags implements Serializable {
     private String name;
     private String headerImage;
 

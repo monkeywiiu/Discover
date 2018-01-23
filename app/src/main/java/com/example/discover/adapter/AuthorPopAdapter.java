@@ -10,15 +10,12 @@ import com.example.discover.R;
 import com.example.discover.app.Constant;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
-import com.example.discover.bean.CategoryDetailBean.ItemList;
+import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.databinding.AuthorCardBinding;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
-import java.util.zip.Inflater;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**

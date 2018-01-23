@@ -1,4 +1,4 @@
-package com.example.discover.bean.CategoryDetailBean;
+package com.example.discover.bean.DetailBean;
 
 import java.io.Serializable;
 
@@ -6,11 +6,11 @@ import java.io.Serializable;
  * Created by monkeyWiiu on 2018/1/17.
  */
 
-public class Footer implements Serializable {
+public class ItemList implements Serializable{
+    private String type;
+    private Data data;
 
-    public String type;
-    public Data data;
-
+    private String tag;
     public String getType() {
         return type;
     }
@@ -25,5 +25,13 @@ public class Footer implements Serializable {
 
     public void setData(Data data) {
         this.data = data;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }
