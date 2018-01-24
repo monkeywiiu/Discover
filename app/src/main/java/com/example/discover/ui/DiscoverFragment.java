@@ -14,6 +14,9 @@ import com.example.discover.databinding.FragmentDiscoverBinding;
 import com.example.discover.http.cahe.ACache;
 import com.example.discover.utils.DebugUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/12/5 0005.
  */
@@ -26,29 +29,33 @@ public class DiscoverFragment extends BaseFragment<FragmentDiscoverBinding> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        showContentView();
         isPrepare = true;
         loadData();
 
-        bindingView.btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TestActivity.class);
-                startActivity(intent);
-            }
-        });
+        bindingView.testText.setText(Test());
+
     }
 
+    public StringBuffer Test() {
+        StringBuffer text = new StringBuffer();
+        for (int i = 0; i < 2000; i++) {
+
+            text.append("你好你好你好");
+        }
+        return text;
+    }
     @Override
     public void loadData() {
         if (!isPrepare || !isVisibile) {
             return;
         }
-        ACache cache = ACache.get(getContext());
+        /*ACache cache = ACache.get(getContext());
         hotEyeBean = (HotEyeBean) cache.getAsObject(Constant.EYE_VIDEO);
         if (hotEyeBean == null) {
             DebugUtil.debug("test111", "null");
         }
-        bindingView.text.setText("bu");
+        bindingView.text.setText("bu");*/
 
 
     }

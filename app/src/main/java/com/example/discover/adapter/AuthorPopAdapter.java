@@ -41,6 +41,7 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
         @Override
         public void fillHolder(final ItemList object, int position) {
 
+
             RxView.clicks(itemViewBinding.cvEnter)
                     .throttleFirst(1, TimeUnit.SECONDS)
                     .subscribe(new Consumer<Object>() {
@@ -61,8 +62,8 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
 
     public void setBackGroundColor(AuthorCardBinding binding, ItemList object) {
         if (object.getData().getItemList().size() > 0) {
-
-            int color = (Integer) Constant.LabelMap.get(object.getData().getItemList().get(0).getData().getCategory());
+            int color;
+            color = (Integer) Constant.LabelMap.get(object.getData().getItemList().get(0).getData().getCategory());
             binding.cvAuthor.setCardBackgroundColor(color);
             binding.cvImage.setCardBackgroundColor(color);
             binding.civAvatar.setBorderColor(color);
@@ -70,10 +71,23 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
     }
 
     public void toAuthorHomeActivity(ItemList list) {
+        int color = 0;
+        if (list.getData().getItemList().size()  > 0) {
+            color = (Integer) Constant.LabelMap.get(list.getData().getItemList().get(0).getData().getCategory());
+        }
         Toast.makeText(mContext, "dianji", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(mContext, AuthorHomeActivity.class);
         intent.putExtra("AuthorId", list.getData().getHeader().getId());
         intent.putExtra("AuthorName", list.getData().getHeader().getTitle());
+        intent.putExtra("AuthorIcon", list.getData().getHeader().getIcon());
+        intent.putExtra("AuthorDesc", list.getData().getHeader().getDescription());
+        intent.putExtra("Color", color);
+        try {
+            intent.putExtra("AuthorBack", list.getData().getItemList().get(0).getData().getTags().get(0).getHeaderImage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         mContext.startActivity(intent);
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
  * Created by monkeyWiiu on 2018/1/18.
  */
 
-public class DatabindingUtil {
+public class BindingUtil {
 
     @BindingAdapter("authorData")
     public static void setAuthorData(RecyclerView view, List<ItemList> lists) {

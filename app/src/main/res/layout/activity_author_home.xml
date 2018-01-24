@@ -1,20 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.discover.AuthorHomeActivity">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/test1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="new"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/test2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+
+
+        <android.support.design.widget.CoordinatorLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/cross_image"
+                        app:layout_collapseMode="parallax"
+                        app:layout_collapseParallaxMultiplier="0.5"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_marginTop="200dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/lightWhite">
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="30dp"
+                                android:gravity="center"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:text="liuliuliu"/>
+
+                            <TextView
+                                android:id="@+id/tv_desc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="16sp"
+                                android:text="alksdfjkldfjkf"/>
+
+                        </LinearLayout>
+
+                        <com.example.discover.view.CustomView.CircleImageView
+                            android:id="@+id/iv_head"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="140dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@mipmap/head_personal"
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="@color/colorLabelAnim"/>
+                    </RelativeLayout>
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+                <View
+                    android:id="@+id/sup_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:visibility="visible"/>
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    app:tabIndicatorHeight="2dp"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    />
+            </android.support.design.widget.AppBarLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </android.support.design.widget.CoordinatorLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            app:contentInsetStart="0dp"
+            app:layout_collapseMode="pin">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.github.mmin18.widget.RealtimeBlurView
+                    android:id="@+id/blurView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:realtimeBlurRadius="20dp"
+                    app:realtimeOverlayColor="#8000" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="15dp"
+                        android:scaleType="centerInside"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:src="@drawable/back"/>
+
+                </LinearLayout>
+            </FrameLayout>
+
+        </android.support.v7.widget.Toolbar>
+    </FrameLayout>
+
+</layout>
+
