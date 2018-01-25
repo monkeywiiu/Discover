@@ -36,25 +36,31 @@
                         android:layout_height="match_parent">
 
                         <LinearLayout
+                            android:id="@+id/ll_text"
                             android:orientation="vertical"
                             android:layout_marginTop="200dp"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:background="@color/lightWhite">
                             <TextView
                                 android:id="@+id/tv_name"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="30dp"
+                                android:layout_marginTop="25dp"
+                                android:ellipsize="end"
+                                android:singleLine="true"
                                 android:gravity="center"
-                                android:textSize="16sp"
+                                android:textSize="24sp"
                                 android:textStyle="bold"
                                 android:text="liuliuliu"/>
 
                             <TextView
                                 android:id="@+id/tv_desc"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="2"
                                 android:gravity="center"
                                 android:textSize="16sp"
                                 android:text="alksdfjkldfjkf"/>
@@ -63,12 +69,12 @@
 
                         <com.example.discover.view.CustomView.CircleImageView
                             android:id="@+id/iv_head"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="85dp"
+                            android:layout_height="85dp"
                             android:layout_marginTop="140dp"
                             android:layout_centerHorizontal="true"
                             android:src="@mipmap/head_personal"
-                            app:civ_border_width="2dp"
+                            app:civ_border_width="3dp"
                             app:civ_border_color="@color/colorLabelAnim"/>
                     </RelativeLayout>
 
@@ -84,7 +90,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     app:tabIndicatorHeight="2dp"
+                    app:tabIndicatorColor="@color/colorLabelAd"
                     app:layout_scrollFlags="scroll|enterAlways"
+                    app:tabSelectedTextColor="@color/colorLabelAd"
+                    app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
                     />
             </android.support.design.widget.AppBarLayout>
             <android.support.v4.view.ViewPager
@@ -99,7 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             app:contentInsetStart="0dp"
-            app:layout_collapseMode="pin">
+            app:layout_collapseMode="pin"
+            android:elevation="10dp">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -126,12 +136,37 @@
                         android:id="@+id/iv_back"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:padding="15dp"
                         android:scaleType="centerInside"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:focusable="true"
                         android:clickable="true"
                         android:src="@drawable/back"/>
+
+                    <TextView
+                        android:id="@+id/toolbar_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:textSize="16sp"
+                        android:textColor="#ffffff"
+                        android:text="六哥"/>
+
+                    <TextView
+                        android:id="@+id/attention"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center"
+                        android:text="关注"
+                        android:textColor="#ffffff"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        />
 
                 </LinearLayout>
             </FrameLayout>

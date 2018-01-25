@@ -42,8 +42,8 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding> {
         fragmentList.add(new LikeFragment());
 
         titleList = new ArrayList<>();
-        titleList.add("喜欢");
-        titleList.add("待填充");
+        titleList.add("喜欢的作品");
+        titleList.add("关注");
     }
 
     public void loadViewPager() {

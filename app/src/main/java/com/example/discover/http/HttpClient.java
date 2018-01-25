@@ -1,9 +1,12 @@
 package com.example.discover.http;
 
+import com.example.discover.bean.AuthorDetailBean;
 import com.example.discover.bean.DetailBean.FindCategory;
 import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.bean.HotEyeBean;
 import com.example.http.HttpUtils;
+
+import java.util.List;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
@@ -39,5 +42,5 @@ public interface HttpClient {
     Flowable<FindCategory> getEyeCateGory(@Query("id") int id);
 
     @GET("v3/pgc/videos")
-    Flowable<ItemList> getAuthorRelated(@Query("start") int start, @Query("tagId") int id, @Query("strategy") String strategy);
+    Flowable<AuthorDetailBean> getAuthorRelated(@Query("start") int start, @Query("pgcId") int id, @Query("strategy") String strategy);
 }

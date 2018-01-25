@@ -17,6 +17,7 @@ import com.example.discover.databinding.VideoCardBinding;
 import com.example.discover.model.HotVideoModel;
 import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.DensityUtil;
+import com.example.discover.utils.LitePalUtil;
 import com.example.discover.utils.ShareUtil;
 
 import java.util.LinkedHashMap;
@@ -36,9 +37,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
     private final static int TYPE_CONTENT = 2;
     private  int mState = STATE_NORMAL;
     private int width = DensityUtil.getScreenWidth(mContext);//屏宽
-    private int videoSize; //video大小MB
     private FooterItemVideoBinding mFooterBinding;
-
 
     public VideoRecyclerAdapter(Context context) {
         super(context);
@@ -65,8 +64,6 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
 
     }
 
-
-
     public void updateStateLoad(boolean loading) {
         if (loading) {
             this.mState = LOAD_MORE;
@@ -86,7 +83,6 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
         mFooterBinding.loading.hide();
     }
 
-
     public class VideoHolder extends BaseViewHolder<ItemList, VideoCardBinding> {
         private VideoHolder(ViewGroup parent, int layoutId) {
             super(parent, layoutId);
@@ -94,6 +90,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
         @Override
         public void fillHolder(final ItemList list, final int position) {
             //填充基础数据
+            int videoSize = 0;
             itemViewBinding.videoTitle.setText(list.getData().getTitle());
             itemViewBinding.videoDesc.setText(list.getData().getDescription());
             Glide.with(mContext).load(list.getData().getCover().getDetail())
@@ -102,8 +99,6 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
                     .error(R.drawable.cross_image)
                     .into(itemViewBinding.jzVideoPlayer.thumbImageView);
             itemViewBinding.tvLabel.setText(list.getData().getCategory());
-            //itemViewBinding.lvType.setBackground(getLabelColor(list.getData().getCategory()));
-            //itemViewBinding.cvLabel.setBackground((int)Constant.LabelMap.get(list.getData().getCategory()));
             itemViewBinding.cvLabel.setCardBackgroundColor((int)Constant.LabelMap.get(list.getData().getCategory()));
             //填充播放链接，playinfo有时候没有，playurl常有
             if (list.getData().getPlayinfo().size() > 0) {
@@ -186,61 +181,18 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
                     DebugUtil.debug("getTags",  list.getData().getTitle() + "|" + list.getData().getDescription());
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collected));
                     //存入数据库
-                    HotVideoModel.addToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
+                    LitePalUtil.addVideoToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
                            list.getData().getPlayUrl(), list.getData().getCover().getDetail(),
                             (int)Constant.LabelMap.get(list.getData().getCategory()), list.getData().getCategory(), vSize);
                     list.setTag("true");
                 } else  if ("true".equals(list.getTag())) {
                     DebugUtil.debug("getTags", list.getTag() + "//" + position);
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
+                    LitePalUtil.deleteVideoFromFavor(list.getData().getId());
                     list.setTag(null);
                 }
             }
         });
     }
 
-
-    /*private int getLabelColor(String type) {
-
-        switch (type) {
-            case "创意":
-                return mContext.getResources().getColor(R.color.colorLabelCre);
-            case "音乐":
-                return mContext.getResources().getColor(R.color.colorLabelMusic);
-            case "旅行":
-                return mContext.getResources().getColor(R.color.colorLabelTravel);
-            case "科普":
-                return mContext.getResources().getColor(R.color.colorLabelScience);
-            case "搞笑":
-                return mContext.getResources().getColor(R.color.colorLabelFunny);
-            case "时尚":
-                return mContext.getResources().getColor(R.color.colorLabelFashion);
-            case "运动":
-                return mContext.getResources().getColor(R.color.colorLabelSport);
-            case "动画":
-                return mContext.getResources().getColor(R.color.colorLabelAnim);
-            case "广告":
-                return mContext.getResources().getColor(R.color.colorLabelAd);
-            case "开胃":
-                return mContext.getResources().getColor(R.color.colorLabelAppetizing);
-            case "生活":
-                return mContext.getResources().getColor(R.color.colorLabelLife);
-            case "剧情":
-                return mContext.getResources().getColor(R.color.colorLabelDrama);
-            case "预告":
-                return mContext.getResources().getColor(R.color.colorLabelNotice);
-            case "集锦":
-                return mContext.getResources().getColor(R.color.colorLabelVariety);
-            case "记录":
-                return mContext.getResources().getColor(R.color.colorLabelRecord);
-            case "游戏":
-                return mContext.getResources().getColor(R.color.colorLabelGame);
-            case "萌宠":
-                return mContext.getResources().getColor(R.color.colorLabelPet);
-            case "综艺":
-                return mContext.getResources().getColor(R.color.colorLabelVariety);
-            default:
-                return mContext.getResources().getColor(R.color.colorLabelDefault);
-        }
-    }*/
 }

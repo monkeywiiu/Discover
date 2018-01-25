@@ -52,22 +52,5 @@ public class HotVideoModel {
                     });
     }
 
-    public static void addToFavor(int id, String title, String desc, String playUrl,
-                                  String imageUrl, int labelColor, String labelText, int size) {
-        LikeVideo likeVideo = new LikeVideo();
-        likeVideo.setId(1);
-        likeVideo.setVideoId(id);
-        likeVideo.setTitle(title);
-        likeVideo.setDescription(desc);
-        likeVideo.setPlayUrl(playUrl);
-        likeVideo.setImageUrl(imageUrl);
-        likeVideo.setLabelColor(labelColor);
-        likeVideo.setLabelText(labelText);
-        likeVideo.setSize(size);
-        likeVideo.save();
-    }
 
-    public static void deleteFromFavor() {
-
-    }
 }

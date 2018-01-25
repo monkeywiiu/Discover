@@ -75,7 +75,6 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
         if (list.getData().getItemList().size()  > 0) {
             color = (Integer) Constant.LabelMap.get(list.getData().getItemList().get(0).getData().getCategory());
         }
-        Toast.makeText(mContext, "dianji", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(mContext, AuthorHomeActivity.class);
         intent.putExtra("AuthorId", list.getData().getHeader().getId());
         intent.putExtra("AuthorName", list.getData().getHeader().getTitle());
