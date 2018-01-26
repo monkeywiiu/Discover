@@ -24,9 +24,7 @@ import java.util.zip.Inflater;
 
 public class MyPopupWindow extends PopupWindow {
 
-    private View contentView;
-    private RecyclerView rvLabel;
-    private LabelChooseAdapter adapter;
+
     private PopItemClickListener mListener;
     public interface PopItemClickListener {
         void ItemClick(String labelType);
@@ -37,7 +35,7 @@ public class MyPopupWindow extends PopupWindow {
     }
     public MyPopupWindow(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        contentView = inflater.inflate(R.layout.my_popup_window, null);
+        View contentView = inflater.inflate(R.layout.my_popup_window, null);
         // 设置SelectPicPopupWindow的View
         this.setContentView(contentView);
         // 设置SelectPicPopupWindow弹出窗体的宽
@@ -59,7 +57,7 @@ public class MyPopupWindow extends PopupWindow {
         // 点back键和其他地方使其消失,设置了这个才能触发OnDismisslistener ，设置其他控件变化等操作
         //this.setBackgroundDrawable(dw);
         // 设置SelectPicPopupWindow弹出窗体动画效果
-        this.setAnimationStyle(R.style.AnimationPreview);
+        this.setAnimationStyle(R.style.AnimationFadeLT);
 
         initRecycler(contentView, context);
     }
@@ -79,8 +77,8 @@ public class MyPopupWindow extends PopupWindow {
     }
 
     public void initRecycler(View view, Context context) {
-        rvLabel = view.findViewById(R.id.rv_label_choose);
-        adapter = new LabelChooseAdapter(Constant.videoTypeList, Constant.LabelMap, context);
+        RecyclerView rvLabel = view.findViewById(R.id.rv_label_choose);
+        LabelChooseAdapter adapter;adapter = new LabelChooseAdapter(Constant.videoTypeList, Constant.LabelMap, context);
         adapter.setItemClickListener(new LabelChooseAdapter.ItemClickListener() {
             @Override
             public void itemClick(String labelType) {

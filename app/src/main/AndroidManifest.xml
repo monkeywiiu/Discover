@@ -26,8 +26,9 @@
         </activity>
         <activity
             android:name=".TestActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
-        <activity android:name=".AuthorHomeActivity"></activity>
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity android:name=".AuthorHomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
     </application>
 
 </manifest>

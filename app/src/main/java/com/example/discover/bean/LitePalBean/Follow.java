@@ -7,9 +7,20 @@ import org.litepal.crud.DataSupport;
  */
 
 public class Follow extends DataSupport {
-    private int authorId;
-    private String authorName;
-    private String iconUrl;
+    private int id;
+    public int authorId;
+    public String authorName;
+    public String authorDesc;
+    public String iconUrl;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getAuthorId() {
         return authorId;
     }
@@ -24,6 +35,14 @@ public class Follow extends DataSupport {
 
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
+    }
+
+    public String getAuthorDesc() {
+        return authorDesc;
+    }
+
+    public void setAuthorDesc(String authorDesc) {
+        this.authorDesc = authorDesc;
     }
 
     public String getIconUrl() {

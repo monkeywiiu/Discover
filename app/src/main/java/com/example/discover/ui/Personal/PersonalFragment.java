@@ -9,6 +9,7 @@ import com.example.discover.R;
 import com.example.discover.adapter.MyFragmentPagerAdapter;
 import com.example.discover.base.BaseFragment;
 import com.example.discover.databinding.FragmentPersonalBinding;
+import com.example.discover.ui.Personal.child.FollowFragment;
 import com.example.discover.ui.Personal.child.LikeFragment;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding> {
 
         fragmentList = new ArrayList<>();
         fragmentList.add(new LikeFragment());
-        fragmentList.add(new LikeFragment());
+        fragmentList.add(new FollowFragment());
 
         titleList = new ArrayList<>();
         titleList.add("喜欢的作品");

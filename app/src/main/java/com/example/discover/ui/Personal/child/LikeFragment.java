@@ -78,9 +78,7 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
                         totalNum = DataSupport.findAll(LikeVideo.class).size();
                         if (likeVideoList != null && likeVideoList.size() > 0) {
                             currentId = likeVideoList.get(likeVideoList.size() - 1).getId();
-                            DebugUtil.debug("totalTest", "currentId:" + currentId);
                             largestId = DataSupport.findLast(LikeVideo.class).getId();
-                            DebugUtil.debug("totalTest", "largestId" + largestId);
                         }
                         setAdapter();
                         mLikeVideoAdapter.notifyDataSetChanged();
@@ -108,6 +106,7 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            DebugUtil.debug("likefollowtest", totalItemCount +"/" +totalNum);
                             if (totalItemCount - 1 == totalNum) {
                                 mLikeVideoAdapter.hideLoading();
                             }

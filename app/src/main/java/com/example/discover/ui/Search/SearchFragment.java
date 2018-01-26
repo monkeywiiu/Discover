@@ -49,6 +49,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     private List<ItemList> authorList = new ArrayList<>();
     private ACache mCache;
     private RecyclerView sTRecyclerView;
+    private SearchRecyclerAdapter adapter;
     private List<String> selectLabel;
     private List<LabelType> savedLabelList;
     private SelectTypeRecyclerAdapter strAdapter;
@@ -125,14 +126,12 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     }
 
     public void setAdapterTest(List<Object> objects) {
-        SearchRecyclerAdapter adapter = new SearchRecyclerAdapter(getContext());
+        adapter = new SearchRecyclerAdapter(getContext());
         adapter.clear();
         adapter.addAll(objects);
         bindingView.rvMain.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
-
-
 
     private void init() {
 
@@ -164,8 +163,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                             findList.getAuthorSection().add(find);
                             break;
                     }
-                    DebugUtil.debug("categoryeye", find.getType());
-
                 }
                 @Override
                 public void onFailed() {
@@ -187,10 +184,15 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                 }
             });
         } else {
+            clear();
             loadSuccess();
         }
     }
 
+    public void clear() {
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+    }
     public List<Object> getPrecessedData() {
 
         authorList.clear();
@@ -271,7 +273,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                         strAdapter.notifyDataSetChanged();
                     }
                 });
-                //Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
         }
     }
 

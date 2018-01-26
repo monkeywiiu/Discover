@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="follow"
+            type="com.example.discover.bean.LitePalBean.Follow"/>
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/lightWhite">
+
+
+        <ImageView
+            android:id="@+id/follow_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="15dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            imageUrl="@{follow.iconUrl}"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/follow_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:text="@{String.valueOf(follow.authorName)}"
+
+                        />
+                    <TextView
+                        android:id="@+id/follow_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/followLabelText"
+                        android:textSize="12sp"
+                        android:text="@{follow.authorDesc}"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/selector"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/figure_normal"
+                    android:padding="10dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/dividingLine"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</layout>

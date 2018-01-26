@@ -15,6 +15,7 @@
     <color name="backgroundGray">#f2f2f2</color>
     <color name="lightWhite">#FFEEEEEE</color>
     <color name="followLabelText">#86909E</color>
+    <color name="dividingLine">#c0c2c4</color>
 
     <!-- LabelColor -->
     <color name="colorLabelCre">#a63939</color>

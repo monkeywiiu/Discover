@@ -46,7 +46,7 @@ public class AuthorHomeActivity extends AppCompatActivity {
     private void init() {
         authorId = getIntent().getIntExtra("AuthorId", 0);
         final String authorName = getIntent().getStringExtra("AuthorName");
-        String authorDesc = getIntent().getStringExtra("AuthorDesc");
+        final String authorDesc = getIntent().getStringExtra("AuthorDesc");
         final String authorIcon = getIntent().getStringExtra("AuthorIcon");
         String authorBack = getIntent().getStringExtra("AuthorBack");
         int color = getIntent().getIntExtra("Color", 0);
@@ -87,7 +87,7 @@ public class AuthorHomeActivity extends AppCompatActivity {
                     public void accept(Object o) throws Exception {
                         //点击关注
                         binding.attention.setVisibility(View.GONE);
-                        LitePalUtil.addToFollow(authorId, authorName, authorIcon);
+                        LitePalUtil.addToFollow(authorId, authorName, authorDesc, authorIcon);
                         Toast.makeText(AuthorHomeActivity.this, "你关注了作者", Toast.LENGTH_SHORT).show();
                         //待完善
                     }
