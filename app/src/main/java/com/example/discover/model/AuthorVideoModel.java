@@ -40,7 +40,7 @@ public class AuthorVideoModel {
                     public void onError(Throwable t) {
 
                         t.printStackTrace();
-                        listener.onFailed();
+                        listener.onFailed(t);
                     }
 
                     @Override

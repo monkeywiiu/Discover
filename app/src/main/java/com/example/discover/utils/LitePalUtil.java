@@ -45,12 +45,14 @@ public class LitePalUtil {
         DataSupport.deleteAll(LikeVideo.class, "videoId = ?", String.valueOf(videoId));
     }
 
-    public static void addToFollow(int authorId, String authorName, String desc, String iconUrl) {
+    public static void addToFollow(int authorId, String authorName, String desc, String iconUrl, int backgroundColor,String backgroundImage) {
         Follow follow = new Follow();
         follow.setAuthorId(authorId);
         follow.setAuthorName(authorName);
         follow.setAuthorDesc(desc);
         follow.setIconUrl(iconUrl);
+        follow.setBackgroundColor(backgroundColor);
+        follow.setBackgroundImage(backgroundImage);
         follow.save();
     }
 

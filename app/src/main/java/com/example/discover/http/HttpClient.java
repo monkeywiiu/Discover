@@ -43,4 +43,7 @@ public interface HttpClient {
 
     @GET("v3/pgc/videos")
     Flowable<AuthorDetailBean> getAuthorRelated(@Query("start") int start, @Query("pgcId") int id, @Query("strategy") String strategy);
+
+    @GET("v3/queries/hot")
+    Flowable<List<String>> getTrendingTag();
 }

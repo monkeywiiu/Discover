@@ -126,7 +126,7 @@ public class ItemFragment extends BaseFragment<FragmentVideoBinding> {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(Throwable t) {
 
                 DebugUtil.debug("loadvideo",  "failed");
                 bindingView.srlVideo.setRefreshing(false);

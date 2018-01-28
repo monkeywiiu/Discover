@@ -1,13 +1,17 @@
 package com.example.discover.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.discover.AuthorHomeActivity;
 import com.example.discover.R;
+import com.example.discover.app.Constant;
 import com.example.discover.base.BaseFragment;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
+import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.bean.LitePalBean.Follow;
 import com.example.discover.databinding.FooterItemVideoBinding;
 import com.example.discover.databinding.ItemFollowBinding;
@@ -75,7 +79,28 @@ public class FollowRecyclerAdapter extends BaseRecyclerAdapter<Follow> {
                     });
                 }
             });
+
+            itemViewBinding.followItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toAuthorHomeActivity(object);
+                }
+            });
+
         }
+    }
+
+    private void toAuthorHomeActivity(Follow follow) {
+
+        Intent intent = new Intent(mContext, AuthorHomeActivity.class);
+        intent.putExtra("AuthorId", follow.getAuthorId());
+        intent.putExtra("AuthorName", follow.getAuthorName());
+        intent.putExtra("AuthorIcon", follow.getIconUrl());
+        intent.putExtra("AuthorDesc", follow.getAuthorDesc());
+        intent.putExtra("Color", follow.getBackgroundColor());
+        intent.putExtra("AuthorBack", follow.getBackgroundImage());
+        intent.putExtra("Following", true);
+        mContext.startActivity(intent);
     }
 
     public class FooterHolder extends BaseViewHolder<Object, FooterItemVideoBinding> {

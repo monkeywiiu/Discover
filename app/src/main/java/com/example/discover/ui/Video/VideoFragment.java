@@ -106,7 +106,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(Throwable throwable) {
 
                 bindingView.srlVideo.setRefreshing(false);
                 if (mVideoAdapter.getItemCount() == 1) {

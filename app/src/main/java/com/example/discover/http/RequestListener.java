@@ -9,7 +9,7 @@ import io.reactivex.disposables.Disposable;
 public interface RequestListener {
     void onSuccess(Object object);
 
-    void onFailed();
+    void onFailed(Throwable t);
 
     void onCompleted();
 }

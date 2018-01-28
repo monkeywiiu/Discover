@@ -42,7 +42,7 @@ public class HotVideoModel {
                         @Override
                         public void onError(Throwable t) {
 
-                            listener.onFailed();
+                            listener.onFailed(t);
                         }
 
                         @Override

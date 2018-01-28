@@ -70,7 +70,7 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
         }
     }
 
-    public void toAuthorHomeActivity(ItemList list) {
+    private void toAuthorHomeActivity(ItemList list) {
         int color = 0;
         if (list.getData().getItemList().size()  > 0) {
             color = (Integer) Constant.LabelMap.get(list.getData().getItemList().get(0).getData().getCategory());

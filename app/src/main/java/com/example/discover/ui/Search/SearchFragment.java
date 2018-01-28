@@ -1,5 +1,6 @@
 package com.example.discover.ui.Search;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.discover.R;
+import com.example.discover.SearchActivity;
 import com.example.discover.adapter.SearchRecyclerAdapter;
 import com.example.discover.adapter.SelectTypeRecyclerAdapter;
 import com.example.discover.app.Constant;
@@ -138,6 +140,13 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         Drawable drawable = getResources().getDrawable(R.drawable.search_normal);
         drawable.setBounds(0, 0 , DensityUtil.dip2px(30), DensityUtil.dip2px(30));
         bindingView.tvSearch.setCompoundDrawables(drawable, null, null, null);
+        bindingView.tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
         bindingView.cvAdd.setOnClickListener(this);
     }
 
@@ -165,7 +174,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                     }
                 }
                 @Override
-                public void onFailed() {
+                public void onFailed(Throwable throwable) {
 
                     bindingView.srlSearchRefresh.setRefreshing(false);
                     loadError();
@@ -190,8 +199,11 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
     }
 
     public void clear() {
-        adapter.clear();
-        adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.clear();
+            adapter.notifyDataSetChanged();
+        }
+
     }
     public List<Object> getPrecessedData() {
 

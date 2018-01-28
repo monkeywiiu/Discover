@@ -102,7 +102,6 @@ public class FollowFragment extends BaseFragment<FragmentFollowBinding>{
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            DebugUtil.debug("followtest", totalItemCount +"/" +totalNum);
                             if (totalItemCount - 1 == totalNum) {
                                 adapter.hideLoading();
                             }

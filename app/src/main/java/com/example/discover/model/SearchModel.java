@@ -1,5 +1,9 @@
 package com.example.discover.model;
 
+import android.content.Context;
+
+import com.example.discover.SearchActivity;
+import com.example.discover.app.Constant;
 import com.example.discover.bean.DetailBean.FindCategory;
 import com.example.discover.bean.DetailBean.SectionList;
 import com.example.discover.http.HttpClient;
@@ -34,6 +38,7 @@ public class SearchModel {
         for (int id : idList) {
             sources.add(HttpClient.Builder.getEyeService().getEyeCateGory(id));
         }
+
 
         Flowable.mergeDelayError(sources)
                 .compose(context.<FindCategory>bindToLifecycle())
@@ -73,7 +78,7 @@ public class SearchModel {
                     public void onError(Throwable t) {
 
                         DebugUtil.debug("searchmodel", "failed");
-                        listener.onFailed();
+                        listener.onFailed(t);
                     }
 
                     @Override
@@ -83,29 +88,33 @@ public class SearchModel {
 
                     }
                 });
-        /*rx.Observable.mergeDelayError(sources)
+    }
+
+    public static void showTrendingTag(SearchActivity context, final RequestListener listener) {
+        HttpClient.Builder.getEyeService().getTrendingTag()
+                .compose(context.<List<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<FindCategory>() {
+                .subscribe(new Subscriber<List<String>>() {
                     @Override
-                    public void onCompleted() {
-
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        listener.onFailed();
-                        DebugUtil.debug("test221", "failed");
+                    public void onNext(List<String> list) {
+                        listener.onSuccess(list);
                     }
 
                     @Override
-                    public void onNext(FindCategory cateGoryEyeBean) {
-
-                        listener.onSuccess(cateGoryEyeBean);
-                        DebugUtil.debug("test221", "successed");
+                    public void onError(Throwable t) {
+                        listener.onFailed(t);
                     }
-                });*/
-        //合并多个接口的请求
 
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
 

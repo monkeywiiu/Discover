@@ -10,12 +10,15 @@
     <!-- UI Color -->
     <color name="background">#36465d</color>
     <color name="backgroundDark">#2f3e53</color>
+    <color name="backgroundLight">#ffffff</color>
     <color name="backgroundVideoCard">#ffffff</color>
     <color name="divisionLine">#FFD2CFCF</color>
     <color name="backgroundGray">#f2f2f2</color>
     <color name="lightWhite">#FFEEEEEE</color>
     <color name="followLabelText">#86909E</color>
     <color name="dividingLine">#c0c2c4</color>
+    <color name="pureDark">#000000</color>
+    <color name="textDark">#2d2d30</color>
 
     <!-- LabelColor -->
     <color name="colorLabelCre">#a63939</color>

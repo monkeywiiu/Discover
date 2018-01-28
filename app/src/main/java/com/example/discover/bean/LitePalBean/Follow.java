@@ -12,7 +12,9 @@ public class Follow extends DataSupport {
     public String authorName;
     public String authorDesc;
     public String iconUrl;
+    private int backgroundColor;
 
+    private String backgroundImage;
     public int getId() {
         return id;
     }
@@ -51,5 +53,21 @@ public class Follow extends DataSupport {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public int getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(String backgroundImage) {
+        this.backgroundImage = backgroundImage;
     }
 }
