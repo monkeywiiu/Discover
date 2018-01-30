@@ -1,5 +1,6 @@
 package com.example.zmenu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,23 +9,23 @@ import java.util.List;
 
 public class PUtils {
 
-    public List<Integer> imageList;
-    public List<Integer> colorList;
-    public List<FloatButton> viewList;
-    public int marginRight, marginBottom;
-    public boolean isVisible;
-    private static volatile PUtils instance = new PUtils();
+    private List<Integer> imageList;
+    private List<Integer> colorList;
+    private List<FloatButton> viewList;
+    private int marginRight, marginBottom;
+    private boolean isVisible;
+    private static volatile PUtils instance;
 
     public static PUtils getInstance() {
-        if (instance != null) {
+        if (instance == null) {
             synchronized (PUtils.class) {
-                if (instance != null) {
-                    return instance;
+                if (instance == null) {
+                    instance = new PUtils();
                 }
             }
         }
 
-        return null;
+        return instance;
     }
 
     public  void setImagesAndColors(List<Integer> imagelist , List<Integer> colorlist) {

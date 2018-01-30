@@ -54,7 +54,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
 
     @Override
     public int getItemViewType(int position) {
-        DebugUtil.debug("positionrecy", position +"");
+
         if (position + 1 == getItemCount()) {
             DebugUtil.debug("footer", "true");
             return TYPE_FOOTER;

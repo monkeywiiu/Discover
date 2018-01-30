@@ -4,4 +4,12 @@
     <style name="LightToolbarThemeOverlay" parent="Widget.AppCompat.ActionBar">
         <item name="android:colorControlNormal">@android:color/black</item>
     </style>
+
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/backgroundLight</item>
+        <item name="colorPrimaryDark">@color/lightWhite</item>
+        <item name="colorAccent">@color/colorLabelAd</item>
+        <item name="android:windowContentTransitions">true</item>
+
+    </style>
 </resources>

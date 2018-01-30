@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.discover.VideoDetailActivity">
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightWhite"
+        android:transitionName="@string/transition_shot_background"/>
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_replies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <cn.jzvd.JZVideoPlayerStandard
+        android:id="@+id/jz_player"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:transitionName="@string/transition_shot"/>
+</FrameLayout>

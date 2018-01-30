@@ -1,10 +1,14 @@
 package com.example.discover.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.discover.R;
+import com.example.discover.ResultActivity;
+import com.example.discover.SearchActivity;
 import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
 import com.example.discover.bean.DetailBean.Data;
@@ -13,6 +17,7 @@ import com.example.discover.databinding.SearchTagBinding;
 import com.example.discover.databinding.TagHeaderNewBinding;
 import com.example.discover.databinding.TagHeaderRecoBinding;
 import com.example.discover.utils.DebugUtil;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import org.litepal.crud.DataSupport;
 
@@ -27,6 +32,14 @@ public class SearchTagAdapter extends BaseRecyclerAdapter<String> {
     private static int HEADER_ONE = 0;
     private static int HEADER_TWO = 1;
     private static int TAG = 3;
+    private onItemClickListener itemClickListener;
+    public interface onItemClickListener {
+        void onItemClick(String s);
+    }
+
+    public void setItemClickListener(onItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
     public SearchTagAdapter(Context context) {
         super(context);
     }
@@ -62,11 +75,6 @@ public class SearchTagAdapter extends BaseRecyclerAdapter<String> {
         @Override
         public void fillHolder(Object object, int position) {
 
-            /*if (DataSupport.count(SearchTag.class) == 0) {
-                itemViewBinding.itemNew.setVisibility(View.GONE);
-            } else {
-                itemViewBinding.itemNew.setVisibility(View.VISIBLE);
-            }*/
         }
     }
 
@@ -90,6 +98,8 @@ public class SearchTagAdapter extends BaseRecyclerAdapter<String> {
 
         @Override
         public void fillHolder(final String object, final int position) {
+            itemViewBinding.tvTag.setText(object);
+
             if (position < DataSupport.count(SearchTag.class) + 1) {
                 DebugUtil.debug("tagposition", position + "//" + object);
                 itemViewBinding.delete.setVisibility(View.VISIBLE);
@@ -108,7 +118,14 @@ public class SearchTagAdapter extends BaseRecyclerAdapter<String> {
                 itemViewBinding.delete.setVisibility(View.GONE);
             }
 
-            itemViewBinding.tvTag.setText(object);
+            itemViewBinding.itemTag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    itemClickListener.onItemClick(object);
+
+                }
+            });
         }
 
     }

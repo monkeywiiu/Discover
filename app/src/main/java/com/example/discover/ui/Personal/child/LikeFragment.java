@@ -14,6 +14,8 @@ import com.example.discover.bean.LitePalBean.LikeVideo;
 import com.example.discover.databinding.FragmentPersonalLikeBinding;
 import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
 import com.example.discover.utils.DebugUtil;
+import com.example.zmenu.PUtils;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import org.litepal.crud.DataSupport;
 
@@ -115,6 +117,23 @@ public class LikeFragment extends BaseFragment<FragmentPersonalLikeBinding> {
                             mLikeVideoAdapter.notifyDataSetChanged();
                         }
                     }, 1000);
+                }
+            }
+
+
+            //recyclerview滑动时ZMemu自动隐藏
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == XRecyclerView.SCROLL_STATE_IDLE  && PUtils.getInstance().getViewList() != null) {
+
+                    for (int i = 0; i < PUtils.getInstance().getViewList().size(); i++) {
+                        PUtils.getInstance().getViewList().get(i).show();
+                    }
+                } else {
+                    for (int i = 0; i < PUtils.getInstance().getViewList().size(); i++) {
+                        PUtils.getInstance().getViewList().get(i).hide();
+                    }
                 }
             }
         });

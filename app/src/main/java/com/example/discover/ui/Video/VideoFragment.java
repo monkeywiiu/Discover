@@ -42,13 +42,11 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
     private boolean isFirst = true;
     private HotEyeBean mHotEyeBean;
     private ACache mCache;
-    private List<FloatButton> floatButtons;//XMenu的悬浮按钮
-    private boolean isCollect = false;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mCache = ACache.get(getContext());
-        floatButtons = PUtils.getInstance().getViewList(); //获取悬浮按钮
         initRecyclerView();
 
         //准备就绪
@@ -67,7 +65,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         if (mHotEyeBean != null ) {
             showContentView();
             setAdapter(mHotEyeBean);
-           // DebugUtil.debug("test12", mHotEyeBean.getItemList().get(0).getType());
+            DebugUtil.debug("test12", mHotEyeBean.getItemList().get(0).getType());
         }else {
             loadVideo();
         }
@@ -86,7 +84,7 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
                 if (mPage == 1) {
                     if(hotEyeBean != null && hotEyeBean.getItemList() != null&& hotEyeBean.getItemList().size() > 0) {
 
-                        DebugUtil.debug("test123456", "video" + hotEyeBean.getItemList().size());
+                        DebugUtil.debug("test1 23456", "video" + hotEyeBean.getItemList().size());
                         bindingView.srlVideo.setRefreshing(false);
                         setAdapter(hotEyeBean);
                         //缓存5小时
@@ -177,13 +175,14 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == XRecyclerView.SCROLL_STATE_IDLE) {
-                    for (int i = 0; i < floatButtons.size(); i++) {
-                        floatButtons.get(i).show();
+                if (newState == XRecyclerView.SCROLL_STATE_IDLE  && PUtils.getInstance().getViewList() != null) {
+
+                    for (int i = 0; i < PUtils.getInstance().getViewList().size(); i++) {
+                        PUtils.getInstance().getViewList().get(i).show();
                     }
                 } else {
-                    for (int i = 0; i < floatButtons.size(); i++) {
-                        floatButtons.get(i).hide();
+                    for (int i = 0; i < PUtils.getInstance().getViewList().size(); i++) {
+                        PUtils.getInstance().getViewList().get(i).hide();
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.discover;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.discover.adapter.SearchTagAdapter;
@@ -18,18 +20,22 @@ import com.example.discover.bean.LitePalBean.SearchTag;
 import com.example.discover.http.RequestListener;
 import com.example.discover.model.SearchModel;
 import com.example.discover.utils.DebugUtil;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.functions.Consumer;
 
 public class SearchActivity extends RxAppCompatActivity {
 
+    public static String KEYWORD = "keyword";
     private RecyclerView mTagRecyclerView;
     private EditText searchEdit;
-    private List<String> tagList;
     private SearchTagAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +48,24 @@ public class SearchActivity extends RxAppCompatActivity {
     }
 
     private void init() {
-        tagList = new ArrayList<>();
-
-
+        List<String> tagList = new ArrayList<>();
         searchEdit = findViewById(R.id.search_edit);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
+
+        ImageButton clearButton = findViewById(R.id.clear_btn);
+        final EditText searchEdit = findViewById(R.id.search_edit);
+        RxView.clicks(clearButton)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        searchEdit.setText("");
+                    }
+                });
         //获取5个最新的搜索记录；
 
         if (DataSupport.count(SearchTag.class) > 0) {
@@ -60,12 +75,6 @@ public class SearchActivity extends RxAppCompatActivity {
 
                 for (SearchTag tag : list) {
                     tagList.add(tag.getTag());
-                }
-
-
-                //test
-                for (String tag :tagList) {
-                    DebugUtil.debug("tags", tag + "" );
                 }
 
                 //只保留5个tag
@@ -78,7 +87,6 @@ public class SearchActivity extends RxAppCompatActivity {
             }
         }
 
-
         setAdapter(tagList);
 
     }
@@ -87,12 +95,17 @@ public class SearchActivity extends RxAppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mTagRecyclerView = findViewById(R.id.rv_hot_tag);
         mTagRecyclerView.setLayoutManager(manager);
-
     }
 
     private void setAdapter(List<String> list) {
         adapter = new SearchTagAdapter(this);
         DebugUtil.debug("trend", list.size() + "");
+        adapter.setItemClickListener(new SearchTagAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(String s) {
+                toResultActivity(s);
+            }
+        });
         mTagRecyclerView.setAdapter(adapter);
         adapter.addAll(list);
         adapter.notifyDataSetChanged();
@@ -102,7 +115,6 @@ public class SearchActivity extends RxAppCompatActivity {
             @Override
             public void onSuccess(Object object) {
                 List<String> list = (List<String>) object;
-                DebugUtil.debug("trend", list.get(0)+list.size());
                 List<String> tagList2 = new ArrayList<>();
                 tagList2.add("recommend");
                 tagList2.addAll(list);
@@ -146,14 +158,14 @@ public class SearchActivity extends RxAppCompatActivity {
         });
     }
 
-    private void search(String s) {
+    private void search(String key) {
 
-        DataSupport.deleteAll(SearchTag.class, "tag = ?", s);
+        DataSupport.deleteAll(SearchTag.class, "tag = ?", key);
         SearchTag tag = new SearchTag();
-        tag.setTag(s);
+        tag.setTag(key);
         tag.save();
 
-        Toast.makeText(SearchActivity.this, s, Toast.LENGTH_SHORT).show();
+        toResultActivity(key);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -162,5 +174,13 @@ public class SearchActivity extends RxAppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void toResultActivity(String key) {
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra(KEYWORD, key);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }

@@ -12,6 +12,7 @@ import com.example.discover.base.baseadapter.BaseRecyclerAdapter;
 import com.example.discover.base.baseadapter.BaseViewHolder;
 import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.databinding.AuthorCardBinding;
+import com.example.discover.utils.IntentManager;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
@@ -47,7 +48,8 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
                     .subscribe(new Consumer<Object>() {
                         @Override
                         public void accept(Object o) throws Exception {
-                            toAuthorHomeActivity(object);
+                            //toAuthorHomeActivity(object);
+                            IntentManager.toAuthorHomeActivity(mContext, object);
                         }
                     });
             setBackGroundColor(itemViewBinding, object);
@@ -70,23 +72,4 @@ public class AuthorPopAdapter extends BaseRecyclerAdapter<ItemList> {
         }
     }
 
-    private void toAuthorHomeActivity(ItemList list) {
-        int color = 0;
-        if (list.getData().getItemList().size()  > 0) {
-            color = (Integer) Constant.LabelMap.get(list.getData().getItemList().get(0).getData().getCategory());
-        }
-        Intent intent = new Intent(mContext, AuthorHomeActivity.class);
-        intent.putExtra("AuthorId", list.getData().getHeader().getId());
-        intent.putExtra("AuthorName", list.getData().getHeader().getTitle());
-        intent.putExtra("AuthorIcon", list.getData().getHeader().getIcon());
-        intent.putExtra("AuthorDesc", list.getData().getHeader().getDescription());
-        intent.putExtra("Color", color);
-        try {
-            intent.putExtra("AuthorBack", list.getData().getItemList().get(0).getData().getTags().get(0).getHeaderImage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        mContext.startActivity(intent);
-    }
 }

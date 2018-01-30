@@ -3,7 +3,9 @@ package com.example.discover.http;
 import com.example.discover.bean.AuthorDetailBean;
 import com.example.discover.bean.DetailBean.FindCategory;
 import com.example.discover.bean.DetailBean.ItemList;
+import com.example.discover.bean.DetailBean.Replies;
 import com.example.discover.bean.HotEyeBean;
+import com.example.discover.bean.ResultBean;
 import com.example.http.HttpUtils;
 
 import java.util.List;
@@ -46,4 +48,13 @@ public interface HttpClient {
 
     @GET("v3/queries/hot")
     Flowable<List<String>> getTrendingTag();
+
+    @GET("v1/search?num=10")
+    Flowable<ResultBean> getResult(@Query("query") String key, @Query("start") int start);
+
+    @GET("v1/replies/video")
+    Flowable<Replies> fetchReplies(@Query("id") int id);
+
+    @GET("v1/replies/video?num=10")
+    Flowable<Replies> fetchReplies(@Query("id") int id, @Query("lastId") int lastId);
 }

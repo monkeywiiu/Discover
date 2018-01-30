@@ -218,11 +218,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (JZVideoPlayer.backPress()) {
-            return false;
-        }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exit();
+            if (!JZVideoPlayer.backPress()) {
+                exit();
+            }
+
+
             return true;
         }
         return super.onKeyDown(keyCode, event);

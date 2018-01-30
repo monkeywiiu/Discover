@@ -29,6 +29,8 @@ import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.DensityUtil;
 import com.example.discover.utils.LitePalUtil;
 import com.example.discover.view.CustomView.MyPopupWindow;
+import com.example.zmenu.PUtils;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import org.litepal.crud.DataSupport;
 
@@ -84,10 +86,8 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         findList = (ACacheFindList) mCache.getAsObject(Constant.EYE_FIND);
         if (findList != null) {
             loadSuccess();
-            DebugUtil.debug("findlistsize", "" + findList.getAuthorSection().size());
             setAdapterTest(getPrecessedData());
         } else {
-            DebugUtil.debug("findlistsize", "" + "null" );
             findList = new ACacheFindList();
             loadDetail();
         }
@@ -123,6 +123,25 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                         loadDetail();
                     }
                 }, 1000);
+            }
+        });
+
+        //recyclerview滑动时ZMemu自动隐藏
+        bindingView.rvMain.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == XRecyclerView.SCROLL_STATE_IDLE  && PUtils.getInstance().getViewList() != null) {
+
+                    for (int i = 0; i < PUtils.getInstance().getViewList().size(); i++) {
+                        PUtils.getInstance().getViewList().get(i).show();
+                    }
+                } else {
+                    for (int i = 0; i < PUtils.getInstance().getViewList().size(); i++) {
+                        PUtils.getInstance().getViewList().get(i).hide();
+                    }
+                }
             }
         });
     }

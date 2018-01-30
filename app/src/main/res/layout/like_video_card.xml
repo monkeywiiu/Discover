@@ -19,18 +19,6 @@
                 android:layout_height="48dp"
                 android:background="@color/backgroundVideoCard">
 
-                <!--
-                <com.example.discover.view.CustomView.LabelView
-                    android:id="@+id/lv_type"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="8dp"
-                    android:elevation="15dp"
-                    app:labelTextSize="16sp"
-                    app:labelTextColor="@color/lightWhite"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cv_label"
@@ -70,7 +58,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:scaleType="centerInside"
-                    android:src="@drawable/close"
+                    android:src="@drawable/ic_clear_black_24px"
                     android:focusable="true"
                     android:clickable="true"
                     android:background="?attr/selectableItemBackground"/>

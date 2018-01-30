@@ -100,11 +100,6 @@ public class ItemFragment extends BaseFragment<FragmentVideoBinding> {
                 showContentView();
                 AuthorDetailBean detailBean = (AuthorDetailBean) object;
                 List<ItemList> list = detailBean.getItemList();
-               // DebugUtil.debug("loadvideo", list.size() + "");
-
-
-
-
                 if (mPage == 1) {
                     if(detailBean != null && detailBean.getItemList() != null&& detailBean.getItemList().size() > 0) {
 

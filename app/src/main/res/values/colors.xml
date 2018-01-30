@@ -19,6 +19,7 @@
     <color name="dividingLine">#c0c2c4</color>
     <color name="pureDark">#000000</color>
     <color name="textDark">#2d2d30</color>
+    <color name="light_grey">#fff5f5f5</color>
 
     <!-- LabelColor -->
     <color name="colorLabelCre">#a63939</color>
@@ -48,4 +49,5 @@
     <color name="background4">#e13f0e</color>
     <color name="background5">#1068ea</color>
     <color name="background6">#7f08e7</color>
+
 </resources>

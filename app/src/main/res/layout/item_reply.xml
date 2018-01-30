@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="reply"
+            type="com.example.discover.bean.DetailBean.ReplyList"/>
+    </data>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.discover.view.CustomView.CircleImageView
+            android:id="@+id/movie_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="16dp"
+            circleImageUrl="@{reply.user.avatar}"/>
+
+        <TextView
+            android:id="@+id/reply_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@+id/movie_avatar"
+            android:layout_toStartOf="@+id/reply_time"
+            android:textStyle="bold"
+            android:text="@{reply.user.nickname}" />
+
+        <TextView
+            android:id="@+id/replay_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reply_avatar"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@+id/movie_avatar"
+            android:layout_toStartOf="@+id/likeCount"
+            android:text="@{reply.message}" />
+
+        <TextView
+            android:id="@+id/reply_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            time="@{reply.createTime}" />
+
+        <TextView
+            android:id="@+id/likeCount"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/reply_time"
+            android:drawableStart="@drawable/ic_heart_full_24dp_pink"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:text="@{String.valueOf(reply.likeCount)}" />
+
+    </RelativeLayout>
+</layout>

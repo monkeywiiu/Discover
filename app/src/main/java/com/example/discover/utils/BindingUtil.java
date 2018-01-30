@@ -1,10 +1,13 @@
 package com.example.discover.utils;
 
 import android.databinding.BindingAdapter;
+import android.databinding.BindingBuildInfo;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.discover.R;
@@ -59,19 +62,7 @@ public class BindingUtil {
                 .placeholder(R.drawable.cross_image)
                 .error(R.drawable.close_press)
                 .into(view);
-        /*Glide.with(view.getContext()).load(url)
-                .asBitmap()
-                .placeholder(R.drawable.cross_image)
-                .error(R.drawable.close_press)
-                .into(new BitmapImageViewTarget(view) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        super.setResource(resource);
-                        RoundedBitmapDrawable circleImage = RoundedBitmapDrawableFactory.create(view.getResources(), resource);
-                        circleImage.setCircular(true);
-                        view.setImageDrawable(circleImage);
-                    }
-                });*/
+
     }
     @BindingAdapter("visibility")
     public static void setVisibility(View view, boolean visible) {
@@ -80,5 +71,20 @@ public class BindingUtil {
         } else {
             view.setVisibility(View.GONE);
         }
+    }
+
+    @BindingAdapter("authorName")
+    public static void setAuthorName(TextView v, ItemList item) {
+        if (item.getData().getAuthor() != null) {
+            v.setText(item.getData().getAuthor().getName());
+        } else
+            v.setText("");
+    }
+
+
+    @BindingAdapter("time")
+    public static void setTime(TextView view, Long time) {
+        view.setText(DateUtils.getRelativeTimeSpanString(time,
+                System.currentTimeMillis(),  DateUtils.SECOND_IN_MILLIS).toString().toLowerCase());
     }
 }

@@ -12,6 +12,7 @@
         <item name="colorPrimary">@color/backgroundLight</item>
         <item name="colorPrimaryDark">@color/lightWhite</item>
         <item name="colorAccent">@color/colorLabelAd</item>
+
     </style>
     <!-- popupWindow的动画式样 -->
     <style name="AnimationFadeLT">

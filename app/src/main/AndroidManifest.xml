@@ -32,7 +32,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".SearchActivity"
-            android:theme="@style/LightTheme"/>
+            android:theme="@style/LightTheme" />
+        <activity
+            android:name=".ResultActivity"
+            android:theme="@style/LightTheme" />
+        <activity android:name=".VideoDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
     </application>
 
 </manifest>

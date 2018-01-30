@@ -2,10 +2,12 @@ package com.example.discover.model;
 
 import android.content.Context;
 
+import com.example.discover.ResultActivity;
 import com.example.discover.SearchActivity;
 import com.example.discover.app.Constant;
 import com.example.discover.bean.DetailBean.FindCategory;
 import com.example.discover.bean.DetailBean.SectionList;
+import com.example.discover.bean.ResultBean;
 import com.example.discover.http.HttpClient;
 import com.example.discover.http.RequestListener;
 import com.example.discover.ui.Search.SearchFragment;
@@ -107,6 +109,35 @@ public class SearchModel {
 
                     @Override
                     public void onError(Throwable t) {
+                        listener.onFailed(t);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public static void showResult(ResultActivity context, String key, int start, final RequestListener listener) {
+        HttpClient.Builder.getEyeService().getResult(key, start)
+                .compose(context.<ResultBean>bindToLifecycle())
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResultBean>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
+                    }
+
+                    @Override
+                    public void onNext(ResultBean resultBean) {
+
+                        listener.onSuccess(resultBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
                         listener.onFailed(t);
                     }
 

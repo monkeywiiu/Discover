@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import cn.jzvd.JZVideoPlayer;
 import io.reactivex.functions.Consumer;
 
 public class AuthorHomeActivity extends AppCompatActivity {
@@ -31,12 +32,11 @@ public class AuthorHomeActivity extends AppCompatActivity {
     private int authorId;
     private List<android.support.v4.app.Fragment> fragmentList;
     private List<String> titleList;
-    private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_author_home);
-
 
         init();
         initFragmentList();
@@ -100,15 +100,6 @@ public class AuthorHomeActivity extends AppCompatActivity {
     }
 
 
-
-    public int changeAlpha(int color, float fraction) {
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-        int alpha = (int) (Color.alpha(color) * fraction);
-        return Color.argb(alpha, red, green, blue);
-    }
-
     private void initFragmentList() {
         fragmentList = new ArrayList<>();
         fragmentList.add(ItemFragment.newInstance("date", authorId)); //按日期排序
@@ -130,9 +121,19 @@ public class AuthorHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        DebugUtil.debug("authoracti", "Destory");
+        JZVideoPlayer.releaseAllVideos();
         super.onDestroy();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        //全屏播放时退出全屏
+        if (JZVideoPlayer.backPress()) {
+            return;
+        }
+
+        super.onBackPressed();
+    }
 
 }
