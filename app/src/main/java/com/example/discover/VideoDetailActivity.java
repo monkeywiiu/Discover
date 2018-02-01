@@ -7,9 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.discover.adapter.ReplyAdapter;
+import com.example.discover.app.Constant;
 import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.bean.DetailBean.Replies;
 import com.example.discover.bean.DetailBean.ReplyList;
@@ -18,6 +21,7 @@ import com.example.discover.http.RequestListener;
 import com.example.discover.model.ReplyModel;
 import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.IntentManager;
+import com.example.discover.utils.LitePalUtil;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -60,7 +64,7 @@ public class VideoDetailActivity extends RxAppCompatActivity {
         headerBinding = DataBindingUtil.getBinding(view);
         headerBinding.setItem(item);
 
-        RxView.clicks(headerBinding.contentMovie)
+        RxView.clicks(headerBinding.authorContent)
                 .throttleFirst(1, TimeUnit.SECONDS)
                 .subscribe(new Consumer<Object>() {
                     @Override
@@ -92,6 +96,28 @@ public class VideoDetailActivity extends RxAppCompatActivity {
                     }, 1000);
 
                 }
+            }
+        });
+
+        //点击收藏
+
+        headerBinding.collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item.getTag() == null) {
+                    headerBinding.collect.setImageDrawable(getResources().getDrawable(R.drawable.ic_heart_full_24dp_pink));
+                    //入库
+                    LitePalUtil.addVideoToFavor(item.getData().getId(), item.getData().getTitle(), item.getData().getDescription(),
+                            item.getData().getPlayUrl(), item.getData().getCover().getDetail(),
+                            (int) Constant.LabelMap.get(item.getData().getCategory()), item.getData().getCategory(), 0);
+                    item.setTag("true");
+                } else if ("true".equals(item.getTag())){
+                    headerBinding.collect.setImageDrawable(getResources().getDrawable(R.drawable.ic_heart_hollow_24dp));
+                    //出库
+                    LitePalUtil.deleteVideoFromFavor(item.getData().getId());
+                    item.setTag(null);
+                }
+
             }
         });
 

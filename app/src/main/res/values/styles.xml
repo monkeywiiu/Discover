@@ -23,6 +23,10 @@
         <item name="android:windowEnterAnimation">@anim/fade_in_rt</item>
         <item name="android:windowExitAnimation">@anim/fade_out_lb</item>
     </style>
+    <style name="AnimationFadeBT">
+        <item name="android:windowEnterAnimation">@anim/fade_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_top</item>
+    </style>
     <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/lightWhite</item>

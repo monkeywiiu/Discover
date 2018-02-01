@@ -28,7 +28,7 @@ import com.example.discover.ui.RecyclerViewNoBugLinearLayoutManager;
 import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.DensityUtil;
 import com.example.discover.utils.LitePalUtil;
-import com.example.discover.view.CustomView.MyPopupWindow;
+import com.example.discover.view.CustomView.CategoryPopupWindow;
 import com.example.zmenu.PUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -284,9 +284,9 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
         switch (v.getId()) {
             case R.id.cv_add:
-                MyPopupWindow popupWindow = new MyPopupWindow(getContext());
+                CategoryPopupWindow popupWindow = new CategoryPopupWindow(getContext());
                 popupWindow.showPopupWindow(bindingView.cvAdd);
-                popupWindow.setPopItemClickListener(new MyPopupWindow.PopItemClickListener() {
+                popupWindow.setPopItemClickListener(new CategoryPopupWindow.PopItemClickListener() {
                     @Override
                     public void ItemClick(String labelType) {
                         //存入labelType中没有的type

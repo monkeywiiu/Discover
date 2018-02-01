@@ -98,7 +98,6 @@ public class FollowFragment extends BaseFragment<FragmentFollowBinding>{
                     followList = DataSupport.order("id desc").limit(mNum).where("id < ?", String.valueOf(currentId)).find(Follow.class);
                     if (followList != null && followList.size() > 0) {
                         currentId = followList.get(followList.size() - 1).getId();
-                        DebugUtil.debug("totalTest", "currentIdLoad" + currentId);
                     }
 
                     new Handler().postDelayed(new Runnable() {

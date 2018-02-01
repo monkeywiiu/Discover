@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.discover.R;
 import com.example.discover.adapter.AuthorPopAdapter;
 import com.example.discover.adapter.CategoryPopAdapter;
+import com.example.discover.bean.DetailBean.Data;
 import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.view.CustomView.CircleImageView;
 
@@ -86,5 +87,10 @@ public class BindingUtil {
     public static void setTime(TextView view, Long time) {
         view.setText(DateUtils.getRelativeTimeSpanString(time,
                 System.currentTimeMillis(),  DateUtils.SECOND_IN_MILLIS).toString().toLowerCase());
+    }
+
+    @BindingAdapter("type")
+    public static void setType(TextView view, Data data) {
+        view.setText(data.getCategory() + " | " + TimeUtils.secToTime((int) data.getDuration()));
     }
 }

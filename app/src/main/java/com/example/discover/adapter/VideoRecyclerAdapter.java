@@ -17,19 +17,25 @@ import com.example.discover.databinding.VideoCardBinding;
 import com.example.discover.model.HotVideoModel;
 import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.DensityUtil;
+import com.example.discover.utils.IntentManager;
 import com.example.discover.utils.LitePalUtil;
 import com.example.discover.utils.ShareUtil;
+import com.example.discover.view.CustomView.ReplyPopupWindow;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.LinkedHashMap;
+import java.util.concurrent.TimeUnit;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Administrator on 2017/12/14 0014.
  */
 
 public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
+    private boolean isAuthor = false;
     private int LOAD_MORE = 1;
     private final static int NO_MORE = 0;
     private final static int STATE_NORMAL = -1;
@@ -43,6 +49,9 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
         super(context);
     }
 
+    public void setAuthor(boolean isAuthor) {
+        this.isAuthor = isAuthor;
+    }
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_CONTENT) {
@@ -90,7 +99,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
         @Override
         public void fillHolder(final ItemList list, final int position) {
             //填充基础数据
-            int videoSize = 0;
+            //int videoSize = 0;
             itemViewBinding.videoTitle.setText(list.getData().getTitle());
             itemViewBinding.videoDesc.setText(list.getData().getDescription());
             Glide.with(mContext).load(list.getData().getCover().getDetail())
@@ -98,6 +107,13 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
                     .placeholder(R.drawable.cross_image)
                     .error(R.drawable.cross_image)
                     .into(itemViewBinding.jzVideoPlayer.thumbImageView);
+            if (!isAuthor) {
+                Glide.with(mContext).load(list.getData().getAuthor().getIcon())
+                        .error(R.drawable.cross_image)
+                        .into(itemViewBinding.headIcon);
+            } else {
+                itemViewBinding.headIcon.setVisibility(View.GONE);
+            }
             itemViewBinding.tvLabel.setText(list.getData().getCategory());
             itemViewBinding.cvLabel.setCardBackgroundColor((int)Constant.LabelMap.get(list.getData().getCategory()));
             //填充播放链接，playinfo有时候没有，playurl常有
@@ -108,8 +124,10 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
                 int height = width * y / x; //根据视频比列获得视频控件的高
                 LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
                 itemViewBinding.jzVideoPlayer.setLayoutParams(layoutParams);
-                videoSize = list.getData().getPlayinfo().get(0).getUrlList().get(2).getSize()/1024/1024;
-                itemViewBinding.tvVideoSize.setText("视频大小约" + videoSize+ "MB");
+
+                //videoSize = list.getData().getPlayinfo().get(0).getUrlList().get(2).getSize()/1024/1024;
+                //itemViewBinding.tvVideoSize.setText("视频大小约" + videoSize+ "MB");
+
 
                 if (list.getData().getPlayinfo().size() == 1) { //标清||高清
 
@@ -141,7 +159,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
                 itemViewBinding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
             }
             //设置点击事件
-            setOnClick(list, itemViewBinding, position, videoSize);
+            setOnClick(list, itemViewBinding, position, 0);
 
         }
     }
@@ -163,7 +181,7 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
 
         boolean isCollect = false;
         final String shareText = list.getData().getTitle() + list.getData().getWebUrl().getForWeibo() + mContext.getString(R.string.share_from);
-        //点击分享
+        //点击分享 RXVIEW
         binding.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,13 +190,24 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
             }
         });
 
+        //展开评论
+        RxView.clicks(binding.ivComment)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        ReplyPopupWindow replyPopupWindow = new ReplyPopupWindow(mContext, list.getData().getId());
+                        replyPopupWindow.showPopupWindow(binding.ivComment);
+                    }
+                });
+        //点击收藏
         binding.ivCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
                 if (list.getTag() == null) {
-                    DebugUtil.debug("getTags",  list.getData().getTitle() + "|" + list.getData().getDescription());
+
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collected));
                     //存入数据库
                     LitePalUtil.addVideoToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
@@ -186,13 +215,22 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
                             (int)Constant.LabelMap.get(list.getData().getCategory()), list.getData().getCategory(), vSize);
                     list.setTag("true");
                 } else  if ("true".equals(list.getTag())) {
-                    DebugUtil.debug("getTags", list.getTag() + "//" + position);
+
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collect));
                     LitePalUtil.deleteVideoFromFavor(list.getData().getId());
                     list.setTag(null);
                 }
             }
         });
+        //跳转主页
+        RxView.clicks(binding.headIcon)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        IntentManager.fromDetailtoAuthor(mContext, list);
+                    }
+                });
     }
 
 }

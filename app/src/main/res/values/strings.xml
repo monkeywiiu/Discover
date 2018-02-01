@@ -6,7 +6,7 @@
     <string name="followLabel">你关注的标签</string>
     <string name="videoRecommend">推荐的视频作者</string>
     <string name="homePageEnter">进入主页</string>
-
+    <string name="noComment">暂无评论</string>
 
     <string name="transition_shot">backdrop</string>
     <string name="transition_shot_background">transition_shot_background</string>

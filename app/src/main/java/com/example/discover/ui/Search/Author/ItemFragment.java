@@ -143,6 +143,7 @@ public class ItemFragment extends BaseFragment<FragmentVideoBinding> {
 
     public void initRecyclerView() {
         mVideoAdapter = new VideoRecyclerAdapter(getContext());
+        mVideoAdapter.setAuthor(true);
         mLayoutManager = new RecyclerViewNoBugLinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.rvVideo.setLayoutManager(mLayoutManager);

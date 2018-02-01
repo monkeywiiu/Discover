@@ -1,9 +1,6 @@
 package com.example.discover.view.CustomView;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,15 +11,12 @@ import android.widget.PopupWindow;
 import com.example.discover.R;
 import com.example.discover.adapter.LabelChooseAdapter;
 import com.example.discover.app.Constant;
-import com.example.discover.utils.DensityUtil;
-
-import java.util.zip.Inflater;
 
 /**
  * Created by monkeyWiiu on 2018/1/13.
  */
 
-public class MyPopupWindow extends PopupWindow {
+public class CategoryPopupWindow extends PopupWindow {
 
 
     private PopItemClickListener mListener;
@@ -33,9 +27,9 @@ public class MyPopupWindow extends PopupWindow {
     public void setPopItemClickListener(PopItemClickListener listener) {
         this.mListener = listener;
     }
-    public MyPopupWindow(Context context) {
+    public CategoryPopupWindow(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.my_popup_window, null);
+        View contentView = inflater.inflate(R.layout.category_popup_window, null);
         // 设置SelectPicPopupWindow的View
         this.setContentView(contentView);
         // 设置SelectPicPopupWindow弹出窗体的宽

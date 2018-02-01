@@ -9,7 +9,6 @@
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/content_movie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,12 +31,31 @@
             android:textColor="#212121"
             android:text="@{item.data.title}" />
 
-        <TextView
-            android:id="@+id/movie_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="搞笑 | 3:35" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/movie_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+
+                type="@{item.data}" />
+
+            <ImageView
+                android:id="@+id/collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_heart_hollow_24dp"
+
+                />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/movie_desc"
@@ -49,38 +67,44 @@
             android:textSize="16sp"
             android:text="@{item.data.description}" />
 
-        <LinearLayout
-            android:id="@+id/author_content"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="end"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightWhite">
 
-            <TextView
-                android:id="@+id/name"
+            <LinearLayout
+                android:id="@+id/author_content"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
                 android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:textStyle="bold"
-                android:text="@{item.data.author.name}"/>
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                >
 
-            <com.example.discover.view.CustomView.CircleImageView
-                android:id="@+id/author"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="16dp"
-                app:civ_border_width="0dp"
-                app:civ_border_color="#56ecd0"
-                android:scaleType="centerCrop"
-                circleImageUrl="@{item.data.author.icon}"/>
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:textStyle="bold"
+                    android:text="@{item.data.author.name}"/>
 
-        </LinearLayout>
+                <com.example.discover.view.CustomView.CircleImageView
+                    android:id="@+id/author"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="16dp"
+                    app:civ_border_width="0dp"
+                    app:civ_border_color="#56ecd0"
+                    android:scaleType="centerCrop"
+                    circleImageUrl="@{item.data.author.icon}"/>
 
+            </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
 </layout>

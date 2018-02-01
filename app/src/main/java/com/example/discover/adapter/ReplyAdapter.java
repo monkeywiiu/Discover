@@ -73,7 +73,7 @@ public class ReplyAdapter extends RecyclerView.Adapter {
         return count;
     }
 
-    static class Holder extends RecyclerView.ViewHolder {
+    public class Holder extends RecyclerView.ViewHolder {
         public ItemReplyBinding replyBinding;
         public Holder(ViewGroup parent, int layoutId) {
             super(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),layoutId, parent, false).getRoot());
