@@ -44,9 +44,8 @@ import java.util.concurrent.ExecutionException;
 
 
 /**
- * 用于查看大图
- *
- * @author jingbin
+ * 查看大图，拖拽退出
+ * Created by monkeyWiiu on 2018/2/3.
  */
 public class ViewBigImageActivity extends FragmentActivity implements OnPageChangeListener, OnPhotoTapListener, OnOutsidePhotoTapListener {
 

@@ -12,8 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 /**
- * DragBack
- * Created by Porster on 17/6/9.
+ * Created by monkeyWiiu on 2018/2/3.
  */
 
 public class DragFrameLayout extends FrameLayout {
