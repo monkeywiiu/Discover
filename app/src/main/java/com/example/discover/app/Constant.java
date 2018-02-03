@@ -16,6 +16,7 @@ public class Constant {
 
     public static final String EYE_VIDEO = "eye_video";
     public static final String EYE_FIND = "eye_find";
+    public static final String GANK_WELFARE = "gank_welfare";
     public static final HashMap LabelMap = new HashMap() {{
         put("萌宠", DiscoverApplication.getContext().getResources().getColor(R.color.colorLabelCre));
         put("搞笑", DiscoverApplication.getContext().getResources().getColor(R.color.colorLabelMusic));

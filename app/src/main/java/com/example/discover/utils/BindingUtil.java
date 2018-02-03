@@ -49,12 +49,19 @@ public class BindingUtil {
     @BindingAdapter("imageUrl")
     public static void setImage(ImageView view, String url) {
         Glide.with(view.getContext()).load(url)
-                .crossFade(800)
+                .crossFade(500)
                 .placeholder(R.drawable.cross_image)
                 .error(R.drawable.cross_image)
                 .into(view);
     }
 
+    @BindingAdapter("welfareImageUrl")
+    public static void setWelfareImage(ImageView view, String url) {
+        Glide.with(view.getContext()).load(url)
+                .crossFade(500)
+                .error(R.drawable.cross_image_welfare)
+                .into(view);
+    }
     @BindingAdapter("circleImageUrl")
     public static void setCircleImage(CircleImageView view, String url) {
         Glide.with(view.getContext()).load(url)
@@ -93,4 +100,5 @@ public class BindingUtil {
     public static void setType(TextView view, Data data) {
         view.setText(data.getCategory() + " | " + TimeUtils.secToTime((int) data.getDuration()));
     }
+
 }

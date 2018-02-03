@@ -30,8 +30,11 @@ public class HttpUtils {
     private boolean debug;
     private Context context;
     private Object eyeHttp;
+    private Object gankHttp;
     //天眼API
     private String EYE_API = "http://baobab.kaiyanapp.com/api/";
+    //干货API
+    private final static String API_GANKIO = "https://gank.io/api/";
 
 
     public static HttpUtils getInstance() {
@@ -55,6 +58,18 @@ public class HttpUtils {
             }
         }
         return (T) eyeHttp;
+    }
+
+    public <T> T getGankServer(Class<T> a) {
+        if (gankHttp == null) {
+            synchronized (HttpUtils.class) {
+                if (gankHttp == null) {
+                    return  getBuilder(API_GANKIO).build().create(a);
+                }
+            }
+        }
+
+        return (T) gankHttp;
     }
     public  void init(Context context, boolean debug) {
         this.debug = debug;

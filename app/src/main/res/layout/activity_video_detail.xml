@@ -14,8 +14,6 @@
         android:background="@color/lightWhite"
         android:transitionName="@string/transition_shot_background"/>
 
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_replies"
         android:layout_width="match_parent"

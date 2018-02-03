@@ -4,6 +4,7 @@ import com.example.discover.bean.AuthorDetailBean;
 import com.example.discover.bean.DetailBean.FindCategory;
 import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.bean.DetailBean.Replies;
+import com.example.discover.bean.GankBean;
 import com.example.discover.bean.HotEyeBean;
 import com.example.discover.bean.ResultBean;
 import com.example.http.HttpUtils;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
@@ -23,6 +25,10 @@ public interface HttpClient {
     class Builder {
         public static HttpClient getEyeService() {
             return HttpUtils.getInstance().getEyeServer(HttpClient.class);
+        }
+
+        public static HttpClient getGankService() {
+            return HttpUtils.getInstance().getGankServer(HttpClient.class);
         }
     }
 
@@ -57,4 +63,8 @@ public interface HttpClient {
 
     @GET("v1/replies/video?num=10")
     Flowable<Replies> fetchReplies(@Query("id") int id, @Query("lastId") int lastId);
+
+
+    @GET("data/{type}/{number}/{page}")
+    Flowable<GankBean> getGankData(@Path("type") String id, @Path("number") int number, @Path("page") int page);
 }

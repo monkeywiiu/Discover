@@ -14,6 +14,8 @@ import java.util.List;
 
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
+    protected OnItemClickListener<T> listener;
+    protected OnItemLongClickListener<T> onItemLongClickListener;
     public List<T> mData = new ArrayList<>();
     public Context mContext;
 
@@ -58,5 +60,13 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, mData.size() - position);
 
+    }
+
+    public void setOnItemClickListener(OnItemClickListener<T> listener) {
+        this.listener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener<T> onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 }

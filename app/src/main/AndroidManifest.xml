@@ -38,6 +38,9 @@
             android:theme="@style/LightTheme" />
         <activity android:name=".VideoDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
+
+        <activity android:name=".ViewBigImageActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

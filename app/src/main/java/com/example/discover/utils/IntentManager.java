@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 
@@ -11,8 +12,12 @@ import com.example.discover.AuthorHomeActivity;
 import com.example.discover.R;
 import com.example.discover.ResultActivity;
 import com.example.discover.VideoDetailActivity;
+import com.example.discover.ViewBigImageActivity;
 import com.example.discover.app.Constant;
 import com.example.discover.bean.DetailBean.ItemList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by monkeyWiiu on 2018/1/30.
@@ -70,4 +75,18 @@ public class IntentManager {
         context.startActivity(intent);
     }
 
+    public static void toBigImageActivity(Activity context, View view, int position, ArrayList<String> imgList) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("selet", 2);// 2,大图显示当前页数，1,头像，不显示页数
+        bundle.putInt("code", position);//第几张
+        bundle.putStringArrayList("imageuri", imgList);
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                context,
+                Pair.create(view, context.getString(R.string.transition_shot)),
+                Pair.create(view, context.getString(R.string.transition_shot_background))
+        );
+        Intent intent = new Intent(context, ViewBigImageActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent, options.toBundle());
+    }
 }
