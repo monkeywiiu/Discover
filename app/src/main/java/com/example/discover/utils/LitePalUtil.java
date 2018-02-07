@@ -27,7 +27,7 @@ public class LitePalUtil {
     }
 
     public static void addVideoToFavor(int id, String title, String desc, String playUrl,
-                                  String imageUrl, int labelColor, String labelText, int size) {
+                                  String imageUrl, String authorName, int authorId, String authorIcon, String authorDesc, int labelColor, String labelText, int size) {
         LikeVideo likeVideo = new LikeVideo();
         likeVideo.setId(1);
         likeVideo.setVideoId(id);
@@ -35,6 +35,10 @@ public class LitePalUtil {
         likeVideo.setDescription(desc);
         likeVideo.setPlayUrl(playUrl);
         likeVideo.setImageUrl(imageUrl);
+        likeVideo.setAuthorName(authorName);
+        likeVideo.setAuthorId(authorId);
+        likeVideo.setAuthorIcon(authorIcon);
+        likeVideo.setAuthorDesc(authorDesc);
         likeVideo.setLabelColor(labelColor);
         likeVideo.setLabelText(labelText);
         likeVideo.setSize(size);

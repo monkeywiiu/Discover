@@ -108,7 +108,8 @@ public class VideoDetailActivity extends RxAppCompatActivity {
                     headerBinding.collect.setImageDrawable(getResources().getDrawable(R.drawable.ic_heart_full_24dp_pink));
                     //入库
                     LitePalUtil.addVideoToFavor(item.getData().getId(), item.getData().getTitle(), item.getData().getDescription(),
-                            item.getData().getPlayUrl(), item.getData().getCover().getDetail(),
+                            item.getData().getPlayUrl(), item.getData().getCover().getDetail(),item.getData().getAuthor().getName(),
+                            item.getData().getAuthor().getId(),item.getData().getAuthor().getIcon(),item.getData().getAuthor().getDescription(),
                             (int) Constant.LabelMap.get(item.getData().getCategory()), item.getData().getCategory(), 0);
                     item.setTag("true");
                 } else if ("true".equals(item.getTag())){
@@ -131,6 +132,14 @@ public class VideoDetailActivity extends RxAppCompatActivity {
                 .error(R.drawable.cross_image)
                 .into(videoPlayerStandard.thumbImageView);
         videoPlayerStandard.setUp(item.getData().getPlayUrl(), JZVideoPlayer.SCREEN_WINDOW_NORMAL, "");
+        videoPlayerStandard.backButton.setVisibility(View.VISIBLE);
+
+        videoPlayerStandard.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     public void loadReply() {

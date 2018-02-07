@@ -112,7 +112,7 @@ public class SnakeButtonLayout extends RelativeLayout {
 
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
-            Log.d("catchview", left + " " + top);
+
             topFollowView.setEndValue(left, top);
         }
 
@@ -133,7 +133,7 @@ public class SnakeButtonLayout extends RelativeLayout {
             if ((upTime - downTime) < 250L && isClickable == true) {
                 onTopViewClickListener.onclick();
             }
-            Log.d("test1123", "released");
+
             controller.onRelease(topView);
         }
 

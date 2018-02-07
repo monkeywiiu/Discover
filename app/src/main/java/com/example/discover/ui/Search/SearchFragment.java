@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.View;
 
 import com.example.discover.R;
 import com.example.discover.SearchActivity;
+import com.example.discover.ViewBigImageActivity;
 import com.example.discover.adapter.SearchRecyclerAdapter;
 import com.example.discover.adapter.SelectTypeRecyclerAdapter;
 import com.example.discover.app.Constant;
@@ -30,20 +32,24 @@ import com.example.discover.utils.DensityUtil;
 import com.example.discover.utils.LitePalUtil;
 import com.example.discover.view.CustomView.CategoryPopupWindow;
 import com.example.zmenu.PUtils;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import cn.jzvd.JZVideoPlayer;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by monkeyWiiu on 2018/1/12.
  */
 
 public class SearchFragment extends BaseFragment<FragmentSearchBinding> implements View.OnClickListener {
+
 
     private boolean isPrepare = false;
     private boolean isFirst = true;
@@ -74,7 +80,8 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         categoryIdList = getCategoryIdList();
         isPrepare = true;
 
-        initMainRecyclerTest();
+        initMainRecycler();
+
     }
 
     @Override
@@ -85,6 +92,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
 
         findList = (ACacheFindList) mCache.getAsObject(Constant.EYE_FIND);
         if (findList != null) {
+            bindingView.rvMain.setVisibility(View.VISIBLE);
             loadSuccess();
             setAdapterTest(getPrecessedData());
         } else {
@@ -95,7 +103,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         isFirst = false;
     }
 
-    public void initMainRecyclerTest() {
+    public void initMainRecycler() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bindingView.rvMain.setLayoutManager(linearLayoutManager);
@@ -167,6 +175,16 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
             }
         });
         bindingView.cvAdd.setOnClickListener(this);
+        //加载失败重新加载
+        RxView.clicks(bindingView.rlError)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        showLoading();
+                        loadDetail();
+                    }
+                });
     }
 
     private void loadDetail() {
@@ -174,7 +192,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         findList = new ACacheFindList();
         if (categoryIdList.size() > 0) {
 
-            DebugUtil.debug("test211", "search");
+            bindingView.rvMain.setVisibility(View.VISIBLE);
             SearchModel.showDetail(this, categoryIdList, new RequestListener() {
                 @Override
                 public void onSuccess(Object object) {
@@ -212,6 +230,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
                 }
             });
         } else {
+            bindingView.rvMain.setVisibility(View.GONE);
             clear();
             loadSuccess();
         }
@@ -317,6 +336,14 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding> implemen
         }
     }
 
+    public void showLoading() {
+        if (bindingView.rlError.getVisibility() == View.VISIBLE) {
+            bindingView.rlError.setVisibility(View.GONE);
+        }
+        if (bindingView.rlSearchLoading.getVisibility() == View.GONE) {
+            bindingView.rlSearchLoading.setVisibility(View.VISIBLE);
+        }
+    }
     public void loadError() {
         if (bindingView.rlError.getVisibility() == View.GONE) {
             bindingView.rlError.setVisibility(View.VISIBLE);

@@ -22,14 +22,18 @@ import com.example.discover.ui.Search.SearchFragment;
 import com.example.discover.ui.Video.VideoFragment;
 import com.example.discover.ui.Welfare.WelFareFragment;
 import com.example.zmenu.PUtils;
+import com.example.zmenu.SnakeButtonLayout;
+import com.jakewharton.rxbinding2.view.RxView;
 
 
 import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import cn.jzvd.JZVideoPlayer;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private List<Fragment> fragmentList;
     private List<Integer> imageList;//XMenu的图片
     private List<Integer> colorList;//XMenu的颜色
-    private boolean isFullSreen = false;
     private static boolean isExit = false;
     private static Handler mHandler = new Handler(new Handler.Callback() {
         @Override
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         //设置悬浮按钮的margin
         PUtils.getInstance().setMargin((int) getResources().getDimension(R.dimen.xMenuMarginRight),
                 (int) getResources().getDimension(R.dimen.xMenuMarginBottom));
+
+
     }
     public void initXMenuResource() {
         imageList = new ArrayList<>();
@@ -103,6 +108,14 @@ public class MainActivity extends AppCompatActivity {
         mBottomItem2 = mBinding.bottomBar.two;
         mBottomItem3 = mBinding.bottomBar.three;
         mBottomItem4 = mBinding.bottomBar.four;
+
+        mBinding.snakeButton.setClickable(true);
+        mBinding.snakeButton.setOnTopViewClickListener(new SnakeButtonLayout.onTopViewClickListener() {
+            @Override
+            public void onclick() {
+                Toast.makeText(MainActivity.this, "click", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void initFragmentList() {

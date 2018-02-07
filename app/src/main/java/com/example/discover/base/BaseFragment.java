@@ -11,10 +11,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.discover.R;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 
 
 /**
@@ -59,11 +63,21 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends RxFragmen
         rlLoading = (RelativeLayout) getView(R.id.rl_loading);
         rlError = (RelativeLayout) getView(R.id.rl_error);
         showLoading();
+        RxView.clicks(rlError)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        Refresh();
+                    }
+                });
+
     }
 
     public View getView(int id) {
         return getView().findViewById(id);
     }
+
     public void onVisible() {
         loadData();
     }
@@ -85,6 +99,9 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends RxFragmen
         if (rlLoading.getVisibility() == View.GONE) {
             rlLoading.setVisibility(View.VISIBLE);
         }
+        if (rlError.getVisibility() == View.VISIBLE) {
+            rlError.setVisibility(View.GONE);
+        }
     }
     /**
      * 加载完成的状态
@@ -105,6 +122,13 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends RxFragmen
             rlError.setVisibility(View.VISIBLE);
         }
     }
+    /**
+     * 加载失败重新加载
+     */
+
+    protected void Refresh() {
+
+    }
 /*
     //显示loading
     public void showLoading() {
@@ -116,5 +140,6 @@ public abstract class BaseFragment<SV extends ViewDataBinding> extends RxFragmen
         avLoading.hide();
     }
     */
+
 
 }

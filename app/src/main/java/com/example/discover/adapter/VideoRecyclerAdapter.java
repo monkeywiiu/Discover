@@ -211,7 +211,8 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
                     binding.ivCollect.setImageDrawable(mContext.getResources().getDrawable(R.drawable.collected));
                     //存入数据库
                     LitePalUtil.addVideoToFavor(list.getData().getId(), list.getData().getTitle(), list.getData().getDescription(),
-                           list.getData().getPlayUrl(), list.getData().getCover().getDetail(),
+                           list.getData().getPlayUrl(), list.getData().getCover().getDetail(), list.getData().getAuthor().getName(),
+                            list.getData().getAuthor().getId(), list.getData().getAuthor().getIcon(), list.getData().getAuthor().getDescription(),
                             (int)Constant.LabelMap.get(list.getData().getCategory()), list.getData().getCategory(), vSize);
                     list.setTag("true");
                 } else  if ("true".equals(list.getTag())) {

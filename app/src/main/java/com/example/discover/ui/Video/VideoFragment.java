@@ -79,7 +79,6 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
             public void onSuccess(Object object) {
                 showContentView();
 
-                DebugUtil.debug("test1234", "video");
                 HotEyeBean hotEyeBean = (HotEyeBean) object;
                 if (mPage == 1) {
                     if(hotEyeBean != null && hotEyeBean.getItemList() != null&& hotEyeBean.getItemList().size() > 0) {
@@ -193,6 +192,13 @@ public class VideoFragment extends BaseFragment<FragmentVideoBinding> {
         mVideoAdapter.clear();
         mVideoAdapter.addAll(hotEyeBean.getItemList());
         bindingView.rvVideo.setAdapter(mVideoAdapter);
+    }
+
+    @Override
+    protected void Refresh() {
+        super.Refresh();
+        showLoading();
+        loadVideo();
     }
 
     @Override

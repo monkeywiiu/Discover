@@ -14,6 +14,10 @@ public class LikeVideo extends DataSupport {
     private String description;
     private String playUrl;
     private String imageUrl;
+    private String authorName;
+    private int authorId;
+    private String authorIcon;
+    private String authorDesc;
     private int labelColor;
     private String labelText;
     private int size;
@@ -65,6 +69,39 @@ public class LikeVideo extends DataSupport {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String auhtorName) {
+        this.authorName = auhtorName;
+    }
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int auhtorId) {
+        this.authorId = auhtorId;
+    }
+
+    public String getAuthorDesc() {
+        return authorDesc;
+    }
+
+    public void setAuthorDesc(String authorDesc) {
+        this.authorDesc = authorDesc;
+    }
+
+    public String getAuthorIcon() {
+        return authorIcon;
+    }
+
+    public void setAuthorIcon(String authorIcon) {
+        this.authorIcon = authorIcon;
     }
 
     public int getLabelColor() {

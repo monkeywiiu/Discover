@@ -15,6 +15,7 @@ import com.example.discover.VideoDetailActivity;
 import com.example.discover.ViewBigImageActivity;
 import com.example.discover.app.Constant;
 import com.example.discover.bean.DetailBean.ItemList;
+import com.example.discover.bean.LitePalBean.LikeVideo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,6 @@ public class IntentManager {
         int color = 0;
         color = (int) Constant.LabelMap.get(list.getData().getCategory());
         Intent intent = new Intent(context, AuthorHomeActivity.class);
-
         intent.putExtra("AuthorId", list.getData().getAuthor().getId());
         intent.putExtra("AuthorName", list.getData().getAuthor().getName());
         intent.putExtra("AuthorIcon", list.getData().getAuthor().getIcon());
@@ -75,6 +75,19 @@ public class IntentManager {
         context.startActivity(intent);
     }
 
+    public static void fromPersonalToAuthor(Context context, LikeVideo likeVideo) {
+
+        Intent intent = new Intent(context, AuthorHomeActivity.class);
+        intent.putExtra("AuthorId", likeVideo.getAuthorId());
+        intent.putExtra("AuthorName", likeVideo.getAuthorName());
+        intent.putExtra("AuthorIcon", likeVideo.getAuthorIcon());
+        intent.putExtra("AuthorDesc", likeVideo.getAuthorDesc());
+        intent.putExtra("Color", likeVideo.getLabelColor());
+        intent.putExtra("AuthorBack", likeVideo.getImageUrl());
+
+
+        context.startActivity(intent);
+    }
     public static void toBigImageActivity(Activity context, View view, int position, ArrayList<String> imgList) {
         Bundle bundle = new Bundle();
         bundle.putInt("selet", 2);// 2,大图显示当前页数，1,头像，不显示页数

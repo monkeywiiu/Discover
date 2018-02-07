@@ -12,6 +12,7 @@ import com.example.discover.bean.LitePalBean.LikeVideo;
 import com.example.discover.databinding.FooterItemVideoBinding;
 import com.example.discover.databinding.LikeVideoCardBinding;
 import com.example.discover.utils.DebugUtil;
+import com.example.discover.utils.IntentManager;
 import com.example.discover.utils.ShareUtil;
 
 import cn.jzvd.JZVideoPlayer;
@@ -82,9 +83,12 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<LikeVideo> {
                         .placeholder(R.drawable.cross_image)
                         .error(R.drawable.cross_image)
                         .into(itemViewBinding.jzVideoPlayer.thumbImageView);
-                if (likeVideo.getSize() > 0) {
+                /*if (likeVideo.getSize() > 0) {
                     itemViewBinding.tvVideoSize.setText("视频大小" + likeVideo.getSize() + "MB");
-                }
+                }*/
+                Glide.with(mContext).load(likeVideo.getAuthorIcon())
+                        .error(R.drawable.cross_image)
+                        .into(itemViewBinding.headIcon);
             }
             //设置点击事件
             setOnClick(itemViewBinding, likeVideo, position, likeVideo.getId());
@@ -104,7 +108,7 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<LikeVideo> {
         }
     }
 
-    public void setOnClick(LikeVideoCardBinding binding, LikeVideo likeVideo, final int positon, final int videoId) {
+    public void setOnClick(LikeVideoCardBinding binding, final LikeVideo likeVideo, final int position, final int videoId) {
         //点击分享
         final String shareText = likeVideo.getTitle() + likeVideo.getPlayUrl() + mContext.getString(R.string.share_from);
         binding.ivShare.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +121,14 @@ public class LikeVideoRecyclerAdapter extends BaseRecyclerAdapter<LikeVideo> {
         binding.ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteListener.onDelete(positon, videoId);
+                deleteListener.onDelete(position, videoId);
+            }
+        });
+        //主页
+        binding.headIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentManager.fromPersonalToAuthor(mContext, likeVideo);
             }
         });
         //点击下载
