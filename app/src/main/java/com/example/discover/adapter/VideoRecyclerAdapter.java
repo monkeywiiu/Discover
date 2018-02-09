@@ -102,12 +102,15 @@ public class VideoRecyclerAdapter extends BaseRecyclerAdapter<ItemList> {
             //int videoSize = 0;
             itemViewBinding.videoTitle.setText(list.getData().getTitle());
             itemViewBinding.videoDesc.setText(list.getData().getDescription());
-            Glide.with(mContext).load(list.getData().getCover().getDetail())
-                    .crossFade(800)
-                    .placeholder(R.drawable.cross_image)
-                    .error(R.drawable.cross_image)
-                    .into(itemViewBinding.jzVideoPlayer.thumbImageView);
-            if (!isAuthor) {
+            if (list.getData().getCover() != null) {
+                Glide.with(mContext).load(list.getData().getCover().getDetail())
+                        .crossFade(800)
+                        .placeholder(R.drawable.cross_image)
+                        .error(R.drawable.cross_image)
+                        .into(itemViewBinding.jzVideoPlayer.thumbImageView);
+            }
+
+            if (!isAuthor && list.getData().getAuthor() != null) {
                 Glide.with(mContext).load(list.getData().getAuthor().getIcon())
                         .error(R.drawable.cross_image)
                         .into(itemViewBinding.headIcon);
