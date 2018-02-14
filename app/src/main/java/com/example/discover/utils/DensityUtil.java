@@ -38,8 +38,8 @@ public class DensityUtil {
      */
     public static int getActionBarSize() {
         TypedValue tv = new TypedValue();
-        if (DiscoverApplication.getContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, DiscoverApplication.getContext().getResources().getDisplayMetrics());
+        if (DiscoverApplication.getDiscoverApplication().getApplicationContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, DiscoverApplication.getDiscoverApplication().getApplicationContext().getResources().getDisplayMetrics());
 
             return actionBarHeight;
         } else {

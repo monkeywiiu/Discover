@@ -406,4 +406,9 @@ public class ViewBigImageActivity extends FragmentActivity implements OnPageChan
 
     }
 
+    @Override
+    public void onBackPressed() {
+        System.gc();
+        super.onBackPressed();
+    }
 }

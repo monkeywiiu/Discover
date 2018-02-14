@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.discover.adapter.ReplyAdapter;
 import com.example.discover.app.Constant;
+import com.example.discover.app.DiscoverApplication;
 import com.example.discover.bean.DetailBean.ItemList;
 import com.example.discover.bean.DetailBean.Replies;
 import com.example.discover.bean.DetailBean.ReplyList;
@@ -23,6 +24,7 @@ import com.example.discover.utils.DebugUtil;
 import com.example.discover.utils.IntentManager;
 import com.example.discover.utils.LitePalUtil;
 import com.jakewharton.rxbinding2.view.RxView;
+import com.squareup.leakcanary.RefWatcher;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class VideoDetailActivity extends RxAppCompatActivity {
     private boolean firstRequest = true;
     private boolean loading = false;
     private int lastSequence;
+    private RecyclerView replies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class VideoDetailActivity extends RxAppCompatActivity {
     public void init() {
 
         item = (ItemList) getIntent().getSerializableExtra("item");
-        RecyclerView replies = findViewById(R.id.rv_replies);
+        replies = findViewById(R.id.rv_replies);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
         replies.setLayoutManager(linearLayoutManager);
         View view =DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.item_movie_detail_header, replies, false).getRoot();
@@ -153,13 +156,10 @@ public class VideoDetailActivity extends RxAppCompatActivity {
                 if (reply.getReplyList().size() > 0) {
                     replyLists.addAll(reply.getReplyList());
                     replyAdapter.notifyDataSetChanged();
-
                     lastSequence = reply.getReplyList().get(reply.getReplyList().size() - 1).getSequence();
                     firstRequest = false;
                     loading =false;
                 }
-
-
             }
 
             @Override
@@ -176,7 +176,12 @@ public class VideoDetailActivity extends RxAppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        JZVideoPlayer.releaseAllVideos();
+        DebugUtil.debug("desss", "1");
+        //
+
+        setContentView(R.layout.null_layout);
+        RefWatcher refWatcher = DiscoverApplication.getRefWatcher(this);
+        refWatcher.watch(this);
         super.onDestroy();
     }
 
@@ -186,8 +191,15 @@ public class VideoDetailActivity extends RxAppCompatActivity {
         if (JZVideoPlayer.backPress()) {
             return;
         }
-
+        toFinish();
         super.onBackPressed();
+    }
+
+    public void toFinish() {
+        DebugUtil.debug("ffff", "111");
+        replyLists = null;
+        replyAdapter = null;
+        System.gc();
     }
 
 

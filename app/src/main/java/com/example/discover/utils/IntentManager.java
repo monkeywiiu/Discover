@@ -5,6 +5,8 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Pair;
 import android.view.View;
 
@@ -29,12 +31,19 @@ public class IntentManager {
     public static void toVideoDetailActivity(Activity context, ItemList item, View view) {
         Intent intent = new Intent(context, VideoDetailActivity.class);
         intent.putExtra("item", item);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+        /*ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                 context,
                 Pair.create(view, context.getString(R.string.transition_shot)),
                 Pair.create(view, context.getString(R.string.transition_shot_background))
+        );*/
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                context,
+                android.support.v4.util.Pair.create(view, context.getString(R.string.transition_shot)),
+                android.support.v4.util.Pair.create(view, context.getString(R.string.transition_shot_background))
         );
-        context.startActivity(intent, options.toBundle());
+        ActivityCompat.startActivity(context, intent, optionsCompat.toBundle());
+        //context.startActivity(intent);
+
     }
 
     public static void toAuthorHomeActivity(Context context,ItemList list) {
@@ -93,13 +102,13 @@ public class IntentManager {
         bundle.putInt("selet", 2);// 2,大图显示当前页数，1,头像，不显示页数
         bundle.putInt("code", position);//第几张
         bundle.putStringArrayList("imageuri", imgList);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 context,
-                Pair.create(view, context.getString(R.string.transition_shot)),
-                Pair.create(view, context.getString(R.string.transition_shot_background))
+                android.support.v4.util.Pair.create(view, context.getString(R.string.transition_shot)),
+                android.support.v4.util.Pair.create(view, context.getString(R.string.transition_shot_background))
         );
         Intent intent = new Intent(context, ViewBigImageActivity.class);
         intent.putExtras(bundle);
-        context.startActivity(intent, options.toBundle());
+        ActivityCompat.startActivity(context, intent, options.toBundle());
     }
 }

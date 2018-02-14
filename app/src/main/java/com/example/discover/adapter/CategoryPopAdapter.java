@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +54,10 @@ public class CategoryPopAdapter extends BaseRecyclerAdapter<ItemList> {
                         @Override
                         public void accept(Object o) throws Exception {
                             IntentManager.toVideoDetailActivity((Activity) mContext, object, itemViewBinding.videoAlbum);
+
                         }
                     });
+
         }
     }
 

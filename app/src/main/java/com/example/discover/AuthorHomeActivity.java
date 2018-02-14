@@ -133,6 +133,7 @@ public class AuthorHomeActivity extends AppCompatActivity {
             return;
         }
 
+        System.gc();
         super.onBackPressed();
     }
 
