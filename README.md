@@ -2,8 +2,7 @@
 一款模仿Tumblr UI，使用开眼api开发的符合Material Desgin阅读类的开源项目。项目采取的是MVVM-DataBinding + Rxjava2 + Retrofit架构开发。
 
 # 截图
-<img src="screenshot/Discover1.png" width="760" height="384">
-<img src="screenshot/Discover2.png" width="760" height="384">
+<img src="screenshot/1.gif" width="160" height="300"><img src="screenshot/2.gif" width="160" height="300"><img src="screenshot/3.gif" width="160" height="300">
 
 # Thanks
 [JiaoZiVideoPlayer](https://github.com/lipangit/JiaoZiVideoPlayer)
